@@ -81,6 +81,6 @@
 - Vercel Hobby planı ticari olmayan kullanım için. İleride üyelik gelirse Pro plana mı geçeceğiz, yoksa siteyi sizin hesabınıza mı taşıyacağız?
 - hafta1 dalında çalışıyorum. Canlı adres (klip-dergi.vercel.app) main dalını gösterdiği için ana sayfa değişikliğim orada görünmüyor, sadece Vercel'in önizleme adresinde görünüyor. hafta1'i main'e ne zaman birleştireceğiz?
 
-## Perşembe günü için
+## Perşembe günü için hazırlık
 - Perşembe işine erken başladım: src/types.ts dosyasına Person ve Clip tiplerini yazdım.
 - @viralgirisimci'den 5 kişiyi ve kliplerini topladım.
