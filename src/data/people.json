@@ -1,0 +1,98 @@
+[
+  {
+    "slug": "nevzat-aydin",
+    "name": "Nevzat Aydın",
+    "bio": "Nevzat Aydın, İstanbul doğumlu bir girişimcidir. Türkiye'nin en tanınan internet şirketlerinden Yemeksepeti'nin kurucu ortağıdır ve şirketin CEO'luğunu uzun yıllar yürütmüştür. Bugün Türkiye'deki pek çok teknoloji girişimine melek yatırımcı ve mentor olarak destek vermektedir.",
+    "links": ["https://instagram.com/zagortenay76"],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/Ddqm-BsAxNj/",
+        "title": "Girişimcilikte Obsesyonun Rolü",
+        "topic": "girişimcilik",
+        "publishedAt": "2026-09-24"
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/Ddei6l8ACBg/",
+        "title": "Vazgeçmek de Bir Başarıdır",
+        "topic": "başarısızlık",
+        "publishedAt": "2026-09-19"
+      }
+    ]
+  },
+  {
+    "slug": "hamdi-ulukaya",
+    "name": "Hamdi Ulukaya",
+    "bio": "Hamdi Ulukaya, Erzincan İliç doğumlu bir girişimci ve hayırseverdir. Süzme yoğurt markası Chobani'nin kurucusu ve CEO'sudur. Markayı ABD'nin en büyük yoğurt markalarından biri haline getirmiştir.",
+    "links": ["https://www.instagram.com/hamdi.ulukaya/"],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/viralgirisimci/reel/DeEQ_nGgm0G/",
+        "title": "Sorunlar Yola Çıkarak Çözülür",
+        "topic": "harekete geçmek",
+        "publishedAt": "2026-10-04"
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/p/Dd_I7rXgLGR/",
+        "title": "Başlamak İçin Her Şeyi Bilmek Gerekmez",
+        "topic": "harekete geçmek",
+        "publishedAt": "2026-10-02"
+      }
+    ]
+  },
+  {
+    "slug": "adnan-sahin",
+    "name": "Adnan Şahin",
+    "bio": "Adnan Şahin, Şahin Metal'in kurucusudur. 1979'da Bayrampaşa'da ilk atölyesini açmış, işini büyütmek için aile evini satarak yeni teknolojiye ve makinelere yatırım yapmıştır. Bu cesur karar, şirketinin büyümesinde dönüm noktası olmuştur. Kaliteli işin tavsiye yoluyla yeni müşteri getirdiğine ve kriz dönemlerinde ekibi korumanın büyümeye fırsat yarattığına inanır.",
+    "links": [],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/viralgirisimci/reel/DdyygKGAW5e/",
+        "title": "Büyük Başarılar Cesur Kararlarla Başlar",
+        "topic": "risk almak",
+        "publishedAt": "2026-09-27"
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/viralgirisimci/reel/DddzrvAAzPV/",
+        "title": "Kalite, Büyümenin Anahtarıdır",
+        "topic": "büyüme",
+        "publishedAt": "2026-09-19"
+      }
+    ]
+  },
+  {
+    "slug": "mehmet-dincerler",
+    "name": "Mehmet Dinçerler",
+    "bio": "Mehmet Dinçerler, 1988 doğumlu bir iş insanıdır. Baklava markası Hacı Sayid'in ikinci kuşak temsilcisidir. Kahve zinciri Gloria Jean's Coffees'in Türkiye'deki başarısının arkasındaki isimdir ve New York'un ünlü tatlı markası Magnolia Bakery'yi de Türkiye'ye getirmiştir.",
+    "links": ["https://www.instagram.com/mehmetdnc/"],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/viralgirisimci/reel/DeG3DvKANMR/",
+        "title": "Doğru Pazarda Fırsatı Görmek",
+        "topic": "fırsat",
+        "publishedAt": "2026-10-05"
+      }
+    ]
+  },
+  {
+    "slug": "acun-ilicali",
+    "name": "Acun Ilıcalı",
+    "bio": "Acun Ilıcalı, 1969 Edirne doğumlu bir medya yöneticisi ve iş insanıdır. Acun Medya'yı kurarak Survivor ve O Ses Türkiye gibi programları Türkiye'den dünyaya taşımıştır. TV8, Exxen ve İngiliz futbol kulübü Hull City'nin sahibidir.",
+    "links": ["https://www.instagram.com/acunilicali/"],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/viralgirisimci/reel/DeWZGAnAHRu/",
+        "title": "Başarı mı, Para mı?",
+        "topic": "motivasyon",
+        "publishedAt": "2026-10-11"
+      }
+    ]
+  }
+]
