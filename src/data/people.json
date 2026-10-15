@@ -66,32 +66,46 @@
     ]
   },
   {
-    "slug": "mehmet-dincerler",
-    "name": "Mehmet Dinçerler",
-    "bio": "Mehmet Dinçerler, 1988 doğumlu bir iş insanıdır. Baklava markası Hacı Sayid'in ikinci kuşak temsilcisidir. Kahve zinciri Gloria Jean's Coffees'in Türkiye'deki başarısının arkasındaki isimdir ve New York'un ünlü tatlı markası Magnolia Bakery'yi de Türkiye'ye getirmiştir.",
-    "links": ["https://www.instagram.com/mehmetdnc/"],
+    "slug": "mustafa-namoglu",
+    "name": "Mustafa Namoğlu",
+    "bio": "1989 yılında Girne, Kıbrıs'ta doğmuştur. Kıbrıslı ve girişimci bir aileden gelmektedir dedesi iş insanı Mustafa Kombos’tur.Bilkent Üniversitesi Bilgisayar Mühendisliği bölümünden mezun olmuştur. İkas ve Fırsat şirketinin kurucu ortağı ve CEO'sudur.",
+    "links": ["https://www.instagram.com/mustafanamoglu/"],
     "clips": [
       {
         "platform": "instagram",
-        "url": "https://www.instagram.com/viralgirisimci/reel/DeG3DvKANMR/",
-        "title": "Doğru Pazarda Fırsatı Görmek",
-        "topic": "fırsat",
-        "publishedAt": "2026-10-05"
+        "url": "https://www.instagram.com/reel/DdWBNe3gFzZ/",
+        "title": "ICP mi, Esnaf Kafası mı?",
+        "topic": "müşteri",
+        "publishedAt": "2026-09-16"
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/DdTWfGXA4qE/",
+        "title": "Genç Ekiplerin Gücür",
+        "topic": "ekip",
+        "publishedAt": "2026-09-15"
       }
     ]
   },
   {
-    "slug": "acun-ilicali",
-    "name": "Acun Ilıcalı",
-    "bio": "Acun Ilıcalı, 1969 Edirne doğumlu bir medya yöneticisi ve iş insanıdır. Acun Medya'yı kurarak Survivor ve O Ses Türkiye gibi programları Türkiye'den dünyaya taşımıştır. TV8, Exxen ve İngiliz futbol kulübü Hull City'nin sahibidir.",
-    "links": ["https://www.instagram.com/acunilicali/"],
+    "slug": "ata-uzunhasan",
+    "name":  "Ata Uzunhasan",
+    "bio":"Özel İtalyan Lisesi'nden mezun olduktan sonra, Koç Üniversitesi İşletme ve Ekonomi bölümlerinden çift anadal yaparak 2005 yılında tamamlamıştır.günümüzde aktif olarak Galata Business Angels (GBA) Yönetici Direktörü (Managing Director) görevini sürdürmektedir.",
+    "links": ["https://www.instagram.com/atauzunhasan/"],
     "clips": [
       {
         "platform": "instagram",
-        "url": "https://www.instagram.com/viralgirisimci/reel/DeWZGAnAHRu/",
-        "title": "Başarı mı, Para mı?",
-        "topic": "motivasyon",
-        "publishedAt": "2026-10-11"
+        "url":"https://www.instagram.com/reel/Dd35VYzgV8-/",
+        "title":"Yatırım Almak Evlilik Gibidir",
+        "topic":"yatırım",
+        "publishedAt": "2026-09-29"
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/Ddjsbc1gxaC/",
+        "title": "Yapay Zeka Çağında Pazarlama Daha Önemli",
+        "topic":  "pazarlama",
+        "publishedAt": "2026-09-21"
       }
     ]
   }
