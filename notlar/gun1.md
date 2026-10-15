@@ -22,6 +22,11 @@
 - Canlı adres: https://klip-dergi.vercel.app
 - Repo: https://github.com/symkllci/klip-dergi
 
+## Dosyalar
+- src/app/page.tsx: Ana sayfa. Site adı, açıklama ve Kişiler linki burada.
+- src/types.ts: Person ve Clip kalıpları. Bütün proje kullandığı için app klasörünün dışında.
+- notlar/gun1.md: Bu not.
+
 ## Öğrendiğim komutlar
 - `node -v`: Node.js'in sürümünü gösterir, kurulu olup olmadığını kontrol eder.
 - `npm -v`: npm'in (Node'un paket yükleyicisinin) sürümünü gösterir.
@@ -63,7 +68,7 @@
   - Vercel build'inde 3 uyarı çıktı, site yine de yayınlandı.
   - Next.js anonim kullanım istatistiği (telemetry) topladığını bildirdi.
 
-## Claude'un yazdığı neyi değiştirdim
+## Claude’un yazdığından neyi değiştirdim
 - Kurulum adımlarını ve komutları Claude'a sorarak ilerledim, her komutun ne yaptığını not aldım.
 - Ana sayfada Claude bana boş bir iskelet verdi. Başlığı, açıklama cümlesini ve link yazısını kendim yazdım.
   Açıklama cümlesini Claude'un önerilerinden birinden yola çıkarak kendime göre değiştirdim.
@@ -76,4 +81,6 @@
 - Vercel Hobby planı ticari olmayan kullanım için. İleride üyelik gelirse Pro plana mı geçeceğiz, yoksa siteyi sizin hesabınıza mı taşıyacağız?
 - hafta1 dalında çalışıyorum. Canlı adres (klip-dergi.vercel.app) main dalını gösterdiği için ana sayfa değişikliğim orada görünmüyor, sadece Vercel'in önizleme adresinde görünüyor. hafta1'i main'e ne zaman birleştireceğiz?
 
-
+## Perşembe günü için
+- Perşembe işine erken başladım: src/types.ts dosyasına Person ve Clip tiplerini yazdım.
+- @viralgirisimci'den 5 kişiyi ve kliplerini topladım.
