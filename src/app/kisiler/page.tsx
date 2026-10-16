@@ -15,8 +15,11 @@ export default function KisilerSayfasi() { // Bu dosyanın sayfası bu bileşen.
       <ul>
         {/* map: her kişiyi sırayla al, adına kisi de */}
         {kisiler.map((kisi) => (
-          // key: her satırın kimliği (slug), içine kişinin adını yaz
-          <li key={kisi.slug}>{kisi.name}</li>
+          // key: her satırın kimliği (slug)
+          // kisi.name: kişinin adı
+          // kisi.clips.length: kişinin klip listesinde kaç klip var (bilgisayar sayar)
+          // { } içindekiler veriden gelir, dışındakiler ( – ve klip ) düz yazıdır
+          <li key={kisi.slug}>{kisi.name} – {kisi.clips.length} klip</li>
         ))}
       </ul>
     </main>
