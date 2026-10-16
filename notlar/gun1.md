@@ -19,7 +19,7 @@
   Artık main dalına her push yaptığımda Vercel siteyi otomatik olarak yeniden yayınlıyor.
 - Planda istendiği gibi `hafta1` dalını açtım. Bundan sonraki çalışmalarımı bu dalda yapıyorum.
 - Ana sayfaya site adını, tek cümlelik açıklamayı ve "Kişiler" linkini ekledim.
-- Canlı adres: https://klip-dergi.vercel.app
+- Canlı adres:https://klip-dergi-git-hafta1-symkllcis-projects.vercel.app
 - Repo: https://github.com/symkllci/klip-dergi
 
 ## Dosyalar
