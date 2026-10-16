@@ -5,32 +5,40 @@ export default function KisilerSayfasi() { // Bu dosyanın sayfası bu bileşen.
   const kisiler = getAllPeople(); // Tarifi çalıştır, 5 kişiyi kisiler adıyla sakla.
 
   return ( // Ekrana bunları ver.
-    <main>
-      <h1>Kişiler</h1>
-      <p>Podcast kliplerinde konuşan girişimcilerin biyografileri, sosyal medya hesapları ve viral klipleri.</p>
+    // mx-auto max-w-5xl: sayfayı ortala ve genişliği sınırla. p-6: kenarlardan boşluk.
+    <main className="mx-auto max-w-5xl p-6">
+      {/* Başlık: büyük (text-3xl), kalın (font-bold), altında küçük boşluk (mb-2) */}
+      <h1 className="text-3xl font-bold mb-2">Kişiler</h1>
 
-      {/* Listede kaç kişi var: 5 */}
-      <p>Toplam {kisiler.length} kişi</p>
+      {/* Açıklama: gri yazı */}
+      <p className="text-gray-600 mb-1">
+        Podcast kliplerinde konuşan girişimcilerin biyografileri, sosyal medya hesapları ve viral klipleri.
+      </p>
 
-      {/* Kişilerin listesi: her kişi bir kart */}
-      <ul>
+      {/* Listede kaç kişi var: küçük gri yazı, altında büyük boşluk (mb-6) */}
+      <p className="text-sm text-gray-500 mb-6">Toplam {kisiler.length} kişi</p>
+
+      {/* Kartlar: ızgara (grid), aralarında boşluk (gap-4) */}
+      {/* Telefonda alt alta, orta ekranda 2, geniş ekranda 3 kart yan yana */}
+      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {/* map: her kişiyi sırayla al, adına kisi de */}
         {kisiler.map((kisi) => (
-          // key: her kartın kimliği (slug)
-          <li key={kisi.slug}>
+          // Kart: yuvarlak köşe, çerçeve, içeriden boşluk. Fare üstüne gelince hafif gölge.
+          <li key={kisi.slug} className="rounded-lg border p-4 hover:shadow-md">
             {/* Kartın başlığı: kişinin adı, tıklayınca kişinin sayfasına gider */}
             {/* Adres: sabit /kisiler/ + değişen slug, ör. /kisiler/nevzat-aydin */}
-            {/* Ters tırnak ve ${ } sabit yazıyla değişkeni birleştirir */}
-            <h2>
-              <Link href={`/kisiler/${kisi.slug}`}>{kisi.name}</Link>
+            <h2 className="text-xl font-semibold mb-2">
+              <Link href={`/kisiler/${kisi.slug}`} className="hover:underline">
+                {kisi.name}
+              </Link>
             </h2>
 
             {/* Kısa bio: bio'yu ". " gördüğün yerden kes, ilk cümleyi al. */}
             {/* split noktayı attığı için sonuna elle "." ekledim. */}
-            <p>{kisi.bio.split(". ")[0]}.</p>
+            <p className="text-gray-700 mb-3">{kisi.bio.split(". ")[0]}.</p>
 
-            {/* Klip sayısı: kişinin klip listesinde kaç klip var (bilgisayar sayar) */}
-            <p>{kisi.clips.length} klip</p>
+            {/* Klip sayısı: küçük gri yazı */}
+            <p className="text-sm text-gray-500">{kisi.clips.length} klip</p>
           </li>
         ))}
       </ul>
