@@ -1,3 +1,4 @@
+import Link from "next/link"; // Next.js'in sayfalar arası geçiş bileşenini getir.
 import { getAllPeople } from "@/lib/people"; // Dün yazdığım tarifi bu dosyaya getir.
 
 export default function KisilerSayfasi() { // Bu dosyanın sayfası bu bileşen.
@@ -17,8 +18,12 @@ export default function KisilerSayfasi() { // Bu dosyanın sayfası bu bileşen.
         {kisiler.map((kisi) => (
           // key: her kartın kimliği (slug)
           <li key={kisi.slug}>
-            {/* Kartın başlığı: kişinin adı */}
-            <h2>{kisi.name}</h2>
+            {/* Kartın başlığı: kişinin adı, tıklayınca kişinin sayfasına gider */}
+            {/* Adres: sabit /kisiler/ + değişen slug, ör. /kisiler/nevzat-aydin */}
+            {/* Ters tırnak ve ${ } sabit yazıyla değişkeni birleştirir */}
+            <h2>
+              <Link href={`/kisiler/${kisi.slug}`}>{kisi.name}</Link>
+            </h2>
 
             {/* Kısa bio: bio'yu ". " gördüğün yerden kes, ilk cümleyi al. */}
             {/* split noktayı attığı için sonuna elle "." ekledim. */}
