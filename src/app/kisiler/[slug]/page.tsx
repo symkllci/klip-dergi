@@ -1,5 +1,29 @@
 import { notFound } from "next/navigation"; // Next.js'in "sayfa bulunamadı" aracını getir.
-import { getPersonBySlug } from "@/lib/people"; // Dün yazdığım "slug ile kişiyi bul" tarifini getir.
+import { getAllPeople, getPersonBySlug } from "@/lib/people"; // İki tarifi de getir: herkesi getiren ve slug ile bulan.
+import type { Clip } from "@/types"; // Klip kalıbını getir (embedAdresi tarifinin tipi için).
+
+// Klibin embed (gömme) adresini üreten tarif.
+// Klibi verirsin, sayfada iframe içinde açılacak adresi geri verir.
+function embedAdresi(klip: Clip): string {
+  // Instagram ise: adresin sonuna "embed" ekle.
+  // https://www.instagram.com/reel/KOD/  →  https://www.instagram.com/reel/KOD/embed
+  if (klip.platform === "instagram") {
+    return klip.url + "embed";
+  }
+
+  // Değilse YouTube'dur: "watch?v=" kısmını "embed/" ile değiştir.
+  // https://www.youtube.com/watch?v=KOD  →  https://www.youtube.com/embed/KOD
+  return klip.url.replace("watch?v=", "embed/");
+}
+
+// Build sırasında hangi kişi sayfalarının önceden üretileceğini Next.js'e söyler.
+// Pastane benzetmesi: dükkânı açmadan önce hangi pastaları vitrine koyacağımın listesi.
+// Tüm kişileri al, her kişiden { slug: "..." } kutusu yap.
+// Sonuç: [{ slug: "nevzat-aydin" }, { slug: "hamdi-ulukaya" }, ...]
+// ({ }): Normal parantez "bu bir kutu, onu geri ver" demek.
+export function generateStaticParams() {
+  return getAllPeople().map((kisi) => ({ slug: kisi.slug }));
+}
 
 // Kişi sayfası: /kisiler/nevzat-aydin gibi adreslerde açılır.
 // params: adresten gelen bilgi. Klasör adı [slug] olduğu için içinde slug var.
@@ -42,6 +66,21 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
           <li key={klip.url}>
             {/* Klibin başlığı */}
             <h3>{klip.title}</h3>
+
+            {/* Embed: klibi sayfanın içindeki küçük bir pencerede (iframe) oynat */}
+            {/* src: embedAdresi tarifinin ürettiği adres */}
+            {/* title: ekran okuyucular için pencerenin adı */}
+            {/* width 320, height 570: reel dikey bir video, telefon ekranı oranına yakın boyut */}
+            {/* className: Tailwind ile köşeleri yuvarla (rounded-lg), ince çerçeve ver (border) */}
+            {/* allowFullScreen: tam ekrana izin ver */}
+            <iframe
+              src={embedAdresi(klip)}
+              title={klip.title}
+              width="320"
+              height="570"
+              className="rounded-lg border"
+              allowFullScreen
+            ></iframe>
 
             {/* Düz link: embed yüklenmezse ziyaretçi buradan izleyebilir */}
             <a href={klip.url} target="_blank">Klibi izle</a>
