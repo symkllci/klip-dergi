@@ -15,8 +15,39 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
 
   return (
     <main>
-      <h1>{kisi.name}</h1> {/* Kişinin adı */}
-      <p>{kisi.bio}</p>    {/* Biyografinin tamamı */}
+      {/* Kişinin adı */}
+      <h1>{kisi.name}</h1>
+
+      {/* Biyografinin tamamı */}
+      <p>{kisi.bio}</p>
+
+      {/* Sosyal medya: kişinin links listesindeki her link için bir satır */}
+      <h2>Sosyal Medya</h2>
+      <ul>
+        {kisi.links.map((link) => (
+          // Her link düz bir yazı: hem kimlik (key), hem adres (href), hem ekranda görünen yazı
+          // target="_blank": linki yeni sekmede aç, ziyaretçi bizim siteyi kaybetmesin
+          <li key={link}>
+            <a href={link} target="_blank">{link}</a>
+          </li>
+        ))}
+      </ul>
+
+      {/* Klipler: kişinin clips listesindeki her klip için bir satır */}
+      <h2>Klipler</h2>
+      <ul>
+        {kisi.clips.map((klip) => (
+          // Her klip bir kutu (platform, url, title, topic, publishedAt)
+          // key: her klipte farklı olan alan url
+          <li key={klip.url}>
+            {/* Klibin başlığı */}
+            <h3>{klip.title}</h3>
+
+            {/* Düz link: embed yüklenmezse ziyaretçi buradan izleyebilir */}
+            <a href={klip.url} target="_blank">Klibi izle</a>
+          </li>
+        ))}
+      </ul>
     </main>
   );
 }
