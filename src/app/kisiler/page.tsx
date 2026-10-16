@@ -11,15 +11,22 @@ export default function KisilerSayfasi() { // Bu dosyanın sayfası bu bileşen.
       {/* Listede kaç kişi var: 5 */}
       <p>Toplam {kisiler.length} kişi</p>
 
-      {/* Kişilerin listesi */}
+      {/* Kişilerin listesi: her kişi bir kart */}
       <ul>
         {/* map: her kişiyi sırayla al, adına kisi de */}
         {kisiler.map((kisi) => (
-          // key: her satırın kimliği (slug)
-          // kisi.name: kişinin adı
-          // kisi.clips.length: kişinin klip listesinde kaç klip var (bilgisayar sayar)
-          // { } içindekiler veriden gelir, dışındakiler ( – ve klip ) düz yazıdır
-          <li key={kisi.slug}>{kisi.name} – {kisi.clips.length} klip</li>
+          // key: her kartın kimliği (slug)
+          <li key={kisi.slug}>
+            {/* Kartın başlığı: kişinin adı */}
+            <h2>{kisi.name}</h2>
+
+            {/* Kısa bio: bio'yu ". " gördüğün yerden kes, ilk cümleyi al. */}
+            {/* split noktayı attığı için sonuna elle "." ekledim. */}
+            <p>{kisi.bio.split(". ")[0]}.</p>
+
+            {/* Klip sayısı: kişinin klip listesinde kaç klip var (bilgisayar sayar) */}
+            <p>{kisi.clips.length} klip</p>
+          </li>
         ))}
       </ul>
     </main>
