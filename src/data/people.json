@@ -1,0 +1,112 @@
+[
+  {
+    "slug": "nevzat-aydin",
+    "name": "Nevzat Aydın",
+    "bio": "Nevzat Aydın, İstanbul doğumlu bir girişimcidir. Türkiye'nin en tanınan internet şirketlerinden Yemeksepeti'nin kurucu ortağıdır ve şirketin CEO'luğunu uzun yıllar yürütmüştür. Bugün Türkiye'deki pek çok teknoloji girişimine melek yatırımcı ve mentor olarak destek vermektedir.",
+    "links": ["https://instagram.com/zagortenay76"],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/Ddqm-BsAxNj/",
+        "title": "Girişimcilikte Obsesyonun Rolü",
+        "topic": "girişimcilik",
+        "publishedAt": "2026-09-24"
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/Ddei6l8ACBg/",
+        "title": "Vazgeçmek de Bir Başarıdır",
+        "topic": "başarısızlık",
+        "publishedAt": "2026-09-19"
+      }
+    ]
+  },
+  {
+    "slug": "hamdi-ulukaya",
+    "name": "Hamdi Ulukaya",
+    "bio": "Hamdi Ulukaya, Erzincan İliç doğumlu bir girişimci ve hayırseverdir. Süzme yoğurt markası Chobani'nin kurucusu ve CEO'sudur. Markayı ABD'nin en büyük yoğurt markalarından biri haline getirmiştir.",
+    "links": ["https://www.instagram.com/hamdi.ulukaya/"],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/DeEQ_nGgm0G/",
+        "title": "Sorunlar Yola Çıkarak Çözülür",
+        "topic": "harekete geçmek",
+        "publishedAt": "2026-10-04"
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/p/Dd_I7rXgLGR/",
+        "title": "Başlamak İçin Her Şeyi Bilmek Gerekmez",
+        "topic": "harekete geçmek",
+        "publishedAt": "2026-10-02"
+      }
+    ]
+  },
+  {
+    "slug": "adnan-sahin",
+    "name": "Adnan Şahin",
+    "bio": "Adnan Şahin, Şahin Metal'in kurucusudur. 1979'da Bayrampaşa'da ilk atölyesini açmış, işini büyütmek için aile evini satarak yeni teknolojiye ve makinelere yatırım yapmıştır. Bu cesur karar, şirketinin büyümesinde dönüm noktası olmuştur. Kaliteli işin tavsiye yoluyla yeni müşteri getirdiğine ve kriz dönemlerinde ekibi korumanın büyümeye fırsat yarattığına inanır.",
+    "links": [],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/DdyygKGAW5e/",
+        "title": "Büyük Başarılar Cesur Kararlarla Başlar",
+        "topic": "risk almak",
+        "publishedAt": "2026-09-27"
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/DddzrvAAzPV/",
+        "title": "Kalite, Büyümenin Anahtarıdır",
+        "topic": "büyüme",
+        "publishedAt": "2026-09-19"
+      }
+    ]
+  },
+  {
+    "slug": "mustafa-namoglu",
+    "name": "Mustafa Namoğlu",
+    "bio": "Mustafa Namoğlu, e-ticaret alanında bir girişimcidir. İkas'ın kurucu ortağı ve CEO'sudur.",
+    "links": ["https://www.instagram.com/mustafanamoglu/"],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/DdWBNe3gFzZ/",
+        "title": "ICP mi, Esnaf Kafası mı?",
+        "topic": "müşteri",
+        "publishedAt": "2026-09-16"
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/DdTWfGXA4qE/",
+        "title": "Genç Ekiplerin Gücür",
+        "topic": "ekip",
+        "publishedAt": "2026-09-15"
+      }
+    ]
+  },
+  {
+    "slug": "ata-uzunhasan",
+    "name":  "Ata Uzunhasan",
+   "bio": "Ata Uzunhasan, Galata Business Angels'ın (GBA) Yönetici Direktörüdür. Koç Üniversitesi'nde İşletme ve Ekonomi okudu. Kariyerine PwC'de başladı.",
+    "links": ["https://www.instagram.com/atauzunhasan/"],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url":"https://www.instagram.com/reel/Dd35VYzgV8-/",
+        "title":"Yatırım Almak Evlilik Gibidir",
+        "topic":"yatırım",
+        "publishedAt": "2026-09-29"
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/Ddjsbc1gxaC/",
+        "title": "Yapay Zeka Çağında Pazarlama Daha Önemli",
+        "topic":  "pazarlama",
+        "publishedAt": "2026-09-21"
+      }
+    ]
+  }
+]
