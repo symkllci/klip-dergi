@@ -51,10 +51,16 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
   return (
     // Sayfayı ortala (mx-auto), genişliği sınırla (max-w-5xl), kenarlardan boşluk (p-6)
     <main className="mx-auto max-w-5xl p-6">
-      {/* Geri dönüş linki: kişiler listesine götürür. Küçük, gri; fare gelince altı çizilir. */}
-      <Link href="/kisiler" className="text-sm text-gray-500 hover:underline">
-        ← Tüm kişiler
-      </Link>
+           {/* Geri dönüş linkleri: ana sayfaya ve kişiler listesine götürür. Küçük, gri; fare gelince altı çizilir. */}
+      {/* flex gap-4: iki linki yan yana diz, aralarında boşluk bırak */}
+      <div className="flex gap-4">
+        <Link href="/" className="text-sm text-gray-500 hover:underline">
+          ← Ana sayfa
+        </Link>
+        <Link href="/kisiler" className="text-sm text-gray-500 hover:underline">
+          ← Tüm kişiler
+        </Link>
+      </div>
 
       {/* Kişinin adı: büyük, kalın. mt-4: üstten boşluk, mb-4: alttan boşluk */}
       <h1 className="text-3xl font-bold mt-4 mb-4">{kisi.name}</h1>

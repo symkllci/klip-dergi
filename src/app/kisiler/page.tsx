@@ -7,8 +7,14 @@ export default function KisilerSayfasi() { // Bu dosyanın sayfası bu bileşen.
   return ( // Ekrana bunları ver.
     // mx-auto max-w-5xl: sayfayı ortala ve genişliği sınırla. p-6: kenarlardan boşluk.
     <main className="mx-auto max-w-5xl p-6">
-      {/* Başlık: büyük (text-3xl), kalın (font-bold), altında küçük boşluk (mb-2) */}
-      <h1 className="text-3xl font-bold mb-2">Kişiler</h1>
+      {/* Geri dönüş linki: ana sayfaya götürür. Kişi sayfasındaki "← Tüm kişiler" ile aynı görünüm. */}
+      {/* href="/": ana sayfanın adresi. Küçük, gri; fare gelince altı çizilir. */}
+      <Link href="/" className="text-sm text-gray-500 hover:underline">
+        ← Ana sayfa
+      </Link>
+
+      {/* Başlık: büyük (text-3xl), kalın (font-bold). mt-4: linkten biraz aşağıda dursun, mb-2: altında küçük boşluk */}
+      <h1 className="text-3xl font-bold mt-4 mb-2">Kişiler</h1>
 
       {/* Açıklama: gri yazı */}
       <p className="text-gray-600 mb-1">
