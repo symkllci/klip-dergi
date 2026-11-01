@@ -1,7 +1,7 @@
 import Link from "next/link"; // Next.js'in sayfalar arası geçiş bileşenini getir (geri dönüş linki için).
 import { notFound } from "next/navigation"; // Next.js'in "sayfa bulunamadı" aracını getir.
 import { getAllPeople, getPersonBySlug } from "@/lib/people"; // İki tarifi de getir: herkesi getiren ve slug ile bulan.
-import type { Clip } from "@/types"; // Klip kalıbını getir (embedAdresi tarifinin tipi için).
+import type { Clip } from "@/types"; // Klip kalıbını getir (embedAdresi ve izleYazisi tariflerinin tipi için).
 
 // Klibin embed (gömme) adresini üreten tarif.
 // Klibi verirsin, sayfada iframe içinde açılacak adresi geri verir.
@@ -15,6 +15,17 @@ function embedAdresi(klip: Clip): string {
   // Değilse YouTube'dur: "watch?v=" kısmını "embed/" ile değiştir.
   // https://www.youtube.com/watch?v=KOD  →  https://www.youtube.com/embed/KOD
   return klip.url.replace("watch?v=", "embed/");
+}
+
+// Klibin altındaki link yazısını platforma göre üreten tarif.
+// Klibi verirsin, ekranda görünecek yazıyı geri verir.
+function izleYazisi(klip: Clip): string {
+  // YouTube ise bu yazıyı ver ve tarifi bitir.
+  if (klip.platform === "youtube") {
+    return "Klibi YouTube'da izle";
+  }
+  // Değilse Instagram'dır.
+  return "Klibi Instagram'da izle";
 }
 
 // Build sırasında hangi kişi sayfalarının önceden üretileceğini Next.js'e söyler.
@@ -57,9 +68,10 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
         {kisi.links.map((link) => (
           // Her link düz bir yazı: hem kimlik (key), hem adres (href), hem ekranda görünen yazı
           // target="_blank": linki yeni sekmede aç, ziyaretçi bizim siteyi kaybetmesin
+          // rel="noopener noreferrer": açılan sayfa bizim sayfamıza dokunamasın (arkasından kapıyı kilitlemek)
           // text-blue-600: mavi yazı (link olduğu anlaşılsın)
           <li key={link}>
-            <a href={link} target="_blank" className="text-blue-600 hover:underline">
+            <a href={link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
               {link}
             </a>
           </li>
@@ -93,8 +105,10 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
             ></iframe>
 
             {/* Düz link: embed yüklenmezse ziyaretçi buradan izleyebilir. block: kendi satırında dursun */}
-            <a href={klip.url} target="_blank" className="block mt-2 text-sm text-blue-600 hover:underline">
-              Klibi Instagram'da izle
+            {/* rel="noopener noreferrer": açılan sayfa bizim sayfamıza dokunamasın */}
+            {/* Yazı sabit değil: izleYazisi tarifi platforma göre "Instagram'da" ya da "YouTube'da" yazar */}
+            <a href={klip.url} target="_blank" rel="noopener noreferrer" className="block mt-2 text-sm text-blue-600 hover:underline">
+              {izleYazisi(klip)}
             </a>
           </li>
         ))}

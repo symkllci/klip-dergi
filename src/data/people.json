@@ -2,7 +2,7 @@
   {
     "slug": "nevzat-aydin",
     "name": "Nevzat Aydın",
-    "bio": "Nevzat Aydın, İstanbul doğumlu bir girişimcidir. Türkiye'nin en tanınan internet şirketlerinden Yemeksepeti'nin kurucu ortağıdır ve şirketin CEO'luğunu uzun yıllar yürütmüştür. Bugün Türkiye'deki pek çok teknoloji girişimine melek yatırımcı ve mentor olarak destek vermektedir.",
+    "bio": "Nevzat Aydın, Yemeksepeti'nin kurucusudur. Boğaziçi Üniversitesi Bilgisayar Mühendisliği mezunudur. Şirket 2015 yılında Delivery Hero tarafından satın alınmıştır. Bugün melek yatırımcı olarak teknoloji girişimlerine yatırım yapmaktadır.",
     "links": ["https://instagram.com/zagortenay76"],
     "clips": [
       {
@@ -24,7 +24,7 @@
   {
     "slug": "hamdi-ulukaya",
     "name": "Hamdi Ulukaya",
-    "bio": "Hamdi Ulukaya, Erzincan İliç doğumlu bir girişimci ve hayırseverdir. Süzme yoğurt markası Chobani'nin kurucusu ve CEO'sudur. Markayı ABD'nin en büyük yoğurt markalarından biri haline getirmiştir.",
+    "bio": "Hamdi Ulukaya, Erzincan İliç doğumlu bir girişimcidir. Chobani markasının kurucusudur. Markanın temeli, 2005 yılında kapatılmış bir yoğurt fabrikasını satın almasıyla atılmıştır. Mültecilere istihdam sağlaması ile de tanınmaktadır.",
     "links": ["https://www.instagram.com/hamdi.ulukaya/"],
     "clips": [
       {
@@ -46,7 +46,7 @@
   {
     "slug": "adnan-sahin",
     "name": "Adnan Şahin",
-    "bio": "Adnan Şahin, Şahin Metal'in kurucusudur. 1979'da Bayrampaşa'da ilk atölyesini açmış, işini büyütmek için aile evini satarak yeni teknolojiye ve makinelere yatırım yapmıştır. Bu cesur karar, şirketinin büyümesinde dönüm noktası olmuştur. Kaliteli işin tavsiye yoluyla yeni müşteri getirdiğine ve kriz dönemlerinde ekibi korumanın büyümeye fırsat yarattığına inanır.",
+    "bio": "Adnan Şahin, metal sanayi alanında bir girişimcidir. İş hayatına 1979 yılında Bayrampaşa'da küçük bir atölye açarak başlamıştır. Aile evini satarak makine yatırımı yapması, işletmesinin büyümesinde bir dönüm noktası olmuştur.",
     "links": [],
     "clips": [
       {
@@ -68,7 +68,7 @@
   {
     "slug": "mustafa-namoglu",
     "name": "Mustafa Namoğlu",
-    "bio": "Mustafa Namoğlu, e-ticaret alanında bir girişimcidir. İkas'ın kurucu ortağı ve CEO'sudur.",
+    "bio": "Mustafa Namoğlu, e-ticaret teknolojileri alanında bir girişimcidir. 2011 yılında Mugo markasını kurmuştur. Bugün ikas'ın kurucu ortağı ve CEO'sudur.",
     "links": ["https://www.instagram.com/mustafanamoglu/"],
     "clips": [
       {
@@ -81,7 +81,7 @@
       {
         "platform": "instagram",
         "url": "https://www.instagram.com/reel/DdTWfGXA4qE/",
-        "title": "Genç Ekiplerin Gücür",
+        "title": "Genç Ekiplerin Gücü",
         "topic": "ekip",
         "publishedAt": "2026-09-15"
       }
@@ -89,22 +89,22 @@
   },
   {
     "slug": "ata-uzunhasan",
-    "name":  "Ata Uzunhasan",
-   "bio": "Ata Uzunhasan, Galata Business Angels'ın (GBA) Yönetici Direktörüdür. Koç Üniversitesi'nde İşletme ve Ekonomi okudu. Kariyerine PwC'de başladı.",
+    "name": "Ata Uzunhasan",
+    "bio": "Ata Uzunhasan, Galata Business Angels'ın (GBA) Yönetici Direktörüdür. Koç Üniversitesi İşletme ve Ekonomi mezunudur. Kariyerine PwC'de başlamıştır.",
     "links": ["https://www.instagram.com/atauzunhasan/"],
     "clips": [
       {
         "platform": "instagram",
-        "url":"https://www.instagram.com/reel/Dd35VYzgV8-/",
-        "title":"Yatırım Almak Evlilik Gibidir",
-        "topic":"yatırım",
+        "url": "https://www.instagram.com/reel/Dd35VYzgV8-/",
+        "title": "Yatırım Almak Evlilik Gibidir",
+        "topic": "yatırım",
         "publishedAt": "2026-09-29"
       },
       {
         "platform": "instagram",
         "url": "https://www.instagram.com/reel/Ddjsbc1gxaC/",
         "title": "Yapay Zeka Çağında Pazarlama Daha Önemli",
-        "topic":  "pazarlama",
+        "topic": "pazarlama",
         "publishedAt": "2026-09-21"
       }
     ]
