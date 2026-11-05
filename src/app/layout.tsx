@@ -22,8 +22,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
+        // lang="tr": sayfanın dili Türkçe. Tarayıcı büyük harfi Türkçe kurala göre çevirir (i → İ, "Kişiler" → "KİŞİLER").
     <html
-      lang="en"
+      lang="tr"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
