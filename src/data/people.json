@@ -1,0 +1,112 @@
+[
+  {
+    "slug": "nevzat-aydin",
+    "name": "Nevzat Aydın",
+    "bio": "Nevzat Aydın, Yemeksepeti'nin kurucusudur. Boğaziçi Üniversitesi Bilgisayar Mühendisliği mezunudur. Şirket 2015 yılında Delivery Hero tarafından satın alınmıştır. Bugün melek yatırımcı olarak teknoloji girişimlerine yatırım yapmaktadır.",
+    "links": ["https://instagram.com/zagortenay76"],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/Ddqm-BsAxNj/",
+        "title": "Girişimcilikte Obsesyonun Rolü",
+        "topic": "girişimcilik",
+        "publishedAt": "2026-09-24"
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/Ddei6l8ACBg/",
+        "title": "Vazgeçmek de Bir Başarıdır",
+        "topic": "başarısızlık",
+        "publishedAt": "2026-09-19"
+      }
+    ]
+  },
+  {
+    "slug": "hamdi-ulukaya",
+    "name": "Hamdi Ulukaya",
+    "bio": "Hamdi Ulukaya, Erzincan İliç doğumlu bir girişimcidir. Chobani markasının kurucusudur. Markanın temeli, 2005 yılında kapatılmış bir yoğurt fabrikasını satın almasıyla atılmıştır. Mültecilere istihdam sağlaması ile de tanınmaktadır.",
+    "links": ["https://www.instagram.com/hamdi.ulukaya/"],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/DeEQ_nGgm0G/",
+        "title": "Sorunlar Yola Çıkarak Çözülür",
+        "topic": "harekete geçmek",
+        "publishedAt": "2026-10-04"
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/p/Dd_I7rXgLGR/",
+        "title": "Başlamak İçin Her Şeyi Bilmek Gerekmez",
+        "topic": "harekete geçmek",
+        "publishedAt": "2026-10-02"
+      }
+    ]
+  },
+  {
+    "slug": "adnan-sahin",
+    "name": "Adnan Şahin",
+    "bio": "Adnan Şahin, metal sanayi alanında bir girişimcidir. İş hayatına 1979 yılında Bayrampaşa'da küçük bir atölye açarak başlamıştır. Aile evini satarak makine yatırımı yapması, işletmesinin büyümesinde bir dönüm noktası olmuştur.",
+    "links": [],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/DdyygKGAW5e/",
+        "title": "Büyük Başarılar Cesur Kararlarla Başlar",
+        "topic": "risk almak",
+        "publishedAt": "2026-09-27"
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/DddzrvAAzPV/",
+        "title": "Kalite, Büyümenin Anahtarıdır",
+        "topic": "büyüme",
+        "publishedAt": "2026-09-19"
+      }
+    ]
+  },
+  {
+    "slug": "mustafa-namoglu",
+    "name": "Mustafa Namoğlu",
+    "bio": "Mustafa Namoğlu, e-ticaret teknolojileri alanında bir girişimcidir. 2011 yılında Mugo markasını kurmuştur. Bugün ikas'ın kurucu ortağı ve CEO'sudur.",
+    "links": ["https://www.instagram.com/mustafanamoglu/"],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/DdWBNe3gFzZ/",
+        "title": "ICP mi, Esnaf Kafası mı?",
+        "topic": "müşteri",
+        "publishedAt": "2026-09-16"
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/DdTWfGXA4qE/",
+        "title": "Genç Ekiplerin Gücü",
+        "topic": "ekip",
+        "publishedAt": "2026-09-15"
+      }
+    ]
+  },
+  {
+    "slug": "ata-uzunhasan",
+    "name": "Ata Uzunhasan",
+    "bio": "Ata Uzunhasan, Galata Business Angels'ın (GBA) Yönetici Direktörüdür. Koç Üniversitesi İşletme ve Ekonomi mezunudur. Kariyerine PwC'de başlamıştır.",
+    "links": ["https://www.instagram.com/atauzunhasan/"],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/Dd35VYzgV8-/",
+        "title": "Yatırım Almak Evlilik Gibidir",
+        "topic": "yatırım",
+        "publishedAt": "2026-09-29"
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/Ddjsbc1gxaC/",
+        "title": "Yapay Zeka Çağında Pazarlama Daha Önemli",
+        "topic": "pazarlama",
+        "publishedAt": "2026-09-21"
+      }
+    ]
+  }
+]
