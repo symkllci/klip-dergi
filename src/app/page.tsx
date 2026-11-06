@@ -84,11 +84,11 @@ export default function Home() {
           </h1>
           {/* Adın altındaki ince menü satırı */}
           <nav className="mt-4 flex items-center justify-between text-xs uppercase tracking-widest">
-            <span className="text-stone-500">Girişimci hikâyeleri</span>
+       <a href="#hikayeler" className="text-stone-500 hover:text-rose-800">Girişimci hikâyeleri</a>
             <Link href="/kisiler" className="font-semibold text-rose-800 hover:underline">
               Kişiler
             </Link>
-            <span className="text-stone-500">Podcast klipleri</span>
+      <a href="https://www.instagram.com/viralgirisimci/" target="_blank" rel="noopener noreferrer" className="text-stone-500 hover:text-rose-800">Podcast klipleri</a>
           </nav>
         </header>
 
@@ -130,6 +130,7 @@ export default function Home() {
         {/* Diğer kişiler: başlık satırı ve kartlar */}
         <section className="mt-14">
           <div className="mb-6 flex items-baseline justify-between border-b border-stone-300 pb-2">
+            <div id="hikayeler" className="mb-6 flex items-baseline justify-between border-b border-stone-300 pb-2"></div>
             <h2 className={`${baslikFontu.className} text-2xl font-bold`}>Diğer hikâyeler</h2>
             <Link href="/kisiler" className="text-sm text-stone-500 hover:text-rose-800 hover:underline">
               Tüm kişiler →
