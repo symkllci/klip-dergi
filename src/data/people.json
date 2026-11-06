@@ -108,5 +108,138 @@
         "publishedAt": "2026-09-21"
       }
     ]
+  },
+    {
+    "slug": "acun-ilicali",
+    "name": "Acun Ilıcalı",
+    "bio": "Acun Ilıcalı, medya ve televizyon sektöründe faaliyet gösteren bir girişimcidir. Muhabirlikle başladığı medya kariyerinde 2004 yılında Acun Medya'yı kurmuştur. 2013 yılında TV8 kanalını, 2022'de ise İngiliz futbol kulübü Hull City'yi satın almıştır.",
+    "links": ["https://www.instagram.com/acunilicali/"],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/Del_e6VATWa/",
+        "title": "Zor Günde Arkadaşlığın Değeri",
+        "topic": "ekip",
+        "publishedAt": "2026-10-17"
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/DeWZGAnAHRu/",
+        "title": "Para Değil, İyi İş Kovalamak",
+        "topic": "risk almak",
+        "publishedAt": "2026-10-11"
+      }
+    ]
+  },
+  {
+    "slug": "elon-musk",
+    "name": "Elon Musk",
+    "bio": "Elon Musk, teknoloji ve uzay sanayisi alanında faaliyet gösteren bir girişimcidir. İlk internet girişimi Zip2'nin ardından PayPal'ın temelini oluşturan X.com'u kurmuştur. 2002'de uzay taşımacılığı şirketi SpaceX'i kurmuş, elektrikli araç üreticisi Tesla'nın yönetimini üstlenmiştir. Bugün bu şirketlerin başında yöneticilik yapmaktadır.",
+    "links": ["https://www.instagram.com/elonmusk/"],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/De1SYWtxMn2/",
+        "title": "Korkmak Normal, Durmak Değil",
+        "topic": "harekete geçmek",
+        "publishedAt": "2026-10-23"
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/DeymVx5AtRG/",
+        "title": "Çılgın Denilen Karar",
+        "topic": "risk almak",
+        "publishedAt": "2026-10-22"
+      }
+    ]
+  },
+  {
+    "slug": "aykut-karaalioglu",
+    "name": "Aykut Karaalioğlu",
+    "bio": "Aykut Karaalioğlu, mobil teknoloji ve yazılım alanında bir girişimcidir. 2013 yılında San Francisco'da mobil uygulama mağaza analitiği sunan MobileAction şirketini kurmuştur. Şirketiyle mobil uygulama geliştiricilerine pazar analizi ve optimizasyon verileri sağlamaktadır.",
+    "links": ["https://www.instagram.com/aykutmobileaction/"],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/DdOn5-QACp_/",
+        "title": "Türk Yetenekleri İçin Büyük Hayal",
+        "topic": "vizyon",
+        "publishedAt": "2026-09-13"
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/DdRn4UcAUho/",
+        "title": "Zor Günde Bile Doğru Fiyat",
+        "topic": "müşteri",
+        "publishedAt": "2026-09-14"
+      }
+    ]
+  },
+  {
+    "slug": "efe-celebi",
+    "name": "Efe Çelebi",
+    "bio": "Efe Çelebi, sağlık işletmeciliği alanında faaliyet gösteren bir diş hekimi ve girişimcidir. 2006 yılında İstanbul Bağdat Caddesi'nde DentGroup'un ilk kliniğini açmıştır. Bugün DentGroup'un Yönetim Kurulu Başkanıdır.",
+    "links": ["https://www.instagram.com/dr.efecelebi/"],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/DeFF2E8A4Ds/",
+        "title": "Hayal Bitince Yeni Rota",
+        "topic": "başarısızlık",
+        "publishedAt": "2026-10-04"
+      },
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/Dd6EHB4A-vS/",
+        "title": "Krizde Müşteriyi Korumak",
+        "topic": "müşteri",
+        "publishedAt": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "slug": "mehmet-dincerler",
+    "name": "Mehmet Dinçerler",
+    "bio": "Mehmet Dinçerler, gıda ve yeme-içme sektöründe faaliyet gösteren bir girişimcidir. 1988 yılında doğmuş olup aslen Gazianteplidir; ailesi Hacı Sayid markasının kurucusudur. Dünyaca ünlü kahve zinciri Gloria Jean's Coffees'in Türkiye CEO'sudur. Şirketin Türkiye genelindeki operasyonlarını ve mağaza ağını yönetmektedir.",
+    "links": ["https://www.instagram.com/mehmetdnc/"],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/DeG3DvKANMR/",
+        "title": "Boş Pazarı İlk Gören Kazanır",
+        "topic": "vizyon",
+        "publishedAt": "2026-10-05"
+      }
+    ]
+  },
+  {
+    "slug": "abdullah-kigili",
+    "name": "Abdullah Kiğılı",
+    "bio": "Abdullah Kiğılı, hazır giyim ve perakende sektöründe faaliyet gösteren bir girişimcidir. 1943 yılında Malatya'da doğmuştur ve 1965'te kurulan Kiğılı markasının sahibidir. İş hayatının yanı sıra 1997 yılında kısa bir süre Türkiye Futbol Federasyonu Başkanlığı, Fenerbahçe'de de başkan yardımcılığı yapmıştır.",
+    "links": [],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/DeBt7G0Ao9G/",
+        "title": "Ortaklıkta Kâr Dengesi",
+        "topic": "yatırım",
+        "publishedAt": "2026-10-03"
+      }
+    ]
+  },
+  {
+    "slug": "mark-zuckerberg",
+    "name": "Mark Zuckerberg",
+    "bio": "Mark Zuckerberg, internet ve sosyal medya alanında faaliyet gösteren bir girişimcidir. 2004 yılında Harvard Üniversitesi'nde öğrenciyken Facebook'u kurmuştur. Zamanla Instagram ve WhatsApp platformlarını bünyesine katmış, 2021 yılında şirketinin adını Meta olarak değiştirmiştir.",
+    "links": ["https://www.instagram.com/zuck/"],
+    "clips": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/reel/DeUWdYOgdW7/",
+        "title": "Milyarlık Vesting Dersi",
+        "topic": "yatırım",
+        "publishedAt": "2026-10-10"
+      }
+    ]
   }
 ]
