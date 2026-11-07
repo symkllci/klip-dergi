@@ -106,6 +106,7 @@ export default function Home() {
                 src={oneCikanKlip.cover}
                 alt={oneCikanKlip.title}
                 fill
+                loading="eager"
                 sizes="(min-width: 768px) 50vw, 100vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
