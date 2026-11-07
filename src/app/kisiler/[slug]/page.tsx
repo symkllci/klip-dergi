@@ -3,6 +3,7 @@ import Image from "next/image"; // Büyük kapak için Next.js'in resim bileşen
 import { notFound } from "next/navigation"; // Next.js'in "sayfa bulunamadı" (404) aracı
 import { Lora } from "next/font/google"; // Ana sayfadaki serif başlık fontu
 import { getAllPeople, getPersonBySlug } from "@/lib/people"; // Herkesi getiren ve slug ile bulan tarifler
+import KlipKarti from "@/components/KlipKarti"; // Diğer kişiler kartları, ana sayfayla aynı
 import type { Clip } from "@/types"; // Klip kalıbı (embedAdresi ve izleYazisi için)
 
 // Başlık fontu: ana sayfayla aynı Lora. latin-ext: Türkçe harfler için
@@ -44,6 +45,12 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
   const kapakKlip = kisi.clips[0]; // Üstteki büyük kapak: kişinin ilk klibi
   // Kişinin konuları, tekrarsız: new Set = aynı olanları bir kere tut · [...] = tekrar listeye çevir
   const konular = [...new Set(kisi.clips.map((klip) => klip.topic))];
+
+  // Diğer kişiler: listede bu kişiden SONRA gelen 3 kişi
+  const tumKisiler = getAllPeople(); // Bütün kişiler (12)
+  const sira = tumKisiler.findIndex((k) => k.slug === kisi.slug); // Bu kişi listede kaçıncı? (findIndex: find'ın sırasını veren kardeşi)
+  // [1, 2, 3]: 1, 2 ve 3 sonraki kişi · % (saat): liste bitince başa dön (Mark'tan sonra Nevzat)
+  const digerKisiler = [1, 2, 3].map((n) => tumKisiler[(sira + n) % tumKisiler.length]);
 
   return (
     // Bütün sayfa: ana sayfayla aynı krem zemin ve koyu mürekkep yazı
@@ -119,7 +126,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
           {kisi.bio}
         </p>
 
-             {/* 3. KLİPLER: yatay kayan şerit (Perşembe'deki vitrin gibi, yalnız CSS) */}
+        {/* 3. KLİPLER: yatay kayan şerit (Perşembe'deki vitrin gibi, yalnız CSS) */}
         <h2 className={`${baslikFontu.className} mt-12 border-b border-stone-300 pb-2 text-2xl font-bold`}>
           Klipler
         </h2>
@@ -128,7 +135,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
           {kisi.clips.map((klip) => (
             // shrink-0: küçülme · snap-start: sol kenarı şeride otursun · w-[320px]: her klip reel genişliğinde
             <li key={klip.url} className="w-[320px] shrink-0 snap-start">
-              {/* Klibin başlığı ve konusu */}
+              {/* Klibin konusu ve başlığı */}
               <p className="text-xs font-semibold uppercase tracking-widest text-rose-800">{klip.topic}</p>
               <h3 className="mb-3 mt-1 font-semibold leading-snug">{klip.title}</h3>
               {/* Embed: klibi sayfanın içinde oynat. 320x570: dikey reel boyutu */}
@@ -149,6 +156,19 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
               >
                 {izleYazisi(klip)}
               </a>
+            </li>
+          ))}
+        </ul>
+
+        {/* 4. DİĞER KİŞİLER: 3 KlipKarti (ana sayfadakiyle aynı kart) */}
+        <h2 className={`${baslikFontu.className} mt-12 border-b border-stone-300 pb-2 text-2xl font-bold`}>
+          Diğer kişiler
+        </h2>
+        {/* Telefonda alt alta, orta ekranda 3 yan yana */}
+        <ul className="mt-6 grid gap-6 sm:grid-cols-3">
+          {digerKisiler.map((diger) => (
+            <li key={diger.slug}>
+              <KlipKarti kisi={diger} klip={diger.clips[0]} />
             </li>
           ))}
         </ul>
