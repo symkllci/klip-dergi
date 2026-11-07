@@ -1,7 +1,7 @@
 # Gün 4 – Birleştirme ve küçük düzeltmeler
 
 ## Ne yaptım
-- **hafta1 → main pull request'ini açtım (PR #1).** Başlık: "Kişi listesi, dinamik kişi sayfaları ve Instagram embed desteği ekle". Açıklamaya üç günün kısa özetini yazdım. Hocam inceleyip birleştirdi.
+**hafta1 → main pull request'ini açtım (PR #1).** Başlık: "Kişi listesi, dinamik kişi sayfaları ve Instagram embed desteği ekle". Açıklamaya üç günün kısa özetini yazdım. Birleştirmeyi hocam yapacak, PR şu an açık bekliyor.
 - **hafta2 dalını açtım** ve GitHub'a gönderdim. Hocam henüz birleştirmediği için önce hafta1'den açtım, birleşince main'i hafta2'ye aldım.
 - **Yeni sekmede açılan iki linke `rel="noopener noreferrer"` ekledim:** sosyal medya linki ve klip linki.
 - **Klip linkinin yazısını platforma göre yaptım.** `izleYazisi` adında bir tarif ekledim: YouTube ise "Klibi YouTube'da izle", değilse "Klibi Instagram'da izle" yazıyor.
