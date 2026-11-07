@@ -3,6 +3,7 @@ import { Lora } from "next/font/google"; // Google Fonts'tan serif (tırnaklı) 
 import { getAllPeople } from "@/lib/people"; // Bütün kişileri getiren tarif.
 import type { Person } from "@/types"; // Kişi kalıbı (kart bileşeninin tipi için).
 import KlipKarti from "@/components/KlipKarti"; // Ortak kart bileşeni, kişiler sayfası da kullanıyor
+import Image from "next/image"; // Öne çıkan kapak için Next.js'in resim bileşeni
 
 // Başlık fontu: dergi hissi versin diye serif (kaynak: Next.js Fonts belgesi).
 // latin-ext: Türkçe harfler (ş, ğ, ı, İ) için.
@@ -99,13 +100,16 @@ export default function Home() {
             href={`/kisiler/${oneCikan.slug}`}
             className="group grid overflow-hidden rounded-lg border border-stone-900 bg-white md:grid-cols-2"
           >
-            {/* Büyük baş harf kutusu: koyu, üstüne gelince bordo */}
-            <div
-              className={`${baslikFontu.className} flex h-64 items-center justify-center bg-stone-900 text-8xl text-amber-50 transition-colors group-hover:bg-rose-800 md:h-auto md:min-h-80`}
-            >
-              {basHarfler(oneCikan.name)}
+            {/* Büyük kapak: öne çıkan klibin kapağı kutuyu doldurur, üstüne gelince hafifçe büyür */}
+            <div className="relative h-80 overflow-hidden bg-stone-900 md:h-auto md:min-h-80">
+              <Image
+                src={oneCikanKlip.cover}
+                alt={oneCikanKlip.title}
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
             </div>
-
             <div className="flex flex-col justify-center p-8">
               <p className="text-xs font-semibold uppercase tracking-widest text-rose-800">
                 Öne çıkan · {oneCikanKlip.topic}
