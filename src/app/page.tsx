@@ -1,9 +1,8 @@
 import Link from "next/link"; // Next.js'in sayfalar arası geçiş bileşenini getir.
+import Image from "next/image"; // Öne çıkan kapak için Next.js'in resim bileşeni
 import { Lora } from "next/font/google"; // Google Fonts'tan serif (tırnaklı) başlık fontu.
 import { getAllPeople } from "@/lib/people"; // Bütün kişileri getiren tarif.
-import type { Person } from "@/types"; // Kişi kalıbı (kart bileşeninin tipi için).
 import KlipKarti from "@/components/KlipKarti"; // Ortak kart bileşeni, kişiler sayfası da kullanıyor
-import Image from "next/image"; // Öne çıkan kapak için Next.js'in resim bileşeni
 
 // Başlık fontu: dergi hissi versin diye serif (kaynak: Next.js Fonts belgesi).
 // latin-ext: Türkçe harfler (ş, ğ, ı, İ) için.
@@ -12,15 +11,6 @@ const baslikFontu = Lora({ subsets: ["latin", "latin-ext"], style: ["normal", "i
 
 // Renkler (Tailwind'in hazır renkleri):
 // krem zemin amber-50 · koyu mürekkep stone-900 · bordo vurgu rose-800
-
-// Kişinin adından baş harflerini çıkaran tarif. Fotoğraf yerine kullanıyoruz (telif).
-// "Nevzat Aydın" → ["Nevzat", "Aydın"] → ["N", "A"] → "NA"
-function basHarfler(ad: string): string {
-  return ad
-    .split(" ") // Adı boşluklardan kes, kelime listesi yap.
-    .map((kelime) => kelime[0]) // Her kelimenin ilk harfini al.
-    .join(""); // Harfleri yan yana birleştir.
-}
 
 // Tarihi Türkçe uzun biçime çeviren tarif (girisimler.net'teki "10 Şubat 2025" gibi).
 // "2026-09-24" → "24 Eylül 2026"
@@ -32,45 +22,9 @@ function tarihYaz(tarih: string): string {
   });
 }
 
-// Küçük hikâye kartı: bir kişi verilir, tıklanabilir bir kart çıkar.
-// group / group-hover: kartın üstüne gelince içindeki kutu ve başlık bordoya döner (Colossus'taki renklenme fikri).
-function HikayeKarti({ kisi }: { kisi: Person }) {
-  const klip = kisi.clips[0]; // Kartta kişinin ilk klibini anlatıyoruz.
-
-  return (
-    <Link
-      href={`/kisiler/${kisi.slug}`}
-      className="group block overflow-hidden rounded-lg border border-stone-300 bg-white transition-colors hover:border-rose-800"
-    >
-      {/* Görsel yerine baş harf kutusu: normalde gri, üstüne gelince bordo */}
-      <div
-        className={`${baslikFontu.className} flex h-36 items-center justify-center bg-stone-200 text-5xl text-stone-500 transition-colors group-hover:bg-rose-800 group-hover:text-white`}
-      >
-        {basHarfler(kisi.name)}
-      </div>
-
-      <div className="p-4 text-center">
-        {/* Konu etiketi: başlığın üstünde (girisimler.net'teki kategori etiketi fikri) */}
-        <p className="text-xs font-semibold uppercase tracking-widest text-rose-800">{klip.topic}</p>
-        {/* Hikâye anlatan başlık: kişinin ilk klibinin başlığı */}
-        <h3 className={`${baslikFontu.className} mt-1 text-xl font-bold leading-snug transition-colors group-hover:text-rose-800`}>
-          {klip.title}
-        </h3>
-        {/* Alt yazı: biyografinin ilk cümlesi */}
-        <p className="mt-2 text-sm text-stone-600">{kisi.bio.split(". ")[0]}.</p>
-        {/* İnce ayırıcı çizgi, altında "kişi · tarih" satırı (dergideki yazar satırı gibi) */}
-        <div className="mx-auto mt-3 w-20 border-t border-stone-300" />
-        <p className="mt-2 text-xs text-stone-500">
-          {kisi.name} · {tarihYaz(klip.publishedAt)}
-        </p>
-      </div>
-    </Link>
-  );
-}
-
 // Ana sayfa: sitenin adresi "/" (localhost:3000)
 export default function Home() {
-  const kisiler = getAllPeople(); // 5 kişiyi al.
+  const kisiler = getAllPeople(); // Bütün kişileri al (şu an 12).
   const oneCikan = kisiler[0]; // Listenin ilk kişisi en üstte, büyük.
   const oneCikanKlip = oneCikan.clips[0]; // Öne çıkan kişinin ilk klibi.
   const digerleri = kisiler.slice(1); // slice(1): ilk kişi hariç geri kalanlar.
@@ -86,21 +40,33 @@ export default function Home() {
           </h1>
           {/* Adın altındaki ince menü satırı */}
           <nav className="mt-4 flex items-center justify-between text-xs uppercase tracking-widest">
-       <a href="#hikayeler" className="text-stone-500 hover:text-rose-800">Girişimci hikâyeleri</a>
+            {/* Sayfa içi bağlantı: aşağıdaki "Diğer hikâyeler" bölümüne iner */}
+            <a href="#hikayeler" className="text-stone-500 hover:text-rose-800">
+              Girişimci hikâyeleri
+            </a>
             <Link href="/kisiler" className="font-semibold text-rose-800 hover:underline">
               Kişiler
             </Link>
-      <a href="https://www.instagram.com/viralgirisimci/" target="_blank" rel="noopener noreferrer" className="text-stone-500 hover:text-rose-800">Podcast klipleri</a>
+            {/* Dış bağlantı: yeni sekmede açılır, rel güvenlik için */}
+            <a
+              href="https://www.instagram.com/viralgirisimci/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-stone-500 hover:text-rose-800"
+            >
+              Podcast klipleri
+            </a>
           </nav>
         </header>
 
-        {/* Öne çıkan kişi: büyük kutu + konu + hikâye başlığı + alt başlık + kişi · tarih + link */}
+        {/* Öne çıkan kişi: büyük kapak + konu + hikâye başlığı + alt başlık + kişi · tarih + link */}
         <section className="mt-10">
           <Link
             href={`/kisiler/${oneCikan.slug}`}
             className="group grid overflow-hidden rounded-lg border border-stone-900 bg-white md:grid-cols-2"
           >
             {/* Büyük kapak: öne çıkan klibin kapağı kutuyu doldurur, üstüne gelince hafifçe büyür */}
+            {/* loading="eager": ilk ekranda göründüğü için hemen yüklensin (LCP) */}
             <div className="relative h-80 overflow-hidden bg-stone-900 md:h-auto md:min-h-80">
               <Image
                 src={oneCikanKlip.cover}
@@ -144,10 +110,11 @@ export default function Home() {
           </div>
 
           {/* Telefonda alt alta, orta ekranda 2, geniş ekranda 4 kart yan yana */}
+          {/* Her kart KlipKarti: kişinin ilk klibinin kapağı, başlığı ve konusu */}
           <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {digerleri.map((kisi) => (
               <li key={kisi.slug}>
-             <KlipKarti kisi={kisi} klip={kisi.clips[0]} />
+                <KlipKarti kisi={kisi} klip={kisi.clips[0]} />
               </li>
             ))}
           </ul>
