@@ -4,6 +4,7 @@ export type Clip = {
     title :string;
     topic:string;
     publishedAt :string;
+    cover: string;
 
 };
 
