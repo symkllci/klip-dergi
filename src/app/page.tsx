@@ -28,7 +28,7 @@ export default function Home() {
             Klip Dergi
           </h1>
           {/* Adın altındaki ince menü satırı */}
-          <nav className="mt-4 flex items-center justify-between text-xs uppercase tracking-widest">
+            <nav className="mt-4 flex items-center justify-between gap-4 text-xs uppercase tracking-widest">
             {/* Sayfa içi bağlantı: aşağıdaki "Diğer hikâyeler" bölümüne iner */}
             <a href="#hikayeler" className="text-stone-500 hover:text-rose-800">
               Girişimci hikâyeleri

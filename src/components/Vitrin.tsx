@@ -76,7 +76,7 @@ export default function Vitrin({ kisiler }: { kisiler: Person[] }) {
         // relative: hikâyelerin konumu (offsetLeft) şeride göre ölçülsün
         // flex: yan yana diz · snap-x snap-mandatory: her kaydırmada bir hikâyeye otur
         // gap-4: aralarında boşluk · overflow-x-auto: yatayda kaydırma çubuğu · pb-4: çubuk kutuya yapışmasın
-        className="relative flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4"
+         className="relative flex items-start snap-x snap-mandatory gap-4 overflow-x-auto pb-4"
       >
         {kisiler.map((kisi, sira) => { // Her kişi için bir hikâye. sira: kaçıncı (0, 1, 2...)
           const klip = kisi.clips[0]; // Bu hikâyede kişinin ilk klibini gösteriyoruz
