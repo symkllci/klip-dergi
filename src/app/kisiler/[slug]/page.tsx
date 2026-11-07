@@ -119,24 +119,28 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
           {kisi.bio}
         </p>
 
-        {/* 3. KLİPLER (2. parçada yatay şeride çevrilecek) */}
+             {/* 3. KLİPLER: yatay kayan şerit (Perşembe'deki vitrin gibi, yalnız CSS) */}
         <h2 className={`${baslikFontu.className} mt-12 border-b border-stone-300 pb-2 text-2xl font-bold`}>
           Klipler
         </h2>
-        <ul className="mt-6 grid gap-6 md:grid-cols-2">
+        {/* flex: yan yana · overflow-x-auto: yatayda kaydır · snap-x snap-mandatory: her klibe otur · gap-6: aralık · pb-4: çubuk yapışmasın */}
+        <ul className="mt-6 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4">
           {kisi.clips.map((klip) => (
-            <li key={klip.url}>
-              <h3 className="mb-2 font-semibold">{klip.title}</h3>
+            // shrink-0: küçülme · snap-start: sol kenarı şeride otursun · w-[320px]: her klip reel genişliğinde
+            <li key={klip.url} className="w-[320px] shrink-0 snap-start">
+              {/* Klibin başlığı ve konusu */}
+              <p className="text-xs font-semibold uppercase tracking-widest text-rose-800">{klip.topic}</p>
+              <h3 className="mb-3 mt-1 font-semibold leading-snug">{klip.title}</h3>
               {/* Embed: klibi sayfanın içinde oynat. 320x570: dikey reel boyutu */}
               <iframe
-                src={embedAdresi(klip)}
-                title={klip.title}
+                src={embedAdresi(klip)} // Instagram'ın gömme adresi
+                title={klip.title} // Ekran okuyucu için pencerenin adı
                 width="320"
                 height="570"
                 className="rounded-lg border border-stone-300 bg-white"
-                allowFullScreen
+                allowFullScreen // Tam ekrana izin ver
               ></iframe>
-              {/* Yedek link: embed yüklenmezse */}
+              {/* Yedek link: embed yüklenmezse ziyaretçi buradan izlesin */}
               <a
                 href={klip.url}
                 target="_blank"
