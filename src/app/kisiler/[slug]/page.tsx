@@ -1,124 +1,154 @@
-import Link from "next/link"; // Next.js'in sayfalar arası geçiş bileşenini getir (geri dönüş linki için).
-import { notFound } from "next/navigation"; // Next.js'in "sayfa bulunamadı" aracını getir.
-import { getAllPeople, getPersonBySlug } from "@/lib/people"; // İki tarifi de getir: herkesi getiren ve slug ile bulan.
-import type { Clip } from "@/types"; // Klip kalıbını getir (embedAdresi ve izleYazisi tariflerinin tipi için).
+import Link from "next/link"; // Next.js'in sayfalar arası geçiş bileşeni
+import Image from "next/image"; // Büyük kapak için Next.js'in resim bileşeni
+import { notFound } from "next/navigation"; // Next.js'in "sayfa bulunamadı" (404) aracı
+import { Lora } from "next/font/google"; // Ana sayfadaki serif başlık fontu
+import { getAllPeople, getPersonBySlug } from "@/lib/people"; // Herkesi getiren ve slug ile bulan tarifler
+import type { Clip } from "@/types"; // Klip kalıbı (embedAdresi ve izleYazisi için)
 
-// Klibin embed (gömme) adresini üreten tarif.
-// Klibi verirsin, sayfada iframe içinde açılacak adresi geri verir.
+// Başlık fontu: ana sayfayla aynı Lora. latin-ext: Türkçe harfler için
+const baslikFontu = Lora({ subsets: ["latin", "latin-ext"] });
+
+// Klibin embed (gömme) adresini üreten tarif
 function embedAdresi(klip: Clip): string {
-  // Instagram ise: adresin sonuna "embed" ekle.
-  // https://www.instagram.com/reel/KOD/  →  https://www.instagram.com/reel/KOD/embed
+  // Instagram ise: adresin sonuna "embed" ekle → .../reel/KOD/embed
   if (klip.platform === "instagram") {
     return klip.url + "embed";
   }
-
-  // Değilse YouTube'dur: "watch?v=" kısmını "embed/" ile değiştir.
-  // https://www.youtube.com/watch?v=KOD  →  https://www.youtube.com/embed/KOD
+  // Değilse YouTube: "watch?v=" yerine "embed/" → .../embed/KOD
   return klip.url.replace("watch?v=", "embed/");
 }
 
-// Klibin altındaki link yazısını platforma göre üreten tarif.
-// Klibi verirsin, ekranda görünecek yazıyı geri verir.
+// Klibin altındaki link yazısını platforma göre üreten tarif
 function izleYazisi(klip: Clip): string {
-  // YouTube ise bu yazıyı ver ve tarifi bitir.
   if (klip.platform === "youtube") {
     return "Klibi YouTube'da izle";
   }
-  // Değilse Instagram'dır.
   return "Klibi Instagram'da izle";
 }
 
-// Build sırasında hangi kişi sayfalarının önceden üretileceğini Next.js'e söyler.
-// Pastane benzetmesi: dükkânı açmadan önce hangi pastaları vitrine koyacağımın listesi.
-// Tüm kişileri al, her kişiden { slug: "..." } kutusu yap.
-// ({ }): Normal parantez "bu bir kutu, onu geri ver" demek.
+// Build sırasında hangi kişi sayfalarının önceden üretileceğini söyler (pastane vitrini)
 export function generateStaticParams() {
   return getAllPeople().map((kisi) => ({ slug: kisi.slug }));
 }
 
-// Kişi sayfası: /kisiler/nevzat-aydin gibi adreslerde açılır.
-// params: adresten gelen bilgi. Klasör adı [slug] olduğu için içinde slug var.
-// async: bu bileşen bir şey bekleyecek (params biraz sonra geliyor).
+// Kişi sayfası: /kisiler/nevzat-aydin gibi adreslerde açılır
 export default async function KisiSayfasi({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params; // params gelene kadar bekle, içinden slug'ı çıkar.
-  const kisi = getPersonBySlug(slug); // Slug ile kişiyi bul. Bulamazsa undefined döner.
+  const { slug } = await params; // Adresten slug'ı al
+  const kisi = getPersonBySlug(slug); // Slug ile kişiyi bul (find). Bulamazsa undefined
 
-  // Kişi yoksa (ör. /kisiler/ali-veli) 404 sayfasını göster ve burada dur.
+  // Kişi yoksa 404 göster ve burada dur
   if (!kisi) {
     notFound();
   }
 
+  const kapakKlip = kisi.clips[0]; // Üstteki büyük kapak: kişinin ilk klibi
+  // Kişinin konuları, tekrarsız: new Set = aynı olanları bir kere tut · [...] = tekrar listeye çevir
+  const konular = [...new Set(kisi.clips.map((klip) => klip.topic))];
+
   return (
-    // Sayfayı ortala (mx-auto), genişliği sınırla (max-w-5xl), kenarlardan boşluk (p-6)
-    <main className="mx-auto max-w-5xl p-6">
-           {/* Geri dönüş linkleri: ana sayfaya ve kişiler listesine götürür. Küçük, gri; fare gelince altı çizilir. */}
-      {/* flex gap-4: iki linki yan yana diz, aralarında boşluk bırak */}
-      <div className="flex gap-4">
-        <Link href="/" className="text-sm text-gray-500 hover:underline">
-          ← Ana sayfa
-        </Link>
-        <Link href="/kisiler" className="text-sm text-gray-500 hover:underline">
-          ← Tüm kişiler
-        </Link>
-      </div>
+    // Bütün sayfa: ana sayfayla aynı krem zemin ve koyu mürekkep yazı
+    <div className="min-h-screen bg-amber-50 text-stone-900">
+      {/* Ana sayfayla aynı genişlik ve boşluklar */}
+      <main className="mx-auto max-w-6xl px-6 py-10">
+        {/* Geri dönüş linkleri: gri, üstüne gelince bordo */}
+        <div className="flex gap-4 text-sm">
+          <Link href="/" className="text-stone-500 hover:text-rose-800">
+            ← Ana sayfa
+          </Link>
+          <Link href="/kisiler" className="text-stone-500 hover:text-rose-800">
+            ← Tüm kişiler
+          </Link>
+        </div>
 
-      {/* Kişinin adı: büyük, kalın. mt-4: üstten boşluk, mb-4: alttan boşluk */}
-      <h1 className="text-3xl font-bold mt-4 mb-4">{kisi.name}</h1>
+        {/* 1. ÜST KISIM: solda büyük kapak, sağda isim. Telefonda alt alta, orta ekranda yan yana */}
+        <header className="mt-6 grid items-end gap-8 border-b-2 border-stone-900 pb-8 md:grid-cols-[minmax(0,18rem)_1fr]">
+          {/* Büyük kapak: 9:16 kutu, resim fill ile doldurur. Telefonda ortada ve dar (max-w-xs) */}
+          <div className="relative mx-auto aspect-[9/16] w-full max-w-xs overflow-hidden rounded-lg bg-stone-900 md:mx-0">
+            <Image
+              src={kapakKlip.cover} // Kişinin ilk klibinin kapağı
+              alt={`${kisi.name}: ${kapakKlip.title}`} // Ekran okuyucu: kişi ve klip başlığı
+              fill // Kutuyu doldur
+              loading="eager" // İlk ekranda en büyük resim (LCP): hemen yükle
+              sizes="(min-width: 768px) 18rem, 20rem" // Kutunun genişliği kadar resim indir
+              className="object-cover" // Ezmeden doldur
+            />
+          </div>
 
-      {/* Biyografinin tamamı. leading-relaxed: satır aralığı biraz geniş, rahat okunsun */}
-      <p className="text-gray-700 leading-relaxed mb-8">{kisi.bio}</p>
+          {/* İsim tarafı */}
+          <div>
+            {/* Konu etiketleri: kartlardaki gibi bordo, BÜYÜK HARF */}
+            <div className="flex flex-wrap gap-2">
+              {konular.map((konu) => (
+                <span
+                  key={konu}
+                  className="rounded-full bg-rose-800 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white"
+                >
+                  {konu}
+                </span>
+              ))}
+            </div>
 
-      {/* Sosyal medya: kişinin links listesindeki her link için bir satır */}
-      <h2 className="text-xl font-semibold mb-2">Sosyal Medya</h2>
-      <ul className="mb-8">
-        {kisi.links.map((link) => (
-          // Her link düz bir yazı: hem kimlik (key), hem adres (href), hem ekranda görünen yazı
-          // target="_blank": linki yeni sekmede aç, ziyaretçi bizim siteyi kaybetmesin
-          // rel="noopener noreferrer": açılan sayfa bizim sayfamıza dokunamasın (arkasından kapıyı kilitlemek)
-          // text-blue-600: mavi yazı (link olduğu anlaşılsın)
-          <li key={link}>
-            <a href={link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-              {link}
-            </a>
-          </li>
-        ))}
-      </ul>
+            {/* Kişinin adı: Lora, çok büyük */}
+            <h1 className={`${baslikFontu.className} mt-4 text-5xl font-bold leading-tight sm:text-6xl`}>
+              {kisi.name}
+            </h1>
 
-      {/* Klipler: kişinin clips listesindeki her klip için bir kart */}
-      <h2 className="text-xl font-semibold mb-4">Klipler</h2>
-      {/* Klipleri yan yana diz: telefonda alt alta, orta ekranda ve üstünde 2 tane yan yana */}
-      <ul className="grid gap-6 md:grid-cols-2">
-        {kisi.clips.map((klip) => (
-          // Her klip bir kutu (platform, url, title, topic, publishedAt)
-          // key: her klipte farklı olan alan url
-          <li key={klip.url}>
-            {/* Klibin başlığı */}
-            <h3 className="font-semibold mb-2">{klip.title}</h3>
+            {/* Sosyal medya: sadece linki varsa göster (Adnan ve Abdullah'ta boş, başlık da çıkmasın) */}
+            {kisi.links.length > 0 && (
+              <ul className="mt-6 flex flex-wrap gap-2">
+                {kisi.links.map((link) => (
+                  <li key={link}>
+                    {/* Dış link: yeni sekmede, rel güvenlik için. Yazıda https:// ve www. görünmesin */}
+                    <a
+                      href={link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-full border border-stone-300 bg-white px-4 py-1.5 text-sm text-stone-600 hover:border-rose-800 hover:text-rose-800"
+                    >
+                      {link.replace("https://", "").replace("www.", "")}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </header>
 
-            {/* Embed: klibi sayfanın içindeki küçük bir pencerede (iframe) oynat */}
-            {/* src: embedAdresi tarifinin ürettiği adres */}
-            {/* title: ekran okuyucular için pencerenin adı */}
-            {/* width 320, height 570: reel dikey bir video, telefon ekranı oranına yakın boyut */}
-            {/* rounded-lg border: yuvarlak köşe, ince çerçeve */}
-            {/* allowFullScreen: tam ekrana izin ver */}
-            <iframe
-              src={embedAdresi(klip)}
-              title={klip.title}
-              width="320"
-              height="570"
-              className="rounded-lg border"
-              allowFullScreen
-            ></iframe>
+        {/* 2. BİO: giriş paragrafı gibi. text-xl: büyük · leading-loose: çok rahat satır aralığı · max-w-3xl: satır çok uzamasın */}
+        <p className="mt-8 max-w-3xl text-xl leading-loose text-stone-700 sm:text-2xl sm:leading-loose">
+          {kisi.bio}
+        </p>
 
-            {/* Düz link: embed yüklenmezse ziyaretçi buradan izleyebilir. block: kendi satırında dursun */}
-            {/* rel="noopener noreferrer": açılan sayfa bizim sayfamıza dokunamasın */}
-            {/* Yazı sabit değil: izleYazisi tarifi platforma göre "Instagram'da" ya da "YouTube'da" yazar */}
-            <a href={klip.url} target="_blank" rel="noopener noreferrer" className="block mt-2 text-sm text-blue-600 hover:underline">
-              {izleYazisi(klip)}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </main>
+        {/* 3. KLİPLER (2. parçada yatay şeride çevrilecek) */}
+        <h2 className={`${baslikFontu.className} mt-12 border-b border-stone-300 pb-2 text-2xl font-bold`}>
+          Klipler
+        </h2>
+        <ul className="mt-6 grid gap-6 md:grid-cols-2">
+          {kisi.clips.map((klip) => (
+            <li key={klip.url}>
+              <h3 className="mb-2 font-semibold">{klip.title}</h3>
+              {/* Embed: klibi sayfanın içinde oynat. 320x570: dikey reel boyutu */}
+              <iframe
+                src={embedAdresi(klip)}
+                title={klip.title}
+                width="320"
+                height="570"
+                className="rounded-lg border border-stone-300 bg-white"
+                allowFullScreen
+              ></iframe>
+              {/* Yedek link: embed yüklenmezse */}
+              <a
+                href={klip.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 block text-sm text-rose-800 hover:underline"
+              >
+                {izleYazisi(klip)}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </main>
+    </div>
   );
 }
