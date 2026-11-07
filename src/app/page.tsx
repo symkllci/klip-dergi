@@ -130,8 +130,8 @@ export default function Home() {
 
         {/* Diğer kişiler: başlık satırı ve kartlar */}
         <section className="mt-14">
-          <div className="mb-6 flex items-baseline justify-between border-b border-stone-300 pb-2">
-            <div id="hikayeler" className="mb-6 flex items-baseline justify-between border-b border-stone-300 pb-2"></div>
+          {/* id="hikayeler": menüdeki "Girişimci hikâyeleri" linki buraya iner */}
+          <div id="hikayeler" className="mb-6 flex items-baseline justify-between border-b border-stone-300 pb-2">
             <h2 className={`${baslikFontu.className} text-2xl font-bold`}>Diğer hikâyeler</h2>
             <Link href="/kisiler" className="text-sm text-stone-500 hover:text-rose-800 hover:underline">
               Tüm kişiler →
