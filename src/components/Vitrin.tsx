@@ -1,6 +1,6 @@
-"use client"; // Bu bileşen tarayıcıda (istemcide) da çalışsın: tıklamayı duyacak ve hafıza (state) tutacak
+"use client"; // Bu bileşen tarayıcıda (istemcide) da çalışsın: tıklamayı duyacak, hafıza (state) tutacak, alarm kuracak
 
-import { useRef, useState } from "react"; // React'ten iki araç: useState = hafıza kutusu, useRef = ekrandaki bir kutuyu elde tutmak
+import { useEffect, useRef, useState } from "react"; // React'ten üç araç: useState = hafıza · useRef = kutuyu elde tutmak · useEffect = ekrana çıkınca/giderken iş (YENİ)
 import Link from "next/link"; // Next.js'in link bileşeni: site içi sayfalara geçiş
 import Image from "next/image"; // Next.js'in resim bileşeni: resmi küçültüp hızlı yükler
 import { Lora } from "next/font/google"; // Google Fonts'tan Lora yazı tipi (ana sayfayla aynı)
@@ -8,6 +8,9 @@ import type { Person } from "@/types"; // Bizim kişi kalıbımız (types.ts'ten
 
 // Başlık fontu: ana sayfadakiyle aynı Lora. latin-ext: Türkçe harfler (ş, ğ, ı, İ) için
 const baslikFontu = Lora({ subsets: ["latin", "latin-ext"] });
+
+// Kendiliğinden kayma aralığı: 5000 milisaniye = 5 saniye (YENİ)
+const KAYMA_SURESI = 5000;
 
 // Tarihi Türkçe uzun biçime çeviren tarif: "2026-09-24" → "24 Eylül 2026"
 function tarihYaz(tarih: string): string { // tarih: "2026-09-24" gibi bir yazı alır, yazı döndürür
@@ -18,24 +21,41 @@ function tarihYaz(tarih: string): string { // tarih: "2026-09-24" gibi bir yazı
   });
 }
 
-// Vitrin bileşeni: 5 hikâye yan yana kayan şerit + oklar + noktalar
+// YENİ: Şeridi "sira"ncı hikâyeye yumuşakça kaydıran yardımcı tarif.
+// Bileşenin dışında, çünkü hem oklar (git) hem alarm (useEffect) kullanıyor: kodu iki kere yazmayalım (kurabiye kalıbı)
+function seridiKaydir(serit: HTMLDivElement | null, sira: number) { // serit: kaydırılacak kutu (yoksa null) · sira: hedef hikâye
+  const hedef = serit?.children[sira] as HTMLElement | undefined; // Şeridin içindeki "sira"ncı hikâye kutusu. ?. = şerit yoksa hata verme
+  if (serit && hedef) { // Hem şerit hem hedef varsa
+    serit.scrollTo({ left: hedef.offsetLeft, behavior: "smooth" }); // Hedefin sol kenarına kadar yumuşakça kaydır
+  }
+}
+
+// Vitrin bileşeni: 5 hikâye yan yana kayan şerit + oklar + noktalar + kendiliğinden kayma
 // { kisiler }: sayfadan gelen props. Person[] = Person listesi (köşeli parantez = liste)
 export default function Vitrin({ kisiler }: { kisiler: Person[] }) {
   // Hafıza kutusu (state): şu an kaçıncı hikâyedeyiz? Başlangıçta 0 (ilk hikâye). Kitap ayracı gibi.
   // aktif = kutudaki değer · setAktif = değeri değiştiren ve ekranı yeniden çizdiren fonksiyon
   const [aktif, setAktif] = useState(0);
-  // Şeridi elimizde tutuyoruz (ref). Oklara basınca onu kaydıracağız. Başta boş (null), ekrana çizilince dolar.
+  // Şeridi elimizde tutuyoruz (ref). Başta boş (null), ekrana çizilince dolar.
   const seritRef = useRef<HTMLDivElement>(null);
+
+  // YENİ: Kendiliğinden kayma. useEffect = bileşen ekrandayken alarm kur, giderken kapat.
+  useEffect(() => {
+    // setInterval: tekrarlayan alarm. Her KAYMA_SURESI'nde (5 sn) içindeki kod çalışır
+    const zamanlayici = setInterval(() => {
+      const yeni = (aktif + 1) % kisiler.length; // Sıradaki hikâye. % sayesinde sondan sonra başa döner
+      seridiKaydir(seritRef.current, yeni); // Şeridi oraya kaydır
+      setAktif(yeni); // Hafızayı güncelle: bordo nokta ilerlesin
+    }, KAYMA_SURESI);
+    // Temizlik: alarmı kapat. Kapatmazsak her değişiklikte yeni alarm birikir (iki alarm aynı anda çalar)
+    return () => clearInterval(zamanlayici);
+  }, [aktif, kisiler.length]); // aktif değişince eski alarmı kapat, yenisini kur (oka basınca 5 sn baştan sayar)
 
   // git: verilen sıradaki hikâyeye kay. Oklar ve noktalar bunu çağırıyor.
   function git(sira: number) { // sira: gitmek istediğimiz hikâyenin numarası (bazen -1 ya da 5 gelebilir)
     // % (mod, kalan): saat gibi, sondan sonra başa döner. +kisiler.length: eksi sayı olmasın diye
     const yeni = (sira + kisiler.length) % kisiler.length; // -1 → 4 (sona), 5 → 0 (başa), 2 → 2
-    const serit = seritRef.current; // Elimizdeki şerit kutusu
-    const hedef = serit?.children[yeni] as HTMLElement | undefined; // Şeridin içindeki "yeni"nci hikâye kutusu. ?. = şerit yoksa hata verme
-    if (serit && hedef) { // Hem şerit hem hedef varsa
-      serit.scrollTo({ left: hedef.offsetLeft, behavior: "smooth" }); // Şeridi, hedefin sol kenarına kadar yumuşakça kaydır
-    }
+    seridiKaydir(seritRef.current, yeni); // Şeridi oraya kaydır (YENİ: ortak tarifi kullanıyor)
     setAktif(yeni); // Hafızayı güncelle: React ekranı yeniden çizer, bordo nokta yerini değiştirir
   }
 
