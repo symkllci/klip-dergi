@@ -2,6 +2,7 @@ import Link from "next/link"; // Next.js'in sayfalar arası geçiş bileşenini 
 import { Lora } from "next/font/google"; // Google Fonts'tan serif (tırnaklı) başlık fontu.
 import { getAllPeople } from "@/lib/people"; // Bütün kişileri getiren tarif.
 import type { Person } from "@/types"; // Kişi kalıbı (kart bileşeninin tipi için).
+import KlipKarti from "@/components/KlipKarti"; // Ortak kart bileşeni, kişiler sayfası da kullanıyor
 
 // Başlık fontu: dergi hissi versin diye serif (kaynak: Next.js Fonts belgesi).
 // latin-ext: Türkçe harfler (ş, ğ, ı, İ) için.
@@ -141,7 +142,7 @@ export default function Home() {
           <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {digerleri.map((kisi) => (
               <li key={kisi.slug}>
-                <HikayeKarti kisi={kisi} />
+             <KlipKarti kisi={kisi} klip={kisi.clips[0]} />
               </li>
             ))}
           </ul>
