@@ -90,3 +90,4 @@ Klasördeki dosya sayısı: `(Get-ChildItem public\kapaklar).Count` → 21
 
 > Hocam, Clip'e `cover` ekledim ama TypeScript eksikleri göstermedi. `lib/people.ts`'te `people as Person[]` yazdığı için kontrol etmiyormuş. Eksikleri `filter` ile saydım, 21 klibin hepsine kapak ekledim. `as`'ı kaldırmalı mıyım? Kaldırınca JSON'daki `"instagram"` sadece yazı sayılıyor, `"instagram" | "youtube"` ile uyuşmuyor.
 
+> Kapak resimlerinin adları sizin direve yüklediğiniz gibi projede public kapaklar dosyasının içinde adlarını ör; acun1 , acun 2 olarak değiştirebilir miyim? böyle mi kalsın.
