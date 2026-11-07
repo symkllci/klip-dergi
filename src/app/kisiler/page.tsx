@@ -1,5 +1,6 @@
 import Link from "next/link"; // Next.js'in sayfalar arası geçiş bileşenini getir.
 import { getAllPeople } from "@/lib/people"; // Bütün kişileri getiren tarif.
+import KlipKarti from "@/components/KlipKarti"; // Ortak kart bileşeni, ana sayfayla aynı
 
 // Kişiler sayfası. searchParams: adresteki ? sonrası bilgiler.
 // Örnek: /kisiler?konu=yatırım&ara=ata → { konu: "yatırım", ara: "ata" }
@@ -123,24 +124,17 @@ export default async function KisilerSayfasi({
         </p>
       )}
 
-      {/* Kartlar: telefonda alt alta, orta ekranda 2, geniş ekranda 3 kart yan yana */}
-      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {kisiler.map((kisi) => (
-          <li key={kisi.slug} className="rounded-lg border p-4 hover:shadow-md">
-            {/* Kartın başlığı: kişinin adı, tıklayınca kişinin sayfasına gider */}
-            <h2 className="text-xl font-semibold mb-2">
-              <Link href={`/kisiler/${kisi.slug}`} className="hover:underline">
-                {kisi.name}
-              </Link>
-            </h2>
-
-            {/* Kısa bio: ilk cümle */}
-            <p className="text-gray-700 mb-3">{kisi.bio.split(". ")[0]}.</p>
-
-            {/* Klip sayısı */}
-            <p className="text-sm text-gray-500">{kisi.clips.length} klip</p>
-          </li>
-        ))}
+        {/* Kartlar: ana sayfayla aynı KlipKarti. Telefonda 1, orta ekranda 2, geniş ekranda 4 yan yana */}
+      <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {kisiler.map((kisi) => {
+          // Konu seçiliyse o konudaki ilk klibi göster (find), bulamazsa (??) kişinin ilk klibini
+          const klip = kisi.clips.find((c) => c.topic === seciliKonu) ?? kisi.clips[0];
+          return (
+            <li key={kisi.slug}>
+              <KlipKarti kisi={kisi} klip={klip} />
+            </li>
+          );
+        })}
       </ul>
     </main>
   );
