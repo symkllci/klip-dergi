@@ -244,3 +244,10 @@ https://raw.githubusercontent.com/symkllci/klip-dergi/hafta3/notlar/DOSYA.png
 6. `Lighthouse ekran görüntülerini ekle`
 7. `Kişi sayfası sonra ekran görüntüsünü ekle`
 8. `gun12.md eklendi`
+
+
+## NOT (DİĞER HAFTA EK OLARAK BUNLARA BAK)
+1. Ana sayfa kaydırma kısmını daha modern yap
+2. Font punto değişebilir 
+3. dark/ light mode ekle 
+4. Anasayfa, kişiler butonları düzenle modern yap
