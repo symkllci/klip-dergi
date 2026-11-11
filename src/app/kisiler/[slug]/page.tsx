@@ -3,22 +3,15 @@ import { notFound } from "next/navigation"; // Next.js'in "sayfa bulunamadı" (4
 import { Lora } from "next/font/google"; // Ana sayfadaki serif başlık fontu
 import { getAllPeople, getPersonBySlug } from "@/lib/people"; // Herkesi getiren ve slug ile bulan tarifler
 import KlipKarti from "@/components/KlipKarti"; // Diğer kişiler kartları, ana sayfayla aynı
-import Kirinti from "@/components/Kirinti"; // ⭐ Ekmek kırıntısı: nerede olduğunu gösterir
-import type { Clip } from "@/types"; // Klip kalıbı (embedAdresi ve izleYazisi için)
+import Kirinti from "@/components/Kirinti"; // Ekmek kırıntısı: nerede olduğunu gösterir
+import KlipOynatici from "@/components/KlipOynatici"; // ⭐ Klip: önce kapak + ▶, tıklanınca Instagram
+import type { Clip } from "@/types"; // Klip kalıbı (izleYazisi için)
 import type { Metadata } from "next"; // Sekme başlığı ve paylaşım bilgisinin kalıbı
 
 // Başlık fontu: ana sayfayla aynı Lora. latin-ext: Türkçe harfler için
 const baslikFontu = Lora({ subsets: ["latin", "latin-ext"] });
 
-// Klibin embed (gömme) adresini üreten tarif
-function embedAdresi(klip: Clip): string {
-  // Instagram ise: adresin sonuna "embed" ekle → .../reel/KOD/embed
-  if (klip.platform === "instagram") {
-    return klip.url + "embed";
-  }
-  // Değilse YouTube: "watch?v=" yerine "embed/" → .../embed/KOD
-  return klip.url.replace("watch?v=", "embed/");
-}
+// ⭐ embedAdresi buradan KlipOynatici.tsx'e taşındı (artık onu sadece oynatıcı kullanıyor)
 
 // Klibin altındaki link yazısını platforma göre üreten tarif
 function izleYazisi(klip: Clip): string {
@@ -88,7 +81,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
     <div className="min-h-screen bg-amber-50 text-stone-900">
       {/* Ana sayfayla aynı genişlik ve boşluklar */}
       <main className="mx-auto max-w-6xl px-6 py-10">
-        {/* ⭐ Ekmek kırıntısı: Ana sayfa › Kişiler › (kişinin adı = buradasın, href yok → bordo) */}
+        {/* Ekmek kırıntısı: Ana sayfa › Kişiler › (kişinin adı = buradasın, href yok → bordo) */}
         <Kirinti adimlar={[{ ad: "Ana sayfa", href: "/" }, { ad: "Kişiler", href: "/kisiler" }, { ad: kisi.name }]} />
 
         {/* 1. ÜST KISIM: solda büyük kapak, sağda isim. Telefonda alt alta, orta ekranda yan yana */}
@@ -159,15 +152,8 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
               {/* Klibin konusu ve başlığı */}
               <p className="text-xs font-semibold uppercase tracking-widest text-rose-800">{klip.topic}</p>
               <h3 className="mb-3 mt-1 font-semibold leading-snug">{klip.title}</h3>
-              {/* Embed: klibi sayfanın içinde oynat. 320x570: dikey reel boyutu */}
-              <iframe
-                src={embedAdresi(klip)} // Instagram'ın gömme adresi
-                title={klip.title} // Ekran okuyucu için pencerenin adı
-                width="320"
-                height="570"
-                className="rounded-lg border border-stone-300 bg-white"
-                allowFullScreen // Tam ekrana izin ver
-              ></iframe>
+              {/* ⭐ Klip: önce kapak + ▶, tıklanınca Instagram yüklenir (sayfa hızlı açılsın) */}
+              <KlipOynatici klip={klip} />
               {/* Yedek link: embed yüklenmezse ziyaretçi buradan izlesin */}
               <a
                 href={klip.url}
