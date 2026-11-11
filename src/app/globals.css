@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: var(--color-amber-50); /* Sayfanın zemini krem, beyaz boşluk kalmasın */
   --foreground: #171717;
 }
 
