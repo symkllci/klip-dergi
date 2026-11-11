@@ -32,7 +32,7 @@ export default function Home() {
             Klip Dergi
           </h1>
 
-          {/* ⭐ Adın altındaki menü: Lora, bordo, ortada, aralarında nokta (dergi künyesi gibi) */}
+          {/*  Adın altındaki menü: Lora, bordo, ortada, aralarında nokta (dergi künyesi gibi) */}
      <nav className="mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 whitespace-nowrap font-serif text-sm text-rose-800 sm:gap-x-4 sm:text-lg">
             {/* Sayfa içi bağlantı: aşağıdaki "Diğer hikâyeler" bölümüne iner */}
             <a href="#hikayeler" className="hover:underline">
@@ -61,10 +61,16 @@ export default function Home() {
         {/* Diğer kişiler: başlık satırı ve kartlar */}
         <section className="mt-14">
           {/* id="hikayeler": menüdeki "Girişimci hikâyeleri" linki buraya iner */}
-          <div id="hikayeler" className="mb-6 flex items-baseline justify-between border-b border-stone-300 pb-2">
+          {/*  items-center: hap (pill) buton başlıkla aynı hizada dursun */}
+          <div id="hikayeler" className="mb-6 flex items-center justify-between border-b border-stone-300 pb-3">
             <h2 className={`${baslikFontu.className} text-2xl font-bold`}>Diğer hikâyeler</h2>
-            <Link href="/kisiler" className="text-sm text-stone-500 hover:text-rose-800 hover:underline">
-              Tüm kişiler →
+            {/* Hap buton: Kirinti gibi krem çerçeve. Fare gelince bordo dolar, ok sağa kayar (group-hover) */}
+            <Link
+              href="/kisiler"
+              className="group inline-flex items-center gap-1.5 rounded-full border border-amber-200/70 bg-white/70 px-4 py-1.5 text-sm text-stone-600 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
+            >
+              Tüm kişiler
+              <span className="transition-transform group-hover:translate-x-1">→</span>
             </Link>
           </div>
 
