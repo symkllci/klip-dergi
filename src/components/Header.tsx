@@ -10,27 +10,42 @@ const baslikFontu = Lora({ subsets: ["latin", "latin-ext"], style: ["normal", "i
 // İnce başlık: her sayfanın en üstünde
 export default function Header() {
   const anaSayfa = usePathname() === "/"; // Ana sayfada mıyız?
-  const [kaydi, setKaydi] = useState(false); // ⭐ Aşağı kaydırıldı mı? Başta: hayır
+  const [kaydi, setKaydi] = useState(false); // Aşağı kaydırıldı mı?
+  const [acik, setAcik] = useState(false); // Menü açık mı? Başta: kapalı
 
-  // ⭐ Kulak 👂: her kaydırmada "200 pikselden fazla indik mi?" diye bak
+  // 1. kulak 👂: kaydırmayı dinle, 200 pikselden fazla indik mi?
   useEffect(() => {
     const dinle = () => setKaydi(window.scrollY > 200);
-    dinle(); // Sayfa açılınca bir kere bak
-    window.addEventListener("scroll", dinle); // Kulağı kur
-    return () => window.removeEventListener("scroll", dinle); // Giderken kulağı kaldır
+    dinle();
+    window.addEventListener("scroll", dinle);
+    return () => window.removeEventListener("scroll", dinle);
   }, []);
 
-  const gizli = anaSayfa && !kaydi; // ⭐ Ana sayfa VE en üstte → saklan
+  // 2. kulak 👂: klavyeyi dinle, Esc'ye basılırsa menüyü kapat
+  useEffect(() => {
+    const dinle = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setAcik(false);
+    };
+    window.addEventListener("keydown", dinle);
+    return () => window.removeEventListener("keydown", dinle);
+  }, []);
+
+  const gizli = anaSayfa && !kaydi && !acik; // Ana sayfa + en üst + menü kapalı → saklan
 
   return (
-    // ⭐ Ana sayfada fixed (sayfayı itmeden üstte belirir), diğer sayfalarda sticky
-    // ⭐ gizli ise yukarı kaydırılıp saklanır (-translate-y-full), değilse yerinde
     <header
       className={`${anaSayfa ? "fixed inset-x-0" : "sticky"} top-0 z-50 grid grid-cols-3 items-center border-b border-stone-900 bg-amber-50 px-6 py-3 transition-transform duration-300 ${gizli ? "-translate-y-full" : "translate-y-0"}`}
     >
-      {/* Sol: menü düğmesi */}
-      <button type="button" aria-label="Menüyü aç" className="justify-self-start">
-        ☰
+      {/* ⭐ Sol: menü düğmesi. Bas → açık/kapalı değişir (ışık düğmesi) */}
+      {/* aria-expanded: ekran okuyucuya "menü şu an açık mı" der */}
+      <button
+        type="button"
+        onClick={() => setAcik(!acik)}
+        aria-expanded={acik}
+        aria-label={acik ? "Menüyü kapat" : "Menüyü aç"}
+        className="justify-self-start text-xl"
+      >
+        {acik ? "×" : "☰"}
       </button>
 
       {/* Orta: logo */}
@@ -40,11 +55,10 @@ export default function Header() {
 
       {/* Sağ: Kişiler + arama */}
       <div className="flex items-center gap-4 justify-self-end">
-   <Link href="/kisiler" className="hidden sm:inline">Kişiler</Link>
+        <Link href="/kisiler" className="hidden sm:inline">Kişiler</Link>
 
         {/* Arama: Enter → /kisiler?ara=... */}
         <form action="/kisiler" className="relative">
-          {/* Büyüteç simgesi (süs) */}
           <svg
             aria-hidden="true"
             viewBox="0 0 24 24"
@@ -56,8 +70,6 @@ export default function Header() {
             <circle cx="11" cy="11" r="7" />
             <path d="m20 20-3.5-3.5" />
           </svg>
-
-          {/* Hap şeklinde kutu */}
           <input
             type="search"
             name="ara"
@@ -67,6 +79,18 @@ export default function Header() {
           />
         </form>
       </div>
+
+      {/* ⭐ Menü paneli: sadece acik true iken görünür (&& = "ise göster") */}
+      {/* Colossus gibi soldan koyu panel. top-full: şeridin hemen altından başlar */}
+      {acik && (
+        <nav className="absolute left-0 top-full h-screen w-72 bg-stone-900 text-amber-50">
+          <ul className="divide-y divide-stone-700">
+            <li><Link href="/" onClick={() => setAcik(false)} className="block px-6 py-4 hover:text-rose-300">Ana sayfa</Link></li>
+            <li><Link href="/kisiler" onClick={() => setAcik(false)} className="block px-6 py-4 hover:text-rose-300">Kişiler</Link></li>
+            <li><Link href="/hakkinda" onClick={() => setAcik(false)} className="block px-6 py-4 hover:text-rose-300">Hakkında</Link></li>
+          </ul>
+        </nav>
+      )}
     </header>
   );
 }
