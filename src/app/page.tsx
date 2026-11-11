@@ -17,10 +17,10 @@ export default function Home() {
   const kisiler = getAllPeople(); // Bütün kişileri al (şu an 12).
   const vitrin = kisiler.slice(0, 5); // Vitrin: ilk 5 kişi (0, 1, 2, 3, 4). slice'ın 2. sayısı dahil değil.
   const digerleri = kisiler.slice(5); // Diğer hikâyeler: 5. sıradan sona kadar, vitrinde olmayanlar.
-  const one = digerleri[0];
-  const sol = digerleri.slice(1, 3);   // 1 ve 2 numaralı kişiler
-  const sag = digerleri.slice(3, 5);   // 3 ve 4 numaralı kişiler
-  const alt = digerleri.slice(5);       // 5'ten sona kadar
+  const one = digerleri[0]; // Öne çıkan: ortadaki büyük kart
+  const sol = digerleri.slice(1, 3); // 1 ve 2 numaralı kişiler (sol sütun)
+  const sag = digerleri.slice(3, 5); // 3 ve 4 numaralı kişiler (sağ sütun)
+  const alt = digerleri.slice(5); // 5'ten sona kadar (alttaki yatay kartlar)
 
   return (
     // Bütün sayfa: krem zemin (amber-50), koyu mürekkep rengi yazı (stone-900)
@@ -31,21 +31,24 @@ export default function Home() {
           <h1 className={`${baslikFontu.className} text-center text-5xl font-bold italic sm:text-7xl`}>
             Klip Dergi
           </h1>
-          {/* Adın altındaki ince menü satırı */}
-            <nav className="mt-4 flex items-center justify-between gap-4 text-xs uppercase tracking-widest">
+
+          {/* ⭐ Adın altındaki menü: Lora, bordo, ortada, aralarında nokta (dergi künyesi gibi) */}
+          <nav className="mt-5 flex items-center justify-center gap-4 font-serif text-lg text-rose-800">
             {/* Sayfa içi bağlantı: aşağıdaki "Diğer hikâyeler" bölümüne iner */}
-            <a href="#hikayeler" className="text-stone-500 hover:text-rose-800">
+            <a href="#hikayeler" className="hover:underline">
               Girişimci hikâyeleri
             </a>
-            <Link href="/kisiler" className="font-semibold text-rose-800 hover:underline">
+            <span className="text-stone-300">·</span>
+            <Link href="/kisiler" className="hover:underline">
               Kişiler
             </Link>
+            <span className="text-stone-300">·</span>
             {/* Dış bağlantı: yeni sekmede açılır, rel güvenlik için */}
             <a
               href="https://www.instagram.com/viralgirisimci/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-stone-500 hover:text-rose-800"
+              className="hover:underline"
             >
               Podcast klipleri
             </a>
@@ -65,7 +68,7 @@ export default function Home() {
             </Link>
           </div>
 
-                 {/* Üst: 3 sütun (geniş ekranda). Ortadaki sütun daha geniş: 1fr · 1.55fr · 1fr */}
+          {/* Üst: 3 sütun (geniş ekranda). Ortadaki sütun daha geniş: 1fr · 1.55fr · 1fr */}
           <div className="grid gap-6 lg:grid-cols-[1fr_1.55fr_1fr]">
             {/* Sol sütun: 2 küçük kart alt alta */}
             <div className="flex flex-col gap-6">
@@ -93,7 +96,7 @@ export default function Home() {
               <KlipKarti key={kisi.slug} kisi={kisi} klip={kisi.clips[0]} boyut="yatay" />
             ))}
           </div>
-                  </section>
+        </section>
       </main>
     </div>
   );
