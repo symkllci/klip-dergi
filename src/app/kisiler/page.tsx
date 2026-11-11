@@ -53,8 +53,18 @@ export default async function KisilerSayfasi({
   // Hem kişinin adını hem aranan yazıyı küçültüyoruz: "NEVZAT", "Nevzat", "nevzat" hepsi aynı sonucu verir.
   // includes: yazının İÇİNDE bu parça geçiyor mu? "nevzat aydın".includes("zat") → true
   const aramaKucuk = aramaMetni.toLocaleLowerCase("tr-TR");
+   // Kelime adında, ya da kliplerinden birinin konusunda/başlığında geçiyor mu? (|| = "ya da")
   const kisiler = aramaMetni
-    ? konuyaGore.filter((kisi) => kisi.name.toLocaleLowerCase("tr-TR").includes(aramaKucuk))
+    ? konuyaGore.filter((kisi) => {
+        const adindaVar = kisi.name.toLocaleLowerCase("tr-TR").includes(aramaKucuk);
+        // some: kliplerden EN AZ BİRİNİN konusu ya da başlığı uyuyorsa true
+        const klibindeVar = kisi.clips.some(
+          (klip) =>
+            klip.topic.toLocaleLowerCase("tr-TR").includes(aramaKucuk) ||
+            klip.title.toLocaleLowerCase("tr-TR").includes(aramaKucuk)
+        );
+        return adindaVar || klibindeVar; // Biri bile doğruysa kişi listede kalır
+      })
     : konuyaGore;
 
   return (
