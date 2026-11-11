@@ -25,7 +25,9 @@ export default function Vitrin({ kisiler }: { kisiler: Person[] }) {
 
   // Kendiliğinden kayma: 5 sn'de bir sıradakine geç
   useEffect(() => {
-    // 3. madde b: hareket azaltma satırları BURAYA gelecek (sen yazacaksın)
+    // Hareket azaltma: ziyaretçi cihazında "hareketi azalt" açtıysa kendiliğinden kayma olmasın
+    const hareketAzalt = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (hareketAzalt) return; // Hareket istemiyorsa alarmı kurma, çık
 
     const zamanlayici = setInterval(() => {
       const yeni = (aktif + 1) % kisiler.length; // Sondan sonra başa dön
