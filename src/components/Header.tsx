@@ -87,7 +87,7 @@ export default function Header() {
           <ul className="divide-y divide-stone-700">
             <li><Link href="/" onClick={() => setAcik(false)} className="block px-6 py-4 hover:text-rose-300">Ana sayfa</Link></li>
             <li><Link href="/kisiler" onClick={() => setAcik(false)} className="block px-6 py-4 hover:text-rose-300">Kişiler</Link></li>
-            <li><Link href="/hakkinda" onClick={() => setAcik(false)} className="block px-6 py-4 hover:text-rose-300">Hakkında</Link></li>
+            <li><Link href="/hakkinda" onClick={() => setAcik(false)} className="block px-6 py-4 hover:text-rose-300">Hakkımızda</Link></li>
           </ul>
         </nav>
       )}

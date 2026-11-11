@@ -29,7 +29,7 @@ export default function Footer() {
           <div>
             <p className={sutunBasligi}>Dergi</p>
             <ul className="mt-4 space-y-2 text-sm text-white/80">
-              <li><Link href="/hakkinda" className="hover:text-white hover:underline">Hakkında</Link></li>
+              <li><Link href="/hakkinda" className="hover:text-white hover:underline">Hakkımızda</Link></li>
               <li><Link href="/kisiler" className="hover:text-white hover:underline">Kişiler</Link></li>
             </ul>
           </div>
