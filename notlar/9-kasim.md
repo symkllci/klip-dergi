@@ -243,11 +243,3 @@ return adindaVar || klibindeVar;   // || = "ya da"
 - [ ] Gerçek e-posta ve YouTube/X hesapları gelince alt bilgiyi ve künyeyi güncelle (şimdilik DEMO)
 - [ ] Hocaya: `as Person[]` sorusu (gun9'dan)
 
-## Hocaya sorularım
-
-1. Büyük logo yalnız ana sayfada, diğer sayfalarda baştan ince şerit var. Böyle mi istiyordunuz?
-2. Arama Kişiler sayfasında çalışıyor (ad, konu ve klip başlığında). Ayrı bir arama sayfası gerekir mi?
-3. Alt bilgideki demo e-posta ile X ve YouTube linkleri ne zaman gerçeğiyle değişecek?
-4. İnce şerit ana sayfada 200 piksel kaydırınca iniyor. Bu sayıyı elle mi yazmalıyım, yoksa büyük logonun yüksekliğine göre mi ayarlanmalı?
-5. Konuya göre arama yapınca kartta kişinin ilk klibi görünüyor, aranan klip değil. Eşleşen klibi göstermeli miyim?
-6. Telefonda başlıktaki “Kişiler” linkini gizledim, çünkü logonun üstüne biniyordu. Menüde var. Bu yeterli mi?
