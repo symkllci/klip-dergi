@@ -71,11 +71,18 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
   // Kişinin konuları, tekrarsız: new Set = aynı olanları bir kere tut · [...] = tekrar listeye çevir
   const konular = [...new Set(kisi.clips.map((klip) => klip.topic))];
 
-  // Diğer kişiler: listede bu kişiden SONRA gelen 3 kişi
+  // Diğer kişiler: önce AYNI KONUDAKİLER, yer kalırsa geri kalanlar (en fazla 3 kişi)
   const tumKisiler = getAllPeople(); // Bütün kişiler (12)
-  const sira = tumKisiler.findIndex((k) => k.slug === kisi.slug); // Bu kişi listede kaçıncı? (findIndex: find'ın sırasını veren kardeşi)
-  // [1, 2, 3]: 1, 2 ve 3 sonraki kişi · % (saat): liste bitince başa dön (Mark'tan sonra Nevzat)
-  const digerKisiler = [1, 2, 3].map((n) => tumKisiler[(sira + n) % tumKisiler.length]);
+
+  // 1) Aynı konudakiler: kendisi olmayan VE en az bir klibinin konusu bu kişinin konularında geçenler
+  const ayniKonu = tumKisiler.filter((k) => k.slug !== kisi.slug && k.clips.some((klip) => konular.includes(klip.topic)));
+
+  // 2) Geri kalanlar: kendisi olmayan VE aynı konudakiler listesinde OLMAYANLAR (! = değil)
+  const geriKalan = tumKisiler.filter((k) => k.slug !== kisi.slug && !ayniKonu.includes(k));
+
+  // 3) Önce aynı konudakiler, arkasından geri kalanlar; ilk 3 kişiyi al
+  // [...a, ...b] = iki listeyi uç uca ekle (iki treni birleştirmek gibi) · slice(0, 3) = ilk 3
+  const digerKisiler = [...ayniKonu, ...geriKalan].slice(0, 3);
 
   return (
     // Bütün sayfa: ana sayfayla aynı krem zemin ve koyu mürekkep yazı
@@ -106,19 +113,12 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
             />
           </div>
 
-          {/* İsim tarafı */}
+            {/* İsim tarafı */}
           <div>
-            {/* Konu etiketleri: kartlardaki gibi bordo, BÜYÜK HARF */}
-            <div className="flex flex-wrap gap-2">
-              {konular.map((konu) => (
-                <span
-                  key={konu}
-                  className="rounded-full bg-rose-800 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white"
-                >
-                  {konu}
-                </span>
-              ))}
-            </div>
+            {/* Konu etiketi: tek, büyük kapaktaki klibin konusu */}
+            <span className="rounded-full bg-rose-800 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white">
+              {kapakKlip.topic}
+            </span>
 
             {/* Kişinin adı: Lora, çok büyük */}
             <h1 className={`${baslikFontu.className} mt-4 text-5xl font-bold leading-tight sm:text-6xl`}>
