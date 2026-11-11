@@ -13,6 +13,7 @@ export type Person = {
     slug : string; //adresteki ad, ör. seyma-kelleci 
     name :string; // kişinin adı
     bio :string;  // biyografi, kendi cümlelerimle
+    dek : string; // kanca: başlığın altındaki tek cümlelik tanıtım, kendi cümlemle
     links:string[];  //kişinin sosyal medya adresleri, birden fazla olabildiği için liste
     clips : Clip[]; //her klip 5 bilgi içerdiği için string değil, Clip kalıbını kullandık
 };

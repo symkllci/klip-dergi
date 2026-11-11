@@ -3,7 +3,10 @@
     "slug": "nevzat-aydin",
     "name": "Nevzat Aydın",
     "bio": "Nevzat Aydın, Yemeksepeti'nin kurucusudur. Boğaziçi Üniversitesi Bilgisayar Mühendisliği mezunudur. Şirket 2015 yılında Delivery Hero tarafından satın alınmıştır. Bugün melek yatırımcı olarak teknoloji girişimlerine yatırım yapmaktadır.",
-    "links": ["https://instagram.com/zagortenay76"],
+    "dek": "Yemeksepeti'ni kurup sattıktan sonra şimdi yeni girişimlere yatırım yapıyor.",
+    "links": [
+      "https://instagram.com/zagortenay76"
+    ],
     "clips": [
       {
         "platform": "instagram",
@@ -27,7 +30,10 @@
     "slug": "hamdi-ulukaya",
     "name": "Hamdi Ulukaya",
     "bio": "Hamdi Ulukaya, Erzincan İliç doğumlu bir girişimcidir. Chobani markasının kurucusudur. Markanın temeli, 2005 yılında kapatılmış bir yoğurt fabrikasını satın almasıyla atılmıştır. Mültecilere istihdam sağlaması ile de tanınmaktadır.",
-    "links": ["https://www.instagram.com/hamdi.ulukaya/"],
+    "dek": "Kapanmış bir yoğurt fabrikasını satın alıp Chobani'ye dönüştürdü.",
+    "links": [
+      "https://www.instagram.com/hamdi.ulukaya/"
+    ],
     "clips": [
       {
         "platform": "instagram",
@@ -51,6 +57,7 @@
     "slug": "adnan-sahin",
     "name": "Adnan Şahin",
     "bio": "Adnan Şahin, metal sanayi alanında bir girişimcidir. İş hayatına 1979 yılında Bayrampaşa'da küçük bir atölye açarak başlamıştır. Aile evini satarak makine yatırımı yapması, işletmesinin büyümesinde bir dönüm noktası olmuştur.",
+    "dek": "Küçük bir atölyeyle başladı, büyümek için aile evini sattı.",
     "links": [],
     "clips": [
       {
@@ -75,7 +82,10 @@
     "slug": "mustafa-namoglu",
     "name": "Mustafa Namoğlu",
     "bio": "Mustafa Namoğlu, e-ticaret teknolojileri alanında bir girişimcidir. 2011 yılında Mugo markasını kurmuştur. Bugün ikas'ın kurucu ortağı ve CEO'sudur.",
-    "links": ["https://www.instagram.com/mustafanamoglu/"],
+    "dek": "Mugo'dan ikas'a uzanan yolda doğru müşteriyi bulmanın önemini anlatıyor.",
+    "links": [
+      "https://www.instagram.com/mustafanamoglu/"
+    ],
     "clips": [
       {
         "platform": "instagram",
@@ -99,7 +109,10 @@
     "slug": "ata-uzunhasan",
     "name": "Ata Uzunhasan",
     "bio": "Ata Uzunhasan, Galata Business Angels'ın (GBA) Yönetici Direktörüdür. Koç Üniversitesi İşletme ve Ekonomi mezunudur. Kariyerine PwC'de başlamıştır.",
-    "links": ["https://www.instagram.com/atauzunhasan/"],
+    "dek": "PwC'den melek yatırımcı ağına uzanan yolda yatırım almayı evliliğe benzetiyor.",
+    "links": [
+      "https://www.instagram.com/atauzunhasan/"
+    ],
     "clips": [
       {
         "platform": "instagram",
@@ -108,7 +121,6 @@
         "topic": "yatırım",
         "publishedAt": "2026-09-29",
         "cover": "/kapaklar/Dd35VYzgV8-.jpg"
-
       },
       {
         "platform": "instagram",
@@ -120,11 +132,14 @@
       }
     ]
   },
-    {
+  {
     "slug": "acun-ilicali",
     "name": "Acun Ilıcalı",
     "bio": "Acun Ilıcalı, medya ve televizyon sektöründe faaliyet gösteren bir girişimcidir. Muhabirlikle başladığı medya kariyerinde 2004 yılında Acun Medya'yı kurmuştur. 2013 yılında TV8 kanalını, 2022'de ise İngiliz futbol kulübü Hull City'yi satın almıştır.",
-    "links": ["https://www.instagram.com/acunilicali/"],
+    "dek": "Muhabirlikten TV8'e ve bir İngiliz futbol kulübüne uzanan yolculuk.",
+    "links": [
+      "https://www.instagram.com/acunilicali/"
+    ],
     "clips": [
       {
         "platform": "instagram",
@@ -148,7 +163,10 @@
     "slug": "elon-musk",
     "name": "Elon Musk",
     "bio": "Elon Musk, teknoloji ve uzay sanayisi alanında faaliyet gösteren bir girişimcidir. İlk internet girişimi Zip2'nin ardından PayPal'ın temelini oluşturan X.com'u kurmuştur. 2002'de uzay taşımacılığı şirketi SpaceX'i kurmuş, elektrikli araç üreticisi Tesla'nın yönetimini üstlenmiştir. Bugün bu şirketlerin başında yöneticilik yapmaktadır.",
-    "links": ["https://www.instagram.com/elonmusk/"],
+    "dek": "PayPal'ın temelinden SpaceX'e, çılgın denilen kararların ardındaki isim.",
+    "links": [
+      "https://www.instagram.com/elonmusk/"
+    ],
     "clips": [
       {
         "platform": "instagram",
@@ -165,7 +183,6 @@
         "topic": "risk almak",
         "publishedAt": "2026-10-22",
         "cover": "/kapaklar/DeymVx5AtRG.jpg"
-
       }
     ]
   },
@@ -173,7 +190,10 @@
     "slug": "aykut-karaalioglu",
     "name": "Aykut Karaalioğlu",
     "bio": "Aykut Karaalioğlu, mobil teknoloji ve yazılım alanında bir girişimcidir. 2013 yılında San Francisco'da mobil uygulama mağaza analitiği sunan MobileAction şirketini kurmuştur. Şirketiyle mobil uygulama geliştiricilerine pazar analizi ve optimizasyon verileri sağlamaktadır.",
-    "links": ["https://www.instagram.com/aykutmobileaction/"],
+    "dek": "San Francisco'da kurduğu MobileAction'la Türk yetenekleri için büyük hayal kuruyor.",
+    "links": [
+      "https://www.instagram.com/aykutmobileaction/"
+    ],
     "clips": [
       {
         "platform": "instagram",
@@ -197,7 +217,10 @@
     "slug": "efe-celebi",
     "name": "Efe Çelebi",
     "bio": "Efe Çelebi, sağlık işletmeciliği alanında faaliyet gösteren bir diş hekimi ve girişimcidir. 2006 yılında İstanbul Bağdat Caddesi'nde DentGroup'un ilk kliniğini açmıştır. Bugün DentGroup'un Yönetim Kurulu Başkanıdır.",
-    "links": ["https://www.instagram.com/dr.efecelebi/"],
+    "dek": "Bağdat Caddesi'ndeki ilk klinikten büyüyen DentGroup'un kurucu ortağı.",
+    "links": [
+      "https://www.instagram.com/dr.efecelebi/"
+    ],
     "clips": [
       {
         "platform": "instagram",
@@ -220,8 +243,11 @@
   {
     "slug": "mehmet-dincerler",
     "name": "Mehmet Dinçerler",
-    "bio": "Mehmet Dinçerler, gıda ve yeme-içme sektöründe faaliyet gösteren bir girişimcidir. 1988 yılında doğmuş olup aslen Gazianteplidir; ailesi Hacı Sayid markasının kurucusudur. Dünyaca ünlü kahve zinciri Gloria Jean's Coffees'in Türkiye CEO'sudur. Şirketin Türkiye genelindeki operasyonlarını ve mağaza ağını yönetmektedir.",
-    "links": ["https://www.instagram.com/mehmetdnc/"],
+    "bio": "Mehmet Dinçerler, gıda ve yeme-içme sektöründe faaliyet gösteren bir girişimcidir. 1988 yılında doğmuş olup aslen Gazianteplidir; ailesi Hacı Sayid markasının kurucusudur. Bugün Dinçerler Group'un CEO'sudur. Grup, Gloria Jean's Coffees'in Türkiye haklarına sahiptir ve markayı Türkiye'de 240 şubeye ulaştırmıştır.",
+    "dek": "Gloria Jean's'i Türkiye'de 240 şubeye taşıyan grubun başındaki Gaziantepli girişimci.",
+    "links": [
+      "https://www.instagram.com/mehmetdnc/"
+    ],
     "clips": [
       {
         "platform": "instagram",
@@ -237,6 +263,7 @@
     "slug": "abdullah-kigili",
     "name": "Abdullah Kiğılı",
     "bio": "Abdullah Kiğılı, hazır giyim ve perakende sektöründe faaliyet gösteren bir girişimcidir. 1943 yılında Malatya'da doğmuştur ve 1965'te kurulan Kiğılı markasının sahibidir. İş hayatının yanı sıra 1997 yılında kısa bir süre Türkiye Futbol Federasyonu Başkanlığı, Fenerbahçe'de de başkan yardımcılığı yapmıştır.",
+    "dek": "Kiğılı markasından Futbol Federasyonu başkanlığına uzanan bir iş hayatı.",
     "links": [],
     "clips": [
       {
@@ -253,7 +280,10 @@
     "slug": "mark-zuckerberg",
     "name": "Mark Zuckerberg",
     "bio": "Mark Zuckerberg, internet ve sosyal medya alanında faaliyet gösteren bir girişimcidir. 2004 yılında Harvard Üniversitesi'nde öğrenciyken Facebook'u kurmuştur. Zamanla Instagram ve WhatsApp platformlarını bünyesine katmış, 2021 yılında şirketinin adını Meta olarak değiştirmiştir.",
-    "links": ["https://www.instagram.com/zuck/"],
+    "dek": "Öğrenciyken kurduğu Facebook'tan Instagram ve WhatsApp'ı da içine alan Meta'ya.",
+    "links": [
+      "https://www.instagram.com/zuck/"
+    ],
     "clips": [
       {
         "platform": "instagram",
