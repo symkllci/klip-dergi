@@ -95,7 +95,7 @@ export default function Vitrin({ kisiler }: { kisiler: Person[] }) {
               <div className={`pt-5 transition-opacity duration-500 ${ortada ? "opacity-100" : "opacity-0"}`}>
                 <p className="text-xs font-semibold uppercase tracking-widest text-rose-800">{klip.topic}</p>
                 <h2 className="mt-2 font-serif text-3xl font-bold leading-tight">{klip.title}</h2>
-                {/* Tek cümle (kanca): 4. maddede eklenecek */}
+                <p className="mt-2 font-serif text-base leading-relaxed text-stone-600">{kisi.dek}</p>
                 <span className="mx-auto mb-2 mt-3 block h-0.5 w-9 rounded bg-rose-800" />
                 <p className="font-serif text-sm italic text-stone-500">{kisi.name}</p>
               </div>

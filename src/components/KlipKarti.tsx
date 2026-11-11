@@ -50,7 +50,8 @@ export default function KlipKarti({ kisi, klip, boyut = "kucuk" }: { kisi: Perso
         >
           {klip.title}
         </h3>
-        {/* Tek cümle (kanca): 4. maddede eklenecek */}
+        {/* Kanca: tek cümlelik tanıtım. Büyük kartta biraz daha büyük */}
+        <p className={`mt-2 leading-relaxed text-stone-600 ${buyuk ? "font-serif text-base" : "text-sm"}`}>{kisi.dek}</p>
         {/* Bordo kısa çizgi + italik isim */}
         <span className={`mb-2 mt-3 block h-0.5 w-9 rounded bg-rose-800 ${yatay ? "" : "mx-auto"}`} />
         <p className="font-serif text-sm italic text-stone-500">{kisi.name}</p>
