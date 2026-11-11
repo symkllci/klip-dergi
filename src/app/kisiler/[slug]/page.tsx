@@ -7,7 +7,6 @@ import KlipKarti from "@/components/KlipKarti"; // Diğer kişiler kartları, an
 import type { Clip } from "@/types"; // Klip kalıbı (embedAdresi ve izleYazisi için)
 import type { Metadata } from "next"; // Sekme başlığı ve paylaşım bilgisinin kalıbı
 
-
 // Başlık fontu: ana sayfayla aynı Lora. latin-ext: Türkçe harfler için
 const baslikFontu = Lora({ subsets: ["latin", "latin-ext"] });
 
@@ -113,7 +112,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
             />
           </div>
 
-            {/* İsim tarafı */}
+          {/* İsim tarafı */}
           <div>
             {/* Konu etiketi: tek, büyük kapaktaki klibin konusu */}
             <span className="rounded-full bg-rose-800 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white">
@@ -146,8 +145,9 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
           </div>
         </header>
 
-        {/* 2. BİO: giriş paragrafı gibi. text-xl: büyük · leading-loose: çok rahat satır aralığı · max-w-3xl: satır çok uzamasın */}
-       <p className="font-serif mt-8 max-w-3xl text-xl leading-loose text-stone-700 sm:text-2xl sm:leading-loose">
+        {/* 2. BİO: giriş paragrafı gibi. Lora (font-serif), büyük, rahat satır aralığı, max-w-3xl: satır çok uzamasın */}
+        {/* first-letter: ilk harf büyük (7xl), kalın, bordo, sola yaslı (float-left) → yazı etrafından akar (dergi tarzı) */}
+        <p className="font-serif mt-8 max-w-3xl text-xl leading-loose text-stone-700 sm:text-2xl sm:leading-loose first-letter:float-left first-letter:mr-3 first-letter:text-7xl first-letter:font-bold first-letter:leading-none first-letter:text-rose-800">
           {kisi.bio}
         </p>
 
