@@ -5,6 +5,8 @@ import { Lora } from "next/font/google"; // Ana sayfadaki serif başlık fontu
 import { getAllPeople, getPersonBySlug } from "@/lib/people"; // Herkesi getiren ve slug ile bulan tarifler
 import KlipKarti from "@/components/KlipKarti"; // Diğer kişiler kartları, ana sayfayla aynı
 import type { Clip } from "@/types"; // Klip kalıbı (embedAdresi ve izleYazisi için)
+import type { Metadata } from "next"; // Sekme başlığı ve paylaşım bilgisinin kalıbı
+
 
 // Başlık fontu: ana sayfayla aynı Lora. latin-ext: Türkçe harfler için
 const baslikFontu = Lora({ subsets: ["latin", "latin-ext"] });
@@ -30,6 +32,29 @@ function izleYazisi(klip: Clip): string {
 // Build sırasında hangi kişi sayfalarının önceden üretileceğini söyler (pastane vitrini)
 export function generateStaticParams() {
   return getAllPeople().map((kisi) => ({ slug: kisi.slug }));
+}
+
+// Sekme başlığı, açıklama ve paylaşım görseli: her kişi için ayrı
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params; // Adresteki kişi kodu (ör. hamdi-ulukaya)
+  const kisi = getPersonBySlug(slug); // O kişiyi bul
+  if (!kisi) return {}; // Kişi yoksa boş bırak
+
+  const kapak = kisi.clips[0]?.cover; // İlk klibin kapağı = paylaşım görseli
+
+  return {
+    title: kisi.name, // Kalıptaki %s yerine geçer → "Hamdi Ulukaya · Klip Dergi"
+    description: kisi.bio, // Google'da ve paylaşımda görünen açıklama
+    openGraph: {
+      title: `${kisi.name} · Klip Dergi`, // WhatsApp önizlemesindeki başlık
+      description: kisi.bio,
+      images: kapak ? [kapak] : [], // WhatsApp önizlemesindeki resim
+    },
+  };
 }
 
 // Kişi sayfası: /kisiler/nevzat-aydin gibi adreslerde açılır

@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import Header from "@/components/Header"; // İnce başlık, her sayfada
 import type { Metadata } from "next"; // Sayfa başlığı ve açıklaması için Next.js'in kalıbı
 import { Geist, Geist_Mono } from "next/font/google"; // Kurulumla gelen yazı tipleri
 import "./globals.css"; // Tailwind'in bağlandığı stil dosyası
@@ -13,23 +13,23 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// metadata: sekmede görünen başlık (title) ve Google'ın gösterdiği açıklama (description).
-// layout bütün sayfaları sardığı için bu, her sayfanın varsayılan başlığı olur.
-// Bir sayfa kendi başlığını verirse (ör. kişi sayfası) o sayfada onunki kullanılır.
+// metadata: sekme başlığı, açıklama ve paylaşım bilgisi. Bütün sayfalar için geçerli.
 export const metadata: Metadata = {
-  title: "Klip Dergi",
+  metadataBase: new URL("https://klip-dergi.vercel.app"), // ⭐ Paylaşım resimleri için sitenin gerçek adresi
+  // ⭐ default: sayfa başlık vermezse · template: %s yerine sayfanın başlığı gelir ("Hamdi Ulukaya · Klip Dergi")
+  title: { default: "Klip Dergi", template: "%s · Klip Dergi" },
   description: "Viral olan girişimcilerin podcast kliplerini ve hikâyelerini bir araya getiren dergi.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-        // lang="tr": sayfanın dili Türkçe. Tarayıcı büyük harfi Türkçe kurala göre çevirir (i → İ, "Kişiler" → "KİŞİLER").
-    <html
-      lang="tr"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      
-    <body className="min-h-full flex flex-col"><Header />{children}</body>
+    // lang="tr": sayfanın dili Türkçe (i → İ doğru çevrilsin)
+    <html lang="tr" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+      {/* Önce ince başlık, sonra açılan sayfa */}
+      <body className="flex min-h-full flex-col">
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }
