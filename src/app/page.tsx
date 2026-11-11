@@ -17,6 +17,10 @@ export default function Home() {
   const kisiler = getAllPeople(); // Bütün kişileri al (şu an 12).
   const vitrin = kisiler.slice(0, 5); // Vitrin: ilk 5 kişi (0, 1, 2, 3, 4). slice'ın 2. sayısı dahil değil.
   const digerleri = kisiler.slice(5); // Diğer hikâyeler: 5. sıradan sona kadar, vitrinde olmayanlar.
+  const one = digerleri[0];
+  const sol = digerleri.slice(1, 3);   // 1 ve 2 numaralı kişiler
+  const sag = digerleri.slice(3, 5);   // 3 ve 4 numaralı kişiler
+  const alt = digerleri.slice(5);       // 5'ten sona kadar
 
   return (
     // Bütün sayfa: krem zemin (amber-50), koyu mürekkep rengi yazı (stone-900)
@@ -61,16 +65,35 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Telefonda alt alta, orta ekranda 2, geniş ekranda 4 kart yan yana */}
-          {/* Her kart KlipKarti: kişinin ilk klibinin kapağı, başlığı ve konusu */}
-          <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {digerleri.map((kisi) => (
-              <li key={kisi.slug}>
-                <KlipKarti kisi={kisi} klip={kisi.clips[0]} />
-              </li>
+                 {/* Üst: 3 sütun (geniş ekranda). Ortadaki sütun daha geniş: 1fr · 1.55fr · 1fr */}
+          <div className="grid gap-6 lg:grid-cols-[1fr_1.55fr_1fr]">
+            {/* Sol sütun: 2 küçük kart alt alta */}
+            <div className="flex flex-col gap-6">
+              {sol.map((kisi) => (
+                <KlipKarti key={kisi.slug} kisi={kisi} klip={kisi.clips[0]} />
+              ))}
+            </div>
+
+            {/* Orta: öne çıkan büyük kart. Telefonda en üstte (order-first) */}
+            <div className="order-first lg:order-none">
+              <KlipKarti kisi={one} klip={one.clips[0]} boyut="buyuk" />
+            </div>
+
+            {/* Sağ sütun: 2 küçük kart alt alta */}
+            <div className="flex flex-col gap-6">
+              {sag.map((kisi) => (
+                <KlipKarti key={kisi.slug} kisi={kisi} klip={kisi.clips[0]} />
+              ))}
+            </div>
+          </div>
+
+          {/* Alt: yatay kartlar, orta ekranda 2 yan yana */}
+          <div className="mt-6 grid gap-6 md:grid-cols-2">
+            {alt.map((kisi) => (
+              <KlipKarti key={kisi.slug} kisi={kisi} klip={kisi.clips[0]} boyut="yatay" />
             ))}
-          </ul>
-        </section>
+          </div>
+                  </section>
       </main>
     </div>
   );
