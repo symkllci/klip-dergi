@@ -124,6 +124,9 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
               {kisi.name}
             </h1>
 
+             {/* Kanca: isimden sonra tek cümle (hocanın slaytı) */}
+            <p className="mt-4 max-w-xl font-serif text-xl italic leading-relaxed text-stone-600">{kisi.dek}</p>
+
             {/* Sosyal medya: sadece linki varsa göster (Adnan ve Abdullah'ta boş, başlık da çıkmasın) */}
             {kisi.links.length > 0 && (
               <ul className="mt-6 flex flex-wrap gap-2">
