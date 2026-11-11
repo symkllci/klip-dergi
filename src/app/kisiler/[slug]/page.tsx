@@ -147,7 +147,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
         </header>
 
         {/* 2. BİO: giriş paragrafı gibi. text-xl: büyük · leading-loose: çok rahat satır aralığı · max-w-3xl: satır çok uzamasın */}
-        <p className="mt-8 max-w-3xl text-xl leading-loose text-stone-700 sm:text-2xl sm:leading-loose">
+       <p className="font-serif mt-8 max-w-3xl text-xl leading-loose text-stone-700 sm:text-2xl sm:leading-loose">
           {kisi.bio}
         </p>
 
