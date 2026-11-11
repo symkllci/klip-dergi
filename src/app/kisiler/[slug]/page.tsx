@@ -4,14 +4,14 @@ import { Lora } from "next/font/google"; // Ana sayfadaki serif başlık fontu
 import { getAllPeople, getPersonBySlug } from "@/lib/people"; // Herkesi getiren ve slug ile bulan tarifler
 import KlipKarti from "@/components/KlipKarti"; // Diğer kişiler kartları, ana sayfayla aynı
 import Kirinti from "@/components/Kirinti"; // Ekmek kırıntısı: nerede olduğunu gösterir
-import KlipOynatici from "@/components/KlipOynatici"; // ⭐ Klip: önce kapak + ▶, tıklanınca Instagram
+import KlipOynatici from "@/components/KlipOynatici"; //  Klip: önce kapak + ▶, tıklanınca Instagram
 import type { Clip } from "@/types"; // Klip kalıbı (izleYazisi için)
 import type { Metadata } from "next"; // Sekme başlığı ve paylaşım bilgisinin kalıbı
 
 // Başlık fontu: ana sayfayla aynı Lora. latin-ext: Türkçe harfler için
 const baslikFontu = Lora({ subsets: ["latin", "latin-ext"] });
 
-// ⭐ embedAdresi buradan KlipOynatici.tsx'e taşındı (artık onu sadece oynatıcı kullanıyor)
+// embedAdresi buradan KlipOynatici.tsx'e taşındı (artık onu sadece oynatıcı kullanıyor)
 
 // Klibin altındaki link yazısını platforma göre üreten tarif
 function izleYazisi(klip: Clip): string {
@@ -113,19 +113,26 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
             {/* Kanca: isimden sonra tek cümle (hocanın slaytı) */}
             <p className="mt-4 max-w-xl font-serif text-xl italic leading-relaxed text-stone-600">{kisi.dek}</p>
 
-            {/* Sosyal medya: sadece linki varsa göster (Adnan ve Abdullah'ta boş, başlık da çıkmasın) */}
+            {/* Sosyal medya: yazı yerine yuvarlak Instagram ikonu (Footer'daki gibi). Linki yoksa hiç çıkmaz */}
             {kisi.links.length > 0 && (
-              <ul className="mt-6 flex flex-wrap gap-2">
+              <ul className="mt-6 flex flex-wrap gap-3">
                 {kisi.links.map((link) => (
                   <li key={link}>
-                    {/* Dış link: yeni sekmede, rel güvenlik için. Yazıda https:// ve www. görünmesin */}
+                    {/* Dış link: yeni sekmede, rel güvenlik için. Yazı yok → aria-label ekran okuyucuya söyler */}
                     <a
                       href={link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="rounded-full border border-stone-300 bg-white px-4 py-1.5 text-sm text-stone-600 hover:border-rose-800 hover:text-rose-800"
+                      aria-label={`${kisi.name} Instagram'da`}
+                      title="Instagram"
+                      className="flex h-11 w-11 items-center justify-center rounded-full border border-amber-200 bg-white text-stone-700 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
                     >
-                      {link.replace("https://", "").replace("www.", "")}
+                      {/* Instagram ikonu: yuvarlak köşeli kare + daire + küçük nokta. currentColor = yazı rengini al */}
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5" aria-hidden="true">
+                        <rect x="3" y="3" width="18" height="18" rx="5" />
+                        <circle cx="12" cy="12" r="4" />
+                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                      </svg>
                     </a>
                   </li>
                 ))}
@@ -140,28 +147,36 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
           {kisi.bio}
         </p>
 
-        {/* 3. KLİPLER: yatay kayan şerit (Perşembe'deki vitrin gibi, yalnız CSS) */}
+        {/* 3. KLİPLER: dergi tarzı (B) · numara, konu, başlık, kapak, hap buton */}
         <h2 className={`${baslikFontu.className} mt-12 border-b border-stone-300 pb-2 text-2xl font-bold`}>
           Klipler
         </h2>
         {/* flex: yan yana · overflow-x-auto: yatayda kaydır · snap-x snap-mandatory: her klibe otur · gap-6: aralık · pb-4: çubuk yapışmasın */}
         <ul className="mt-6 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4">
-          {kisi.clips.map((klip) => (
+          {kisi.clips.map((klip, sira) => (
             // shrink-0: küçülme · snap-start: sol kenarı şeride otursun · w-[320px]: her klip reel genişliğinde
             <li key={klip.url} className="w-[320px] shrink-0 snap-start">
-              {/* Klibin konusu ve başlığı */}
-              <p className="text-xs font-semibold uppercase tracking-widest text-rose-800">{klip.topic}</p>
-              <h3 className="mb-3 mt-1 font-semibold leading-snug">{klip.title}</h3>
-              {/* ⭐ Klip: önce kapak + ▶, tıklanınca Instagram yüklenir (sayfa hızlı açılsın) */}
+              {/* ⭐ Dergi numarası: sira 0'dan başlar → +1 ile 01, 02 */}
+              <p className="font-serif text-5xl italic text-rose-800">0{sira + 1}</p>
+              {/* Klibin konusu */}
+              <p className="mt-2 text-xs font-semibold uppercase tracking-widest text-rose-800">{klip.topic}</p>
+              {/* ⭐ Başlık: Lora, büyük. min-h-14 = en az 2 satırlık yer → bütün kapaklar aynı hizadan başlar */}
+              <h3 className="mb-3 mt-1 min-h-14 font-serif text-xl font-bold leading-snug">{klip.title}</h3>
+              {/* Klip: önce kapak + ▶, tıklanınca Instagram yüklenir (sayfa hızlı açılsın) */}
               <KlipOynatici klip={klip} />
-              {/* Yedek link: embed yüklenmezse ziyaretçi buradan izlesin */}
+              {/* ⭐ Yedek link: hap buton + Instagram ikonu. Fare gelince bordo dolar */}
               <a
                 href={klip.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 block text-sm text-rose-800 hover:underline"
+                className="mt-3 inline-flex items-center gap-2 rounded-full border border-amber-200 bg-white px-4 py-1.5 text-sm text-stone-600 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
               >
-                {izleYazisi(klip)}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                </svg>
+                {izleYazisi(klip)} ↗
               </a>
             </li>
           ))}
