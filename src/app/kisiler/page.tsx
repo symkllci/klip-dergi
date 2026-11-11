@@ -2,6 +2,7 @@ import Link from "next/link"; // Next.js'in sayfalar arası geçiş bileşenini 
 import { Lora } from "next/font/google"; // Ana sayfadaki serif başlık fontu (dergi hissi).
 import { getAllPeople } from "@/lib/people"; // Bütün kişileri getiren tarif.
 import KlipKarti from "@/components/KlipKarti"; // Ortak kart bileşeni, ana sayfayla aynı
+import Kirinti from "@/components/Kirinti"; // ⭐ Ekmek kırıntısı: nerede olduğunu gösterir
 
 // Başlık fontu: ana sayfadakiyle aynı Lora. latin-ext: Türkçe harfler (ş, ğ, ı, İ) için.
 const baslikFontu = Lora({ subsets: ["latin", "latin-ext"] });
@@ -48,12 +49,12 @@ export default async function KisilerSayfasi({
     ? tumKisiler.filter((kisi) => kisi.clips.some((klip) => klip.topic === seciliKonu))
     : tumKisiler;
 
-  // 2. süzgeç: arama metni varsa adında bu metin geçen kişiler, yoksa hepsi.
+  // 2. süzgeç: arama metni varsa adında, konusunda ya da klip başlığında bu metin geçen kişiler, yoksa hepsi.
   // toLocaleLowerCase("tr-TR"): Türkçe kurallarıyla küçük harfe çevir (toLowerCase'in Türkçe bilen hali).
-  // Hem kişinin adını hem aranan yazıyı küçültüyoruz: "NEVZAT", "Nevzat", "nevzat" hepsi aynı sonucu verir.
+  // Hem bakılan yazıyı hem aranan yazıyı küçültüyoruz: "NEVZAT", "Nevzat", "nevzat" hepsi aynı sonucu verir.
   // includes: yazının İÇİNDE bu parça geçiyor mu? "nevzat aydın".includes("zat") → true
   const aramaKucuk = aramaMetni.toLocaleLowerCase("tr-TR");
-   // Kelime adında, ya da kliplerinden birinin konusunda/başlığında geçiyor mu? (|| = "ya da")
+  // Kelime adında, ya da kliplerinden birinin konusunda/başlığında geçiyor mu? (|| = "ya da")
   const kisiler = aramaMetni
     ? konuyaGore.filter((kisi) => {
         const adindaVar = kisi.name.toLocaleLowerCase("tr-TR").includes(aramaKucuk);
@@ -72,10 +73,8 @@ export default async function KisilerSayfasi({
     <div className="min-h-screen bg-amber-50 text-stone-900">
       {/* Ana sayfayla aynı genişlik ve boşluklar */}
       <main className="mx-auto max-w-6xl px-6 py-10">
-        {/* Geri dönüş linki: ana sayfaya götürür. Üstüne gelince bordo */}
-        <Link href="/" className="text-sm text-stone-500 hover:text-rose-800">
-          ← Ana sayfa
-        </Link>
+        {/* ⭐ Ekmek kırıntısı: Ana sayfa › Kişiler (Kişiler = buradasın, href yok → bordo) */}
+        <Kirinti adimlar={[{ ad: "Ana sayfa", href: "/" }, { ad: "Kişiler" }]} />
 
         {/* Başlık bölümü: ana sayfadaki logo gibi altında kalın çizgi */}
         <header className="mt-4 border-b-2 border-stone-900 pb-4">
@@ -96,7 +95,7 @@ export default async function KisilerSayfasi({
             type="search"
             name="ara"
             defaultValue={aramaMetni}
-            placeholder="İsme göre ara (ör. nevzat)"
+            placeholder="İsim, konu ya da klip ara" // ⭐ Arama artık ad + konu + klip başlığında
             // focus: kutuya tıklayınca çerçeve bordo olsun (outline-none: tarayıcının mavi çerçevesini kapat)
             className="w-full max-w-sm rounded-full border border-stone-300 bg-white px-4 py-2 text-sm focus:border-rose-800 focus:outline-none"
           />

@@ -33,7 +33,7 @@ export default function Home() {
           </h1>
 
           {/* ⭐ Adın altındaki menü: Lora, bordo, ortada, aralarında nokta (dergi künyesi gibi) */}
-          <nav className="mt-5 flex items-center justify-center gap-4 font-serif text-lg text-rose-800">
+     <nav className="mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 whitespace-nowrap font-serif text-sm text-rose-800 sm:gap-x-4 sm:text-lg">
             {/* Sayfa içi bağlantı: aşağıdaki "Diğer hikâyeler" bölümüne iner */}
             <a href="#hikayeler" className="hover:underline">
               Girişimci hikâyeleri

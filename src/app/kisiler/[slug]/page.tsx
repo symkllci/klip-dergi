@@ -1,9 +1,9 @@
-import Link from "next/link"; // Next.js'in sayfalar arası geçiş bileşeni
 import Image from "next/image"; // Büyük kapak için Next.js'in resim bileşeni
 import { notFound } from "next/navigation"; // Next.js'in "sayfa bulunamadı" (404) aracı
 import { Lora } from "next/font/google"; // Ana sayfadaki serif başlık fontu
 import { getAllPeople, getPersonBySlug } from "@/lib/people"; // Herkesi getiren ve slug ile bulan tarifler
 import KlipKarti from "@/components/KlipKarti"; // Diğer kişiler kartları, ana sayfayla aynı
+import Kirinti from "@/components/Kirinti"; // ⭐ Ekmek kırıntısı: nerede olduğunu gösterir
 import type { Clip } from "@/types"; // Klip kalıbı (embedAdresi ve izleYazisi için)
 import type { Metadata } from "next"; // Sekme başlığı ve paylaşım bilgisinin kalıbı
 
@@ -88,15 +88,8 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
     <div className="min-h-screen bg-amber-50 text-stone-900">
       {/* Ana sayfayla aynı genişlik ve boşluklar */}
       <main className="mx-auto max-w-6xl px-6 py-10">
-        {/* Geri dönüş linkleri: gri, üstüne gelince bordo */}
-        <div className="flex gap-4 text-sm">
-          <Link href="/" className="text-stone-500 hover:text-rose-800">
-            ← Ana sayfa
-          </Link>
-          <Link href="/kisiler" className="text-stone-500 hover:text-rose-800">
-            ← Tüm kişiler
-          </Link>
-        </div>
+        {/* ⭐ Ekmek kırıntısı: Ana sayfa › Kişiler › (kişinin adı = buradasın, href yok → bordo) */}
+        <Kirinti adimlar={[{ ad: "Ana sayfa", href: "/" }, { ad: "Kişiler", href: "/kisiler" }, { ad: kisi.name }]} />
 
         {/* 1. ÜST KISIM: solda büyük kapak, sağda isim. Telefonda alt alta, orta ekranda yan yana */}
         <header className="mt-6 grid items-end gap-8 border-b-2 border-stone-900 pb-8 md:grid-cols-[minmax(0,18rem)_1fr]">
@@ -124,7 +117,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
               {kisi.name}
             </h1>
 
-             {/* Kanca: isimden sonra tek cümle (hocanın slaytı) */}
+            {/* Kanca: isimden sonra tek cümle (hocanın slaytı) */}
             <p className="mt-4 max-w-xl font-serif text-xl italic leading-relaxed text-stone-600">{kisi.dek}</p>
 
             {/* Sosyal medya: sadece linki varsa göster (Adnan ve Abdullah'ta boş, başlık da çıkmasın) */}
