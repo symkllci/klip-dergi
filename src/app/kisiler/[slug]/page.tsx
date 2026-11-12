@@ -195,7 +195,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
           {kisi.bio}
         </p>
 
-        {/* 3. KLİPLER: dergi tarzı (B) · numara, konu, başlık, kapak, hap buton */}
+        {/* 3. KLİPLER: dergi tarzı (B) · numara, konu, başlık, kapak, hap buton, kaynak */}
         <h2 className={`${baslikFontu.className} mt-12 border-b border-stone-300 pb-2 text-2xl font-bold`}>
           Klipler
         </h2>
@@ -226,6 +226,21 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
                 </svg>
                 {izleYazisi(klip)} ↗
               </a>
+              {/* ⭐ Kaynak: klibin kesildiği bölüm (hocanın listesi). Sadece varsa (&&): 4 klipte yok */}
+              {klip.source && (
+                <p className="mt-2 text-xs leading-relaxed text-stone-500">
+                  Kaynak:{" "}
+                  <a
+                    href={klip.source.episodeUrl} // Bölümün YouTube linki
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:text-rose-800"
+                  >
+                    {klip.source.episodeTitle}
+                  </a>{" "}
+                  ↗
+                </p>
+              )}
             </li>
           ))}
         </ul>
