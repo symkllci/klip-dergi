@@ -84,19 +84,67 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
         {/* Ekmek kırıntısı: Ana sayfa › Kişiler › (kişinin adı = buradasın, href yok → bordo) */}
         <Kirinti adimlar={[{ ad: "Ana sayfa", href: "/" }, { ad: "Kişiler", href: "/kisiler" }, { ad: kisi.name }]} />
 
-        {/* 1. ÜST KISIM: solda büyük kapak, sağda isim. Telefonda alt alta, orta ekranda yan yana */}
+        {/* 1. ÜST KISIM: solda büyük görsel (fotoğraf ya da kapak), sağda isim. Telefonda alt alta, orta ekranda yan yana */}
         <header className="mt-6 grid items-end gap-8 border-b-2 border-stone-900 pb-8 md:grid-cols-[minmax(0,18rem)_1fr]">
-          {/* Büyük kapak: 9:16 kutu, resim fill ile doldurur. Telefonda ortada ve dar (max-w-xs) */}
-          <div className="relative mx-auto aspect-[9/16] w-full max-w-xs overflow-hidden rounded-lg bg-stone-900 md:mx-0">
-            <Image
-              src={kapakKlip.cover} // Kişinin ilk klibinin kapağı
-              alt={`${kisi.name}: ${kapakKlip.title}`} // Ekran okuyucu: kişi ve klip başlığı
-              fill // Kutuyu doldur
-              loading="eager" // İlk ekranda en büyük resim (LCP): hemen yükle
-              sizes="(min-width: 768px) 18rem, 20rem" // Kutunun genişliği kadar resim indir
-              className="object-cover" // Ezmeden doldur
-            />
-          </div>
+          {/*  Büyük görsel: Wikipedia fotoğrafı varsa o, yoksa reel kapağı. İkisi de siyah-beyaz (grayscale) */}
+          {/* figure = görsel + altındaki açıklama (atıf) bir arada. Telefonda ortada ve dar (max-w-xs) */}
+          <figure className="mx-auto w-full max-w-xs md:mx-0">
+            {kisi.photo ? (
+              // Fotoğraf varsa: kendi boyutuyla (width/height Commons'tan geldi), kırpılmadan
+              <Image
+                src={kisi.photo.src} // public/fotograflar'daki dosya
+                alt={`${kisi.name} fotoğrafı`} // Ekran okuyucu için
+                width={kisi.photo.width} // 960
+                height={kisi.photo.height} // ör. 1242: oranı bilsin, sayfa kaymasın
+                loading="eager" // İlk ekranda en büyük resim (LCP): hemen yükle
+                sizes="(min-width: 768px) 18rem, 20rem" // Kutunun genişliği kadar resim indir
+                className="h-auto w-full rounded-lg grayscale" // Tam genişlik, boy orana göre, siyah-beyaz
+              />
+            ) : (
+              // Fotoğraf yoksa (6 kişi): yedek olarak reel kapağı, 9:16 kutuda
+              <div className="relative aspect-[9/16] w-full overflow-hidden rounded-lg bg-stone-900">
+                <Image
+                  src={kapakKlip.cover} // Kişinin ilk klibinin kapağı
+                  alt={`${kisi.name}: ${kapakKlip.title}`} // Ekran okuyucu: kişi ve klip başlığı
+                  fill // Kutuyu doldur
+                  loading="eager" // İlk ekranda en büyük resim (LCP): hemen yükle
+                  sizes="(min-width: 768px) 18rem, 20rem" // Kutunun genişliği kadar resim indir
+                  className="object-cover grayscale" // Ezmeden doldur, siyah-beyaz
+                />
+              </div>
+            )}
+
+            {/*  Atıf: sadece fotoğraf varsa (&&). Fotoğrafçı · lisans · kaynak · siyah-beyaz yapıldı */}
+            {kisi.photo && (
+              <figcaption className="mt-2 text-xs leading-relaxed text-stone-500">
+                Fotoğraf: {kisi.photo.author} ·{" "}
+                {/* Lisans linki varsa tıklanır, yoksa düz yazı (kamu malında link yok) */}
+                {kisi.photo.licenseUrl ? (
+                  <a
+                    href={kisi.photo.licenseUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:text-rose-800"
+                  >
+                    {kisi.photo.license}
+                  </a>
+                ) : (
+                  kisi.photo.license
+                )}{" "}
+                ·{" "}
+                {/* Kaynak: fotoğrafın Commons sayfası */}
+                <a
+                  href={kisi.photo.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-rose-800"
+                >
+                  Wikimedia Commons
+                </a>{" "}
+                · siyah-beyaz yapıldı
+              </figcaption>
+            )}
+          </figure>
 
           {/* İsim tarafı */}
           <div>
@@ -156,15 +204,15 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
           {kisi.clips.map((klip, sira) => (
             // shrink-0: küçülme · snap-start: sol kenarı şeride otursun · w-[320px]: her klip reel genişliğinde
             <li key={klip.url} className="w-[320px] shrink-0 snap-start">
-              {/* ⭐ Dergi numarası: sira 0'dan başlar → +1 ile 01, 02 */}
+              {/*  Dergi numarası: sira 0'dan başlar → +1 ile 01, 02 */}
               <p className="font-serif text-5xl italic text-rose-800">0{sira + 1}</p>
               {/* Klibin konusu */}
               <p className="mt-2 text-xs font-semibold uppercase tracking-widest text-rose-800">{klip.topic}</p>
-              {/* ⭐ Başlık: Lora, büyük. min-h-14 = en az 2 satırlık yer → bütün kapaklar aynı hizadan başlar */}
+              {/*  Başlık: Lora, büyük. min-h-14 = en az 2 satırlık yer → bütün kapaklar aynı hizadan başlar */}
               <h3 className="mb-3 mt-1 min-h-14 font-serif text-xl font-bold leading-snug">{klip.title}</h3>
               {/* Klip: önce kapak + ▶, tıklanınca Instagram yüklenir (sayfa hızlı açılsın) */}
               <KlipOynatici klip={klip} />
-              {/* ⭐ Yedek link: hap buton + Instagram ikonu. Fare gelince bordo dolar */}
+              {/*  Yedek link: hap buton + Instagram ikonu. Fare gelince bordo dolar */}
               <a
                 href={klip.url}
                 target="_blank"
