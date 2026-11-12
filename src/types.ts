@@ -5,7 +5,7 @@ export type Clip = {
     topic: string;
     publishedAt: string;
     cover: string;
-    source?: Source; // klibin kaynağı. ? = bulamadıklarımızda olmayabilir   
+    source?: Source; // klibin kaynağı. ? = bulamadıklarımızda olmayabilir (4 klipte yok)
 };
 
 export type Person = {
@@ -15,7 +15,7 @@ export type Person = {
     dek: string; // kanca: başlığın altındaki tek cümlelik tanıtım
     photo?: Photo; // fotoğraf (Wikipedia/Commons). ? = olmayabilir, 6 kişide yok
     links: string[]; // kişinin sosyal medya adresleri, birden fazla olabildiği için liste
-    clips: Clip[]; // her klip 6 bilgi içerdiği için string değil, Clip kalıbını kullandık
+    clips: Clip[]; // her klip 7 bilgi içerdiği için string değil, Clip kalıbını kullandık
 };
 
 // Fotoğrafın kimlik kartı (Wikipedia/Commons'tan)
@@ -31,17 +31,17 @@ export type Photo = {
 
 // Podcast programı (dizi gibi)
 export type Podcast = {
-  slug: string; // adresteki ad, ör. viral-girisimci
-  name: string; // programın adı
-  host: string; // sunucu
-  url: string; // programın ana linki
-  platforms: string[]; // YouTube, Spotify... birden fazla → liste
+    slug: string; // adresteki ad, ör. viral-girisimci
+    name: string; // programın adı
+    host: string; // sunucu
+    url: string; // programın ana linki
+    platforms: string[]; // YouTube, Spotify... birden fazla → liste
 };
 
 // Klibin geldiği bölüm
 export type Source = {
-  podcastSlug: string; // hangi podcast (Podcast'in slug'ı)
-  episodeTitle: string; // bölümün adı
-  episodeUrl: string; // bölümün linki
-  timestamp: string; // bölümün kaçıncı dakikası, ör. "12:34" (: olduğu için yazı)
+    podcastSlug?: string; // hangi podcast. ? = bilinmiyorsa olmayabilir
+    episodeTitle: string; // bölümün adı
+    episodeUrl: string; // bölümün linki
+    timestamp?: string; // bölümün kaçıncı dakikası, ör. "12:34". ? = hoca vermedi, olmayabilir
 };
