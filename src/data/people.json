@@ -31,6 +31,14 @@
     "name": "Hamdi Ulukaya",
     "bio": "Hamdi Ulukaya, Erzincan İliç doğumlu bir girişimcidir. Chobani markasının kurucusudur. Markanın temeli, 2005 yılında kapatılmış bir yoğurt fabrikasını satın almasıyla atılmıştır. Mültecilere istihdam sağlaması ile de tanınmaktadır.",
     "dek": "Kapanmış bir yoğurt fabrikasını satın alıp Chobani'ye dönüştürdü.",
+    "photo": {
+      "src": "/fotograflar/hamdi-ulukaya.jpg",
+      "width": 960,
+      "height": 1242,
+      "author": "Benjamin Applebaum",
+      "license": "Public domain",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hamdi_Ulukaya,_official_portrait,_Homeland_Security_Council.jpg"
+    },
     "links": [
       "https://www.instagram.com/hamdi.ulukaya/"
     ],
@@ -137,6 +145,15 @@
     "name": "Acun Ilıcalı",
     "bio": "Acun Ilıcalı, medya ve televizyon sektöründe faaliyet gösteren bir girişimcidir. Muhabirlikle başladığı medya kariyerinde 2004 yılında Acun Medya'yı kurmuştur. 2013 yılında TV8 kanalını, 2022'de ise İngiliz futbol kulübü Hull City'yi satın almıştır.",
     "dek": "Muhabirlikten TV8'e ve bir İngiliz futbol kulübüne uzanan yolculuk.",
+    "photo": {
+      "src": "/fotograflar/acun-ilicali.jpg",
+      "width": 960,
+      "height": 1280,
+      "author": "Zafer",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Fenerbah%C3%A7e_Sports_Club_Ordinary_General_Assembly_Meeting_20240609_(24).jpg"
+    },
     "links": [
       "https://www.instagram.com/acunilicali/"
     ],
@@ -164,6 +181,15 @@
     "name": "Elon Musk",
     "bio": "Elon Musk, teknoloji ve uzay sanayisi alanında faaliyet gösteren bir girişimcidir. İlk internet girişimi Zip2'nin ardından PayPal'ın temelini oluşturan X.com'u kurmuştur. 2002'de uzay taşımacılığı şirketi SpaceX'i kurmuş, elektrikli araç üreticisi Tesla'nın yönetimini üstlenmiştir. Bugün bu şirketlerin başında yöneticilik yapmaktadır.",
     "dek": "PayPal'ın temelinden SpaceX'e, çılgın denilen kararların ardındaki isim.",
+    "photo": {
+      "src": "/fotograflar/elon-musk.jpg",
+      "width": 960,
+      "height": 1262,
+      "author": "Gage Skidmore",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Elon_Musk_-_54820081119_(cropped).jpg"
+    },
     "links": [
       "https://www.instagram.com/elonmusk/"
     ],
@@ -245,6 +271,15 @@
     "name": "Mehmet Dinçerler",
     "bio": "Mehmet Dinçerler, gıda ve yeme-içme sektöründe faaliyet gösteren bir girişimcidir. 1988 yılında doğmuş olup aslen Gazianteplidir; ailesi Hacı Sayid markasının kurucusudur. Bugün Dinçerler Group'un CEO'sudur. Grup, Gloria Jean's Coffees'in Türkiye haklarına sahiptir ve markayı Türkiye'de 240 şubeye ulaştırmıştır.",
     "dek": "Gloria Jean's'i Türkiye'de 240 şubeye taşıyan grubun başındaki Gaziantepli girişimci.",
+    "photo": {
+      "src": "/fotograflar/mehmet-dincerler.jpg",
+      "width": 960,
+      "height": 1440,
+      "author": "Mehmet Dinçerler",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mehmet-Dincerler-2.jpg"
+    },
     "links": [
       "https://www.instagram.com/mehmetdnc/"
     ],
@@ -264,6 +299,15 @@
     "name": "Abdullah Kiğılı",
     "bio": "Abdullah Kiğılı, hazır giyim ve perakende sektöründe faaliyet gösteren bir girişimcidir. 1943 yılında Malatya'da doğmuştur ve 1965'te kurulan Kiğılı markasının sahibidir. İş hayatının yanı sıra 1997 yılında kısa bir süre Türkiye Futbol Federasyonu Başkanlığı, Fenerbahçe'de de başkan yardımcılığı yapmıştır.",
     "dek": "Kiğılı markasından Futbol Federasyonu başkanlığına uzanan bir iş hayatı.",
+    "photo": {
+      "src": "/fotograflar/abdullah-kigili.jpg",
+      "width": 960,
+      "height": 1144,
+      "author": "Serkan Yakın",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Abdullah_Kiğılı.jpg"
+    },
     "links": [],
     "clips": [
       {
@@ -281,6 +325,15 @@
     "name": "Mark Zuckerberg",
     "bio": "Mark Zuckerberg, internet ve sosyal medya alanında faaliyet gösteren bir girişimcidir. 2004 yılında Harvard Üniversitesi'nde öğrenciyken Facebook'u kurmuştur. Zamanla Instagram ve WhatsApp platformlarını bünyesine katmış, 2021 yılında şirketinin adını Meta olarak değiştirmiştir.",
     "dek": "Öğrenciyken kurduğu Facebook'tan Instagram ve WhatsApp'ı da içine alan Meta'ya.",
+    "photo": {
+      "src": "/fotograflar/mark-zuckerberg.jpg",
+      "width": 960,
+      "height": 1282,
+      "author": "Jeff Sainlar",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mark_Zuckerberg_(2025)_(cropped).jpg"
+    },
     "links": [
       "https://www.instagram.com/zuck/"
     ],
