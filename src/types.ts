@@ -24,6 +24,6 @@ export type Photo = {
     height: number; // yükseklik (piksel)
     author: string; // fotoğrafçı
     license: string; // lisans adı (CC BY 4.0 gibi)
-    licenseUrl: string; // lisansın bağlantısı
+    licenseUrl?: string; // lisansın bağlantısı. ? = olmayabilir (kamu malında yok)
     sourceUrl: string; // görselin Commons sayfası
 };
