@@ -17,6 +17,8 @@ export type Person = {
     photo?: Photo; // fotoğraf (Wikipedia/Commons). ? = olmayabilir, 6 kişide yok
     links: string[]; // kişinin sosyal medya adresleri, birden fazla olabildiği için liste
     clips: Clip[]; // her klip 8 bilgi içerdiği için string değil, Clip kalıbını kullandık
+    updatedAt: string; // sayfanın son güncellenme tarihi, ör. "2026-11-14". ? yok: 12 kişide de var
+    editor: string; // biyografiyi hazırlayan editör. Bütün sayfaya ait → Person'da (klibe değil)
 };
 
 // Fotoğrafın kimlik kartı (Wikipedia/Commons'tan)
