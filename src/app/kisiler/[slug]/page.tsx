@@ -84,11 +84,28 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
         {/* Ekmek kırıntısı: Ana sayfa › Kişiler › (kişinin adı = buradasın, href yok → bordo) */}
         <Kirinti adimlar={[{ ad: "Ana sayfa", href: "/" }, { ad: "Kişiler", href: "/kisiler" }, { ad: kisi.name }]} />
 
-        {/* 1. ÜST KISIM: solda büyük görsel (fotoğraf ya da kapak), sağda isim. Telefonda alt alta, orta ekranda yan yana */}
-        <header className="mt-6 grid items-end gap-8 border-b-2 border-stone-900 pb-8 md:grid-cols-[minmax(0,18rem)_1fr]">
-          {/*  Büyük görsel: Wikipedia fotoğrafı varsa o, yoksa reel kapağı. İkisi de siyah-beyaz (grayscale) */}
+        {/* ===== GAZETE SAYFASI (Maket E) ===== */}
+
+        {/* 1. KÜNYE ŞERİDİ: üstte tek kalın çizgi. Solda PROFİL, ortada KLİP DERGİ, sağda konu */}
+        <div className="mt-6 flex items-center justify-between border-t-2 border-stone-900 pt-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-stone-600 sm:text-xs">
+          <span>Profil</span>
+          <span className="hidden sm:inline">Klip Dergi</span>
+          <span className="text-rose-800">{kapakKlip.topic}</span>
+        </div>
+
+        {/* 2. MANŞET: ortada dev isim + kanca */}
+        <header className="py-10 text-center">
+          {/* Kişinin adı: Lora, telefonda 5xl, büyük ekranda 7xl */}
+          <h1 className={`${baslikFontu.className} text-5xl font-bold leading-tight sm:text-7xl`}>{kisi.name}</h1>
+          {/* Kanca: isimden sonra tek cümle */}
+          <p className="mx-auto mt-3 max-w-2xl font-serif text-lg italic leading-relaxed text-stone-600 sm:text-xl">{kisi.dek}</p>
+        </header>
+
+        {/* 3. İKİ SÜTUN: telefonda alt alta · orta ekrandan itibaren solda fotoğraf (4), sağda yazı (8). 4 + 8 = 12 */}
+        <div className="grid gap-10 md:grid-cols-12">
+          {/* 3a. SOL: fotoğraf + atıf */}
           {/* figure = görsel + altındaki açıklama (atıf) bir arada. Telefonda ortada ve dar (max-w-xs) */}
-          <figure className="mx-auto w-full max-w-xs md:mx-0">
+          <figure className="mx-auto w-full max-w-xs md:col-span-4 md:max-w-none">
             {kisi.photo ? (
               // Fotoğraf varsa: kendi boyutuyla (width/height Commons'tan geldi), kırpılmadan
               <Image
@@ -97,7 +114,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
                 width={kisi.photo.width} // 960
                 height={kisi.photo.height} // ör. 1242: oranı bilsin, sayfa kaymasın
                 loading="eager" // İlk ekranda en büyük resim (LCP): hemen yükle
-                sizes="(min-width: 768px) 18rem, 20rem" // Kutunun genişliği kadar resim indir
+                sizes="(min-width: 768px) 22rem, 20rem" // Kutunun genişliği kadar resim indir
                 className="h-auto w-full rounded-lg grayscale" // Tam genişlik, boy orana göre, siyah-beyaz
               />
             ) : (
@@ -108,7 +125,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
                   alt={`${kisi.name}: ${kapakKlip.title}`} // Ekran okuyucu: kişi ve klip başlığı
                   fill // Kutuyu doldur
                   loading="eager" // İlk ekranda en büyük resim (LCP): hemen yükle
-                  sizes="(min-width: 768px) 18rem, 20rem" // Kutunun genişliği kadar resim indir
+                  sizes="(min-width: 768px) 22rem, 20rem" // Kutunun genişliği kadar resim indir
                   className="object-cover grayscale" // Ezmeden doldur, siyah-beyaz
                 />
               </div>
@@ -146,24 +163,43 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
             )}
           </figure>
 
-          {/* İsim tarafı */}
-          <div>
-            {/* Konu etiketi: tek, büyük kapaktaki klibin konusu */}
-            <span className="rounded-full bg-rose-800 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white">
-              {kapakKlip.topic}
-            </span>
+          {/* 3b. SAĞ: biyografi + alıntılar + editör satırı */}
+          <article className="md:col-span-8">
+            {/* BİO: tek sütun, Lora, rahat satır aralığı */}
+            {/* first-letter: ilk harf büyük, kalın, bordo, sola yaslı (float-left) → yazı etrafından akar */}
+            <p className="font-serif text-xl leading-loose text-stone-700 first-letter:float-left first-letter:mr-3 first-letter:text-7xl first-letter:font-bold first-letter:leading-none first-letter:text-rose-800">
+              {kisi.bio}
+            </p>
 
-            {/* Kişinin adı: Lora, çok büyük */}
-            <h1 className={`${baslikFontu.className} mt-4 text-5xl font-bold leading-tight sm:text-6xl`}>
-              {kisi.name}
-            </h1>
+            {/* ⭐ ALINTILAR: her klibin alıntısı, büyük ve ortada. Altında hangi klipten olduğu yazılı */}
+            {/* filter: sadece alıntısı olan klipler (Aykut, Efe, Mark'ta yok → bu kısım hiç çıkmaz) */}
+            {kisi.clips
+              .filter((klip) => klip.quote)
+              .map((klip) => (
+                <figure key={klip.url} className="mt-10">
+                  {/* Çizgi yerine büyük bordo tırnak işareti (süs, ekran okuyucu okumasın: aria-hidden) */}
+                  <span aria-hidden="true" className="block font-serif text-6xl leading-none text-rose-800">“</span>
+                  {/* blockquote = "bu başkasının sözü" diyen etiket */}
+                  <blockquote className="-mt-4 font-serif text-2xl italic leading-relaxed text-stone-800">{klip.quote}</blockquote>
+                  {/* Kimin sözü, hangi klip: KLİP 02 gibi. indexOf = klibin listedeki sırası (0'dan başlar → +1) */}
+                  <figcaption className="mt-3 text-xs font-semibold uppercase tracking-widest text-stone-500">
+                    {kisi.name} · Klip 0{kisi.clips.indexOf(klip) + 1}: {klip.title}
+                  </figcaption>
+                </figure>
+              ))}
 
-            {/* Kanca: isimden sonra tek cümle (hocanın slaytı) */}
-            <p className="mt-4 max-w-xl font-serif text-xl italic leading-relaxed text-stone-600">{kisi.dek}</p>
+            {/* ⭐ Editör satırı: biyografiyi kim hazırladı, en son ne zaman güncellendi */}
+            {/* time = makinenin okuyacağı tarih (dateTime) + insanın okuyacağı tarih (14 Kasım 2026) */}
+            <p className="mt-10 text-xs uppercase tracking-widest text-stone-500">
+              Editör: {kisi.editor} · Güncellendi:{" "}
+              <time dateTime={kisi.updatedAt}>
+                {new Date(kisi.updatedAt).toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })}
+              </time>
+            </p>
 
-            {/* Sosyal medya: yazı yerine yuvarlak Instagram ikonu (Footer'daki gibi). Linki yoksa hiç çıkmaz */}
+            {/* Sosyal medya: yuvarlak Instagram ikonu. Linki yoksa hiç çıkmaz */}
             {kisi.links.length > 0 && (
-              <ul className="mt-6 flex flex-wrap gap-3">
+              <ul className="mt-4 flex flex-wrap gap-3">
                 {kisi.links.map((link) => (
                   <li key={link}>
                     {/* Dış link: yeni sekmede, rel güvenlik için. Yazı yok → aria-label ekran okuyucuya söyler */}
@@ -186,83 +222,61 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
                 ))}
               </ul>
             )}
-          </div>
-        </header>
+          </article>
 
-        {/* 2. BİO: giriş paragrafı gibi. Lora (font-serif), büyük, rahat satır aralığı, max-w-3xl: satır çok uzamasın */}
-        {/* first-letter: ilk harf büyük (7xl), kalın, bordo, sola yaslı (float-left) → yazı etrafından akar (dergi tarzı) */}
-        <p className="font-serif mt-8 max-w-3xl text-xl leading-loose text-stone-700 sm:text-2xl sm:leading-loose first-letter:float-left first-letter:mr-3 first-letter:text-7xl first-letter:font-bold first-letter:leading-none first-letter:text-rose-800">
-          {kisi.bio}
-        </p>
+        </div>
 
-        {/* ⭐ Editör satırı: biyografiyi kim hazırladı, en son ne zaman güncellendi */}
-        {/* time = makinenin okuyacağı tarih (dateTime) + insanın okuyacağı tarih (14 Kasım 2026) */}
-        <p className="mt-6 max-w-3xl border-t border-stone-300 pt-3 text-xs uppercase tracking-widest text-stone-500">
-          Editör: {kisi.editor} · Güncellendi:{" "}
-          <time dateTime={kisi.updatedAt}>
-            {new Date(kisi.updatedAt).toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })}
-          </time>
-        </p>
-
-        {/* 3. KLİPLER: dergi tarzı (B) · numara, konu, başlık, kapak, hap buton, kaynak, alıntı */}
-        <h2 className={`${baslikFontu.className} mt-12 border-b border-stone-300 pb-2 text-2xl font-bold`}>
-          Klipler
-        </h2>
-        {/* flex: yan yana · overflow-x-auto: yatayda kaydır · snap-x snap-mandatory: her klibe otur · gap-6: aralık · pb-4: çubuk yapışmasın */}
-        <ul className="mt-6 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4">
-          {kisi.clips.map((klip, sira) => (
-            // shrink-0: küçülme · snap-start: sol kenarı şeride otursun · w-[320px]: her klip reel genişliğinde
-            <li key={klip.url} className="w-[320px] shrink-0 snap-start">
-              {/*  Dergi numarası: sira 0'dan başlar → +1 ile 01, 02 */}
-              <p className="font-serif text-5xl italic text-rose-800">0{sira + 1}</p>
-              {/* Klibin konusu */}
-              <p className="mt-2 text-xs font-semibold uppercase tracking-widest text-rose-800">{klip.topic}</p>
-              {/*  Başlık: Lora, büyük. min-h-14 = en az 2 satırlık yer → bütün kapaklar aynı hizadan başlar */}
-              <h3 className="mb-3 mt-1 min-h-14 font-serif text-xl font-bold leading-snug">{klip.title}</h3>
-              {/* Klip: önce kapak + ▶, tıklanınca Instagram yüklenir (sayfa hızlı açılsın) */}
-              <KlipOynatici klip={klip} />
-              {/*  Yedek link: hap buton + Instagram ikonu. Fare gelince bordo dolar */}
-              <a
-                href={klip.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-3 inline-flex items-center gap-2 rounded-full border border-amber-200 bg-white px-4 py-1.5 text-sm text-stone-600 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4" aria-hidden="true">
-                  <rect x="3" y="3" width="18" height="18" rx="5" />
-                  <circle cx="12" cy="12" r="4" />
-                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-                </svg>
-                {izleYazisi(klip)} ↗
-              </a>
-              {/* ⭐ Kaynak: klibin kesildiği bölüm (hocanın listesi). Sadece varsa (&&): 4 klipte yok */}
-              {klip.source && (
-                <p className="mt-2 text-xs leading-relaxed text-stone-500">
-                  Kaynak:{" "}
-                  <a
-                    href={klip.source.episodeUrl} // Bölümün YouTube linki
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline hover:text-rose-800"
-                  >
-                    {klip.source.episodeTitle}
-                  </a>{" "}
-                  ↗
+        {/* 4. KLİPLER: tam genişlik, yatay şerit. Her klip 320px (oynatıcı bu genişlikte rahat sığıyor) */}
+        <section className="mt-16">
+          {/* Başlık: KLİPLER · 2 (kaç klip olduğu) */}
+          <h2 className={`${baslikFontu.className} text-2xl font-bold`}>
+            Klipler <span className="text-rose-800">· {kisi.clips.length}</span>
+          </h2>
+          {/* flex: yan yana · overflow-x-auto: yatayda kaydır · snap: her klibe otur · gap-6: aralık */}
+          <ul className="mt-6 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4">
+            {kisi.clips.map((klip, sira) => (
+              // shrink-0: küçülme · snap-start: sol kenarı şeride otursun · w-[320px]: her klip reel genişliğinde
+              <li key={klip.url} className="w-[320px] shrink-0 snap-start">
+                {/*  Dergi numarası + konu yan yana */}
+                <p className="flex items-baseline gap-3">
+                  <span className="font-serif text-3xl italic text-rose-800">0{sira + 1}</span>
+                  <span className="text-xs font-semibold uppercase tracking-widest text-rose-800">{klip.topic}</span>
                 </p>
-              )}
-              {/* ⭐ Alıntı: kişinin klipte söylediği söz. Sadece varsa (&&): Aykut, Efe, Mark'ta yok */}
-              {/* En altta: alıntıların boyu farklı, kapaklar aynı hizada kalsın */}
-              {klip.quote && (
-                <blockquote className="mt-4 border-l-2 border-rose-800 pl-3 font-serif text-base italic leading-relaxed text-stone-700">
-                  “{klip.quote}”
-                </blockquote>
-              )}
-            </li>
-          ))}
-        </ul>
+                {/*  Başlık: min-h-14 = 2 satırlık yer → bütün kapaklar aynı hizadan başlar */}
+                <h3 className="mb-3 mt-1 min-h-14 font-serif text-xl font-bold leading-snug">{klip.title}</h3>
+                {/* Klip: önce kapak + ▶, tıklanınca Instagram yüklenir (sayfa hızlı açılsın) */}
+                <KlipOynatici klip={klip} />
+                {/*  Yedek link: küçük, altı çizili */}
+                <a
+                  href={klip.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-block text-sm text-stone-600 underline hover:text-rose-800"
+                >
+                  {izleYazisi(klip)} ↗
+                </a>
+                {/* ⭐ Kaynak: klibin kesildiği bölüm. Sadece varsa (&&): 4 klipte yok */}
+                {klip.source && (
+                  <p className="mt-1 text-xs leading-relaxed text-stone-500">
+                    Kaynak:{" "}
+                    <a
+                      href={klip.source.episodeUrl} // Bölümün YouTube linki
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline hover:text-rose-800"
+                    >
+                      {klip.source.episodeTitle}
+                    </a>{" "}
+                    ↗
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
 
-        {/* 4. DİĞER KİŞİLER: 3 KlipKarti (ana sayfadakiyle aynı kart) */}
-        <h2 className={`${baslikFontu.className} mt-12 border-b border-stone-300 pb-2 text-2xl font-bold`}>
+        {/* 5. DİĞER KİŞİLER: 3 KlipKarti (ana sayfadakiyle aynı kart) */}
+        <h2 className={`${baslikFontu.className} mt-16 text-2xl font-bold`}>
           Diğer kişiler
         </h2>
         {/* Telefonda alt alta, orta ekranda 3 yan yana */}
