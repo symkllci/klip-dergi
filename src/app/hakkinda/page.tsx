@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Lora } from "next/font/google";
+import Kirinti from "@/components/Kirinti"; // Ekmek kırıntısı: nerede olduğunu gösterir (kişi sayfasındakinin aynısı)
 
 const baslikFontu = Lora({ subsets: ["latin", "latin-ext"], style: ["normal", "italic"] });
 
@@ -43,9 +44,12 @@ const kunye = [
 export default function HakkindaSayfasi() {
   return (
     <div className="bg-amber-50 text-stone-900">
-      <main className="mx-auto max-w-2xl px-6 py-20">
-        {/* Giriş: ortalı, sakin */}
-        <div className="text-center">
+      <main className="mx-auto max-w-2xl px-6 py-10">
+        {/* ⭐ Ekmek kırıntısı: Ana sayfa › Hakkımızda. Son adımda href yok → "buradasın" (bordo, tıklanmaz) */}
+        <Kirinti adimlar={[{ ad: "Ana sayfa", href: "/" }, { ad: "Hakkımızda" }]} />
+
+        {/* Giriş: ortalı, sakin. mt-12: kırıntıyla arasında boşluk */}
+        <div className="mt-12 text-center">
           <p className={etiket}>Hakkımızda</p>
           <h1 className={`${baslikFontu.className} mt-4 text-5xl italic`}>Klip Dergi</h1>
           <p className="mx-auto mt-6 max-w-xl font-serif text-lg leading-loose text-stone-600">
