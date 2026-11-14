@@ -6,6 +6,7 @@ export type Clip = {
     publishedAt: string;
     cover: string;
     source?: Source; // klibin kaynağı. ? = bulamadıklarımızda olmayabilir (4 klipte yok)
+    quote?: string; // klipten alıntı, kişinin kendi sözü. ? = bulamadıklarımızda olmayabilir (Aykut, Efe, Mark)
 };
 
 export type Person = {
@@ -15,7 +16,7 @@ export type Person = {
     dek: string; // kanca: başlığın altındaki tek cümlelik tanıtım
     photo?: Photo; // fotoğraf (Wikipedia/Commons). ? = olmayabilir, 6 kişide yok
     links: string[]; // kişinin sosyal medya adresleri, birden fazla olabildiği için liste
-    clips: Clip[]; // her klip 7 bilgi içerdiği için string değil, Clip kalıbını kullandık
+    clips: Clip[]; // her klip 8 bilgi içerdiği için string değil, Clip kalıbını kullandık
 };
 
 // Fotoğrafın kimlik kartı (Wikipedia/Commons'tan)

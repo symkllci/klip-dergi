@@ -195,7 +195,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
           {kisi.bio}
         </p>
 
-        {/* 3. KLİPLER: dergi tarzı (B) · numara, konu, başlık, kapak, hap buton, kaynak */}
+        {/* 3. KLİPLER: dergi tarzı (B) · numara, konu, başlık, kapak, hap buton, kaynak, alıntı */}
         <h2 className={`${baslikFontu.className} mt-12 border-b border-stone-300 pb-2 text-2xl font-bold`}>
           Klipler
         </h2>
@@ -240,6 +240,13 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
                   </a>{" "}
                   ↗
                 </p>
+              )}
+              {/* ⭐ Alıntı: kişinin klipte söylediği söz. Sadece varsa (&&): Aykut, Efe, Mark'ta yok */}
+              {/* En altta: alıntıların boyu farklı, kapaklar aynı hizada kalsın */}
+              {klip.quote && (
+                <blockquote className="mt-4 border-l-2 border-rose-800 pl-3 font-serif text-base italic leading-relaxed text-stone-700">
+                  “{klip.quote}”
+                </blockquote>
               )}
             </li>
           ))}
