@@ -195,6 +195,15 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
           {kisi.bio}
         </p>
 
+        {/* ⭐ Editör satırı: biyografiyi kim hazırladı, en son ne zaman güncellendi */}
+        {/* time = makinenin okuyacağı tarih (dateTime) + insanın okuyacağı tarih (14 Kasım 2026) */}
+        <p className="mt-6 max-w-3xl border-t border-stone-300 pt-3 text-xs uppercase tracking-widest text-stone-500">
+          Editör: {kisi.editor} · Güncellendi:{" "}
+          <time dateTime={kisi.updatedAt}>
+            {new Date(kisi.updatedAt).toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })}
+          </time>
+        </p>
+
         {/* 3. KLİPLER: dergi tarzı (B) · numara, konu, başlık, kapak, hap buton, kaynak, alıntı */}
         <h2 className={`${baslikFontu.className} mt-12 border-b border-stone-300 pb-2 text-2xl font-bold`}>
           Klipler
