@@ -1,68 +1,76 @@
-import Image from "next/image";
+import Link from "next/link"; // Next.js'in sayfalar arası geçiş bileşenini getir.
+import { Lora } from "next/font/google"; // Google Fonts'tan serif (tırnaklı) başlık fontu.
+import { getAllPeople } from "@/lib/people"; // Bütün kişileri getiren tarif.
+import KlipKarti from "@/components/KlipKarti"; // Ortak kart bileşeni, kişiler sayfası da kullanıyor
+import Vitrin from "@/components/Vitrin"; // Kayan vitrin: tarayıcıda çalışan ("use client") bileşen
 
+// Başlık fontu: dergi hissi versin diye serif (kaynak: Next.js Fonts belgesi).
+// latin-ext: Türkçe harfler (ş, ğ, ı, İ) için.
+// style: hem düz hem italik (eğik) yazı kullanabilmek için. Logo italik, başlıklar düz.
+const baslikFontu = Lora({ subsets: ["latin", "latin-ext"], style: ["normal", "italic"] });
+
+// Renkler (Tailwind'in hazır renkleri):
+// krem zemin amber-50 · koyu mürekkep stone-900 · bordo vurgu rose-800
+
+// Ana sayfa: sitenin adresi "/" (localhost:3000). Sunucuda hazırlanır, sadece vitrin tarayıcıda çalışır.
 export default function Home() {
+  const kisiler = getAllPeople(); // Bütün kişileri al (şu an 12).
+  const vitrin = kisiler.slice(0, 5); // Vitrin: ilk 5 kişi (0, 1, 2, 3, 4). slice'ın 2. sayısı dahil değil.
+  const digerleri = kisiler.slice(5); // Diğer hikâyeler: 5. sıradan sona kadar, vitrinde olmayanlar.
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    // Bütün sayfa: krem zemin (amber-50), koyu mürekkep rengi yazı (stone-900)
+    <div className="min-h-screen bg-amber-50 text-stone-900">
+      <main className="mx-auto max-w-6xl px-6 py-10">
+        {/* Üst kısım: ortalanmış dergi adı. Lora italik: yumuşak, Colossus'tan farklı bir logo */}
+        <header className="border-b-2 border-stone-900 pb-4">
+          <h1 className={`${baslikFontu.className} text-center text-5xl font-bold italic sm:text-7xl`}>
+            Klip Dergi
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
+          {/* Adın altındaki ince menü satırı */}
+            <nav className="mt-4 flex items-center justify-between gap-4 text-xs uppercase tracking-widest">
+            {/* Sayfa içi bağlantı: aşağıdaki "Diğer hikâyeler" bölümüne iner */}
+            <a href="#hikayeler" className="text-stone-500 hover:text-rose-800">
+              Girişimci hikâyeleri
+            </a>
+            <Link href="/kisiler" className="font-semibold text-rose-800 hover:underline">
+              Kişiler
+            </Link>
+            {/* Dış bağlantı: yeni sekmede açılır, rel güvenlik için */}
             <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              href="https://www.instagram.com/viralgirisimci/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-stone-500 hover:text-rose-800"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+              Podcast klipleri
+            </a>
+          </nav>
+        </header>
+
+        {/* Vitrin: ilk 5 kişi, ayrı bileşende (src/components/Vitrin.tsx) */}
+        <Vitrin kisiler={vitrin} />
+
+        {/* Diğer kişiler: başlık satırı ve kartlar */}
+        <section className="mt-14">
+          {/* id="hikayeler": menüdeki "Girişimci hikâyeleri" linki buraya iner */}
+          <div id="hikayeler" className="mb-6 flex items-baseline justify-between border-b border-stone-300 pb-2">
+            <h2 className={`${baslikFontu.className} text-2xl font-bold`}>Diğer hikâyeler</h2>
+            <Link href="/kisiler" className="text-sm text-stone-500 hover:text-rose-800 hover:underline">
+              Tüm kişiler →
+            </Link>
+          </div>
+
+          {/* Telefonda alt alta, orta ekranda 2, geniş ekranda 4 kart yan yana */}
+          {/* Her kart KlipKarti: kişinin ilk klibinin kapağı, başlığı ve konusu */}
+          <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {digerleri.map((kisi) => (
+              <li key={kisi.slug}>
+                <KlipKarti kisi={kisi} klip={kisi.clips[0]} />
+              </li>
+            ))}
+          </ul>
+        </section>
       </main>
     </div>
   );
