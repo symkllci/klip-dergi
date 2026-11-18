@@ -114,7 +114,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
                 width={kisi.photo.width} // 960
                 height={kisi.photo.height} // ör. 1242: oranı bilsin, sayfa kaymasın
                 loading="eager" // İlk ekranda en büyük resim (LCP): hemen yükle
-                // fetchPriority="high" // TEST: geçici kapalı (hafta5 puanı 92 → 87 düştü, sebep bu mu?)
+                fetchPriority="high" // ⭐ Önce bu görseli indir. Next.js belgesi önerir, Lighthouse "LCP istek keşfi" uyarısını kapatır. Test: kapatınca puan değişmedi → zararı yok
                 sizes="(min-width: 768px) 22rem, 20rem" // Kutunun genişliği kadar resim indir
                 className="h-auto w-full rounded-lg grayscale" // Tam genişlik, boy orana göre, siyah-beyaz
               />
@@ -126,7 +126,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
                   alt={`${kisi.name}: ${kapakKlip.title}`} // Ekran okuyucu: kişi ve klip başlığı
                   fill // Kutuyu doldur
                   loading="eager" // İlk ekranda en büyük resim (LCP): hemen yükle
-                  // fetchPriority="high" // TEST: geçici kapalı (hafta5 puanı 92 → 87 düştü, sebep bu mu?)
+                  fetchPriority="high" // ⭐ Önce bu görseli indir. Next.js belgesi önerir, Lighthouse "LCP istek keşfi" uyarısını kapatır. Test: kapatınca puan değişmedi → zararı yok
                   sizes="(min-width: 768px) 22rem, 20rem" // Kutunun genişliği kadar resim indir
                   className="object-cover grayscale" // Ezmeden doldur, siyah-beyaz
                 />
