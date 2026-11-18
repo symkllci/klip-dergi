@@ -83,7 +83,8 @@ export default function Vitrin({ kisiler }: { kisiler: Person[] }) {
   }
 
   return (
-    <section className="mt-10">
+    // relative: oklar bu kutuya göre konumlansın (absolute)
+    <section className="relative mt-10">
       {/* Şerit: yan yana, ortaya oturan (snap-center), çubuksuz.
           Artık iki yanda boşluk (px) yok: solda ve sağda hep kopya kartlar var */}
       <div
@@ -136,39 +137,39 @@ export default function Vitrin({ kisiler }: { kisiler: Person[] }) {
         })}
       </div>
 
-      {/* Alt satır: ← noktalar → */}
-      <div className="mt-2 flex items-center justify-center gap-4">
-        <button
-          type="button"
-          onClick={() => git(konum - 1)} // Hep bir sola: sayıyı başa sarmak yok, kopya karta geçer
-          aria-label="Önceki hikâye"
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-amber-200 bg-white text-stone-600 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
-        >
-          ←
-        </button>
+      {/* Oklar: aktif kartın iki kenarında, kapağın tam ortası hizasında.
+          Kart 260px (sm: 300px) → yarısı 130px (sm: 150px). Ok, kartın kenarına yarı biner (-translate-x-1/2).
+          top: üst boşluk 16px + kapak yüksekliğinin yarısı (260 × 16/9 ÷ 2 ≈ 231 · 300 × 16/9 ÷ 2 ≈ 267) */}
+      <button
+        type="button"
+        onClick={() => git(konum - 1)} // Hep bir sola: sayıyı başa sarmak yok, kopya karta geçer
+        aria-label="Önceki hikâye"
+        className="absolute left-[calc(50%-130px)] top-[247px] z-10 -translate-x-1/2 -translate-y-1/2 shadow-md sm:left-[calc(50%-150px)] sm:top-[283px] flex h-11 w-11 items-center justify-center rounded-full border border-amber-200 bg-white text-stone-600 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
+      >
+        ←
+      </button>
+      <button
+        type="button"
+        onClick={() => git(konum + 1)} // Hep bir sağa: sondan sonra kopyanın 1. kartı gelir
+        aria-label="Sonraki hikâye"
+        className="absolute right-[calc(50%-130px)] top-[247px] z-10 translate-x-1/2 -translate-y-1/2 shadow-md sm:right-[calc(50%-150px)] sm:top-[283px] flex h-11 w-11 items-center justify-center rounded-full border border-amber-200 bg-white text-stone-600 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
+      >
+        →
+      </button>
 
-        <div className="flex gap-2">
-          {kisiler.map((kisi, sira) => (
-            <button
-              key={kisi.slug}
-              type="button"
-              onClick={() => git(konum - aktif + sira)} // Aynı grup içinde o kişiye git
-              aria-label={`${sira + 1}. hikâye: ${kisi.name}`}
-              className={`h-2 rounded-full transition-all ${
-                sira === aktif ? "w-7 bg-rose-800" : "w-2 bg-stone-300 hover:bg-stone-400"
-              }`}
-            />
-          ))}
-        </div>
-
-        <button
-          type="button"
-          onClick={() => git(konum + 1)} // Hep bir sağa: sondan sonra kopyanın 1. kartı gelir
-          aria-label="Sonraki hikâye"
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-amber-200 bg-white text-stone-600 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
-        >
-          →
-        </button>
+      {/* Alt satır: sadece noktalar (oklar yukarı, kartın yanına taşındı) */}
+      <div className="mt-2 flex justify-center gap-2">
+        {kisiler.map((kisi, sira) => (
+          <button
+            key={kisi.slug}
+            type="button"
+            onClick={() => git(konum - aktif + sira)} // Aynı grup içinde o kişiye git
+            aria-label={`${sira + 1}. hikâye: ${kisi.name}`}
+            className={`h-2 rounded-full transition-all ${
+              sira === aktif ? "w-7 bg-rose-800" : "w-2 bg-stone-300 hover:bg-stone-400"
+            }`}
+          />
+        ))}
       </div>
     </section>
   );
