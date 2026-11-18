@@ -3,7 +3,10 @@
     "slug": "nevzat-aydin",
     "name": "Nevzat Aydın",
     "bio": "Nevzat Aydın, Yemeksepeti'nin kurucusudur. Boğaziçi Üniversitesi Bilgisayar Mühendisliği mezunudur. Şirket 2015 yılında Delivery Hero tarafından satın alınmıştır. Bugün melek yatırımcı olarak teknoloji girişimlerine yatırım yapmaktadır.",
-    "links": ["https://instagram.com/zagortenay76"],
+    "dek": "Yemeksepeti'ni kurup sattıktan sonra şimdi yeni girişimlere yatırım yapıyor.",
+    "links": [
+      "https://instagram.com/zagortenay76"
+    ],
     "clips": [
       {
         "platform": "instagram",
@@ -11,7 +14,12 @@
         "title": "Girişimcilikte Obsesyonun Rolü",
         "topic": "girişimcilik",
         "publishedAt": "2026-09-24",
-        "cover": "/kapaklar/Ddqm-BsAxNj.jpg"
+        "cover": "/kapaklar/Ddqm-BsAxNj.jpg",
+        "source": {
+          "episodeTitle": "Nevzat Aydın, En Kötü Zamanda Bile Fırsat Yaratılabilir",
+          "episodeUrl": "https://www.youtube.com/watch?v=sD09TB7M7u4"
+        },
+        "quote": "Yaratıcı olmam gereken bir çocukluk yaşadım. Bende obsesyon var, bir şeye kafayı takıp onun peşinden gitme var. Bu iyi bir şey değil aslında, ama Yemeksepeti'nin başarısına baktığımda ne yazık ki bunun bayağı etkili olduğunu görüyorum."
       },
       {
         "platform": "instagram",
@@ -19,15 +27,29 @@
         "title": "Vazgeçmek de Bir Başarıdır",
         "topic": "başarısızlık",
         "publishedAt": "2026-09-19",
-        "cover": "/kapaklar/Ddei6l8ACBg.jpg"
+        "cover": "/kapaklar/Ddei6l8ACBg.jpg",
+        "quote": "Sosyal çevresinde başarısız olmuş görünmeden bir korku var bizde."
       }
-    ]
+    ],
+    "updatedAt": "2026-11-14",
+    "editor": "Şeyma Kelleci"
   },
   {
     "slug": "hamdi-ulukaya",
     "name": "Hamdi Ulukaya",
     "bio": "Hamdi Ulukaya, Erzincan İliç doğumlu bir girişimcidir. Chobani markasının kurucusudur. Markanın temeli, 2005 yılında kapatılmış bir yoğurt fabrikasını satın almasıyla atılmıştır. Mültecilere istihdam sağlaması ile de tanınmaktadır.",
-    "links": ["https://www.instagram.com/hamdi.ulukaya/"],
+    "dek": "Kapanmış bir yoğurt fabrikasını satın alıp Chobani'ye dönüştürdü.",
+    "photo": {
+      "src": "/fotograflar/hamdi-ulukaya.jpg",
+      "width": 960,
+      "height": 1242,
+      "author": "Benjamin Applebaum",
+      "license": "Public domain",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hamdi_Ulukaya,_official_portrait,_Homeland_Security_Council.jpg"
+    },
+    "links": [
+      "https://www.instagram.com/hamdi.ulukaya/"
+    ],
     "clips": [
       {
         "platform": "instagram",
@@ -35,7 +57,12 @@
         "title": "Sorunlar Yola Çıkarak Çözülür",
         "topic": "harekete geçmek",
         "publishedAt": "2026-10-04",
-        "cover": "/kapaklar/DeEQ_nGgm0G.jpg"
+        "cover": "/kapaklar/DeEQ_nGgm0G.jpg",
+        "source": {
+          "episodeTitle": "Hamdi Ulukaya'dan Girişimcilere Mesaj",
+          "episodeUrl": "https://www.youtube.com/watch?v=yeoqR8Yh5_k"
+        },
+        "quote": "Her şeyi bilmemiz imkânsız. Sorunlar büyük olabilir, aşılacak dağlar büyük olabilir, para olmayabilir, müşteri olmayabilir, ürün olmayabilir. Bunların hiçbirisi oturduğumuz yerden çözülmez, bizim yola çıkmamız lazım."
       },
       {
         "platform": "instagram",
@@ -43,14 +70,22 @@
         "title": "Başlamak İçin Her Şeyi Bilmek Gerekmez",
         "topic": "harekete geçmek",
         "publishedAt": "2026-10-02",
-        "cover": "/kapaklar/Dd_I7rXgLGR.jpg"
+        "cover": "/kapaklar/Dd_I7rXgLGR.jpg",
+        "source": {
+          "episodeTitle": "Hamdi Ulukaya'dan Girişimcilere Mesaj",
+          "episodeUrl": "https://www.youtube.com/watch?v=yeoqR8Yh5_k"
+        },
+        "quote": "Her şeyi en başta bilmemize gerek yok. Ben de bilmiyordum, kimse de bilmiyordu."
       }
-    ]
+    ],
+    "updatedAt": "2026-11-14",
+    "editor": "Şeyma Kelleci"
   },
   {
     "slug": "adnan-sahin",
     "name": "Adnan Şahin",
     "bio": "Adnan Şahin, metal sanayi alanında bir girişimcidir. İş hayatına 1979 yılında Bayrampaşa'da küçük bir atölye açarak başlamıştır. Aile evini satarak makine yatırımı yapması, işletmesinin büyümesinde bir dönüm noktası olmuştur.",
+    "dek": "Küçük bir atölyeyle başladı, büyümek için aile evini sattı.",
     "links": [],
     "clips": [
       {
@@ -59,7 +94,8 @@
         "title": "Büyük Başarılar Cesur Kararlarla Başlar",
         "topic": "risk almak",
         "publishedAt": "2026-09-27",
-        "cover": "/kapaklar/DdyygKGAW5e.jpg"
+        "cover": "/kapaklar/DdyygKGAW5e.jpg",
+        "quote": "1979 yılında ilk atölyemizi açtık, Bayrampaşa'da. Tamamen borç olan 2 makineyle işe başladık."
       },
       {
         "platform": "instagram",
@@ -67,15 +103,21 @@
         "title": "Kalite, Büyümenin Anahtarıdır",
         "topic": "büyüme",
         "publishedAt": "2026-09-19",
-        "cover": "/kapaklar/DddzrvAAzPV.jpg"
+        "cover": "/kapaklar/DddzrvAAzPV.jpg",
+        "quote": "Daha çok müşteri sizi şekillendiriyor, kartopu gibi büyüyorsunuz."
       }
-    ]
+    ],
+    "updatedAt": "2026-11-14",
+    "editor": "Şeyma Kelleci"
   },
   {
     "slug": "mustafa-namoglu",
     "name": "Mustafa Namoğlu",
     "bio": "Mustafa Namoğlu, e-ticaret teknolojileri alanında bir girişimcidir. 2011 yılında Mugo markasını kurmuştur. Bugün ikas'ın kurucu ortağı ve CEO'sudur.",
-    "links": ["https://www.instagram.com/mustafanamoglu/"],
+    "dek": "Mugo'dan ikas'a uzanan yolda doğru müşteriyi bulmanın önemini anlatıyor.",
+    "links": [
+      "https://www.instagram.com/mustafanamoglu/"
+    ],
     "clips": [
       {
         "platform": "instagram",
@@ -83,7 +125,12 @@
         "title": "ICP mi, Esnaf Kafası mı?",
         "topic": "müşteri",
         "publishedAt": "2026-09-16",
-        "cover": "/kapaklar/DdWBNe3gFzZ.jpg"
+        "cover": "/kapaklar/DdWBNe3gFzZ.jpg",
+        "source": {
+          "episodeTitle": "20 milyon dolarlık yeni yatırım, ikas",
+          "episodeUrl": "https://www.youtube.com/watch?v=HMOD1pROT98"
+        },
+        "quote": "İdeal müşteri kimsenin hedeflediğin şeyleri bilmeleri lazım, çünkü bu yatırımda ICP diye sana soracak: Kimdir senin ICP?"
       },
       {
         "platform": "instagram",
@@ -91,15 +138,25 @@
         "title": "Genç Ekiplerin Gücü",
         "topic": "ekip",
         "publishedAt": "2026-09-15",
-        "cover": "/kapaklar/DdTWfGXA4qE.jpg"
+        "cover": "/kapaklar/DdTWfGXA4qE.jpg",
+        "source": {
+          "episodeTitle": "20 milyon dolarlık yeni yatırım, ikas",
+          "episodeUrl": "https://www.youtube.com/watch?v=HMOD1pROT98"
+        },
+        "quote": "Yöneticilerin çoğu 95'li."
       }
-    ]
+    ],
+    "updatedAt": "2026-11-14",
+    "editor": "Şeyma Kelleci"
   },
   {
     "slug": "ata-uzunhasan",
     "name": "Ata Uzunhasan",
     "bio": "Ata Uzunhasan, Galata Business Angels'ın (GBA) Yönetici Direktörüdür. Koç Üniversitesi İşletme ve Ekonomi mezunudur. Kariyerine PwC'de başlamıştır.",
-    "links": ["https://www.instagram.com/atauzunhasan/"],
+    "dek": "PwC'den melek yatırımcı ağına uzanan yolda yatırım almayı evliliğe benzetiyor.",
+    "links": [
+      "https://www.instagram.com/atauzunhasan/"
+    ],
     "clips": [
       {
         "platform": "instagram",
@@ -107,8 +164,12 @@
         "title": "Yatırım Almak Evlilik Gibidir",
         "topic": "yatırım",
         "publishedAt": "2026-09-29",
-        "cover": "/kapaklar/Dd35VYzgV8-.jpg"
-
+        "cover": "/kapaklar/Dd35VYzgV8-.jpg",
+        "source": {
+          "episodeTitle": "Ata Uzunhasan, Ortak Alan",
+          "episodeUrl": "https://www.youtube.com/watch?v=bqYHmmeXK5w"
+        },
+        "quote": "Yatırım almak evlilik gibi. Yaptığınız her işten dolayı siz ortaklara hesap vermek zorundasınız."
       },
       {
         "platform": "instagram",
@@ -116,15 +177,34 @@
         "title": "Yapay Zeka Çağında Pazarlama Daha Önemli",
         "topic": "pazarlama",
         "publishedAt": "2026-09-21",
-        "cover": "/kapaklar/Ddjsbc1gxaC.jpg"
+        "cover": "/kapaklar/Ddjsbc1gxaC.jpg",
+        "source": {
+          "episodeTitle": "Ata Uzunhasan, Ortak Alan",
+          "episodeUrl": "https://www.youtube.com/watch?v=bqYHmmeXK5w"
+        },
+        "quote": "Yatırımın en çok aranma nedeni pazarlama olacak."
       }
-    ]
+    ],
+    "updatedAt": "2026-11-14",
+    "editor": "Şeyma Kelleci"
   },
-    {
+  {
     "slug": "acun-ilicali",
     "name": "Acun Ilıcalı",
     "bio": "Acun Ilıcalı, medya ve televizyon sektöründe faaliyet gösteren bir girişimcidir. Muhabirlikle başladığı medya kariyerinde 2004 yılında Acun Medya'yı kurmuştur. 2013 yılında TV8 kanalını, 2022'de ise İngiliz futbol kulübü Hull City'yi satın almıştır.",
-    "links": ["https://www.instagram.com/acunilicali/"],
+    "dek": "Muhabirlikten TV8'e ve bir İngiliz futbol kulübüne uzanan yolculuk.",
+    "photo": {
+      "src": "/fotograflar/acun-ilicali.jpg",
+      "width": 960,
+      "height": 1280,
+      "author": "Zafer",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Fenerbah%C3%A7e_Sports_Club_Ordinary_General_Assembly_Meeting_20240609_(24).jpg"
+    },
+    "links": [
+      "https://www.instagram.com/acunilicali/"
+    ],
     "clips": [
       {
         "platform": "instagram",
@@ -132,7 +212,12 @@
         "title": "Zor Günde Arkadaşlığın Değeri",
         "topic": "ekip",
         "publishedAt": "2026-10-17",
-        "cover": "/kapaklar/Del_e6VATWa.jpg"
+        "cover": "/kapaklar/Del_e6VATWa.jpg",
+        "source": {
+          "episodeTitle": "Acun Ilıcalı ile Startup Grind İstanbul",
+          "episodeUrl": "https://www.youtube.com/watch?v=Rq1L6uqQTcQ"
+        },
+        "quote": "Arkadaşlıktan daha fazla ruhu doyuran bir şey yok."
       },
       {
         "platform": "instagram",
@@ -140,15 +225,34 @@
         "title": "Para Değil, İyi İş Kovalamak",
         "topic": "risk almak",
         "publishedAt": "2026-10-11",
-        "cover": "/kapaklar/DeWZGAnAHRu.jpg"
+        "cover": "/kapaklar/DeWZGAnAHRu.jpg",
+        "source": {
+          "episodeTitle": "Acun Ilıcalı ile Startup Grind İstanbul",
+          "episodeUrl": "https://www.youtube.com/watch?v=Rq1L6uqQTcQ"
+        },
+        "quote": "Ben bir, mutlu olmayı kovaladım; iki, yaptığım işi daha iyi yapmayı kovaladım."
       }
-    ]
+    ],
+    "updatedAt": "2026-11-14",
+    "editor": "Şeyma Kelleci"
   },
   {
     "slug": "elon-musk",
     "name": "Elon Musk",
     "bio": "Elon Musk, teknoloji ve uzay sanayisi alanında faaliyet gösteren bir girişimcidir. İlk internet girişimi Zip2'nin ardından PayPal'ın temelini oluşturan X.com'u kurmuştur. 2002'de uzay taşımacılığı şirketi SpaceX'i kurmuş, elektrikli araç üreticisi Tesla'nın yönetimini üstlenmiştir. Bugün bu şirketlerin başında yöneticilik yapmaktadır.",
-    "links": ["https://www.instagram.com/elonmusk/"],
+    "dek": "PayPal'ın temelinden SpaceX'e, çılgın denilen kararların ardındaki isim.",
+    "photo": {
+      "src": "/fotograflar/elon-musk.jpg",
+      "width": 960,
+      "height": 1262,
+      "author": "Gage Skidmore",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Elon_Musk_-_54820081119_(cropped).jpg"
+    },
+    "links": [
+      "https://www.instagram.com/elonmusk/"
+    ],
     "clips": [
       {
         "platform": "instagram",
@@ -156,7 +260,12 @@
         "title": "Korkmak Normal, Durmak Değil",
         "topic": "harekete geçmek",
         "publishedAt": "2026-10-23",
-        "cover": "/kapaklar/De1SYWtxMn2.jpg"
+        "cover": "/kapaklar/De1SYWtxMn2.jpg",
+        "source": {
+          "episodeTitle": "How to Build the Future",
+          "episodeUrl": "https://www.youtube.com/watch?v=tnBQmEqBCY0"
+        },
+        "quote": "Olasılıkları kabul edersen korku azalır."
       },
       {
         "platform": "instagram",
@@ -164,16 +273,25 @@
         "title": "Çılgın Denilen Karar",
         "topic": "risk almak",
         "publishedAt": "2026-10-22",
-        "cover": "/kapaklar/DeymVx5AtRG.jpg"
-
+        "cover": "/kapaklar/DeymVx5AtRG.jpg",
+        "source": {
+          "episodeTitle": "How to Build the Future",
+          "episodeUrl": "https://www.youtube.com/watch?v=tnBQmEqBCY0"
+        },
+        "quote": "En iyi risk düzeltilmiş getiriyi elde etmek amaçsa bir plak şirketi kurmak delilik olur."
       }
-    ]
+    ],
+    "updatedAt": "2026-11-14",
+    "editor": "Şeyma Kelleci"
   },
   {
     "slug": "aykut-karaalioglu",
     "name": "Aykut Karaalioğlu",
     "bio": "Aykut Karaalioğlu, mobil teknoloji ve yazılım alanında bir girişimcidir. 2013 yılında San Francisco'da mobil uygulama mağaza analitiği sunan MobileAction şirketini kurmuştur. Şirketiyle mobil uygulama geliştiricilerine pazar analizi ve optimizasyon verileri sağlamaktadır.",
-    "links": ["https://www.instagram.com/aykutmobileaction/"],
+    "dek": "San Francisco'da kurduğu MobileAction'la Türk yetenekleri için büyük hayal kuruyor.",
+    "links": [
+      "https://www.instagram.com/aykutmobileaction/"
+    ],
     "clips": [
       {
         "platform": "instagram",
@@ -181,7 +299,11 @@
         "title": "Türk Yetenekleri İçin Büyük Hayal",
         "topic": "vizyon",
         "publishedAt": "2026-09-13",
-        "cover": "/kapaklar/DdOn5-QACp_.jpg"
+        "cover": "/kapaklar/DdOn5-QACp_.jpg",
+        "source": {
+          "episodeTitle": "Aykut Karaalioğlu, MobileAction",
+          "episodeUrl": "https://www.youtube.com/watch?v=Tz9K1miVrCg"
+        }
       },
       {
         "platform": "instagram",
@@ -189,15 +311,24 @@
         "title": "Zor Günde Bile Doğru Fiyat",
         "topic": "müşteri",
         "publishedAt": "2026-09-14",
-        "cover": "/kapaklar/DdRn4UcAUho.jpg"
+        "cover": "/kapaklar/DdRn4UcAUho.jpg",
+        "source": {
+          "episodeTitle": "Aykut Karaalioğlu, MobileAction",
+          "episodeUrl": "https://www.youtube.com/watch?v=Tz9K1miVrCg"
+        }
       }
-    ]
+    ],
+    "updatedAt": "2026-11-14",
+    "editor": "Şeyma Kelleci"
   },
   {
     "slug": "efe-celebi",
     "name": "Efe Çelebi",
     "bio": "Efe Çelebi, sağlık işletmeciliği alanında faaliyet gösteren bir diş hekimi ve girişimcidir. 2006 yılında İstanbul Bağdat Caddesi'nde DentGroup'un ilk kliniğini açmıştır. Bugün DentGroup'un Yönetim Kurulu Başkanıdır.",
-    "links": ["https://www.instagram.com/dr.efecelebi/"],
+    "dek": "Bağdat Caddesi'ndeki ilk klinikten büyüyen DentGroup'un kurucu ortağı.",
+    "links": [
+      "https://www.instagram.com/dr.efecelebi/"
+    ],
     "clips": [
       {
         "platform": "instagram",
@@ -205,7 +336,11 @@
         "title": "Hayal Bitince Yeni Rota",
         "topic": "başarısızlık",
         "publishedAt": "2026-10-04",
-        "cover": "/kapaklar/DeFF2E8A4Ds.jpg"
+        "cover": "/kapaklar/DeFF2E8A4Ds.jpg",
+        "source": {
+          "episodeTitle": "0'dan 15M Dolar Değerlemeye, Efe Çelebi ve DentalPrices",
+          "episodeUrl": "https://www.youtube.com/watch?v=JKFrFTjuRJQ"
+        }
       },
       {
         "platform": "instagram",
@@ -213,15 +348,33 @@
         "title": "Krizde Müşteriyi Korumak",
         "topic": "müşteri",
         "publishedAt": "2026-09-30",
-        "cover": "/kapaklar/Dd6EHB4A-vS.jpg"
+        "cover": "/kapaklar/Dd6EHB4A-vS.jpg",
+        "source": {
+          "episodeTitle": "0'dan 15M Dolar Değerlemeye, Efe Çelebi ve DentalPrices",
+          "episodeUrl": "https://www.youtube.com/watch?v=JKFrFTjuRJQ"
+        }
       }
-    ]
+    ],
+    "updatedAt": "2026-11-14",
+    "editor": "Şeyma Kelleci"
   },
   {
     "slug": "mehmet-dincerler",
     "name": "Mehmet Dinçerler",
-    "bio": "Mehmet Dinçerler, gıda ve yeme-içme sektöründe faaliyet gösteren bir girişimcidir. 1988 yılında doğmuş olup aslen Gazianteplidir; ailesi Hacı Sayid markasının kurucusudur. Dünyaca ünlü kahve zinciri Gloria Jean's Coffees'in Türkiye CEO'sudur. Şirketin Türkiye genelindeki operasyonlarını ve mağaza ağını yönetmektedir.",
-    "links": ["https://www.instagram.com/mehmetdnc/"],
+    "bio": "Mehmet Dinçerler, gıda ve yeme-içme sektöründe faaliyet gösteren bir girişimcidir. 1988 yılında doğmuş olup aslen Gazianteplidir; ailesi Hacı Sayid markasının kurucusudur. Bugün Dinçerler Group'un CEO'sudur. Grup, Gloria Jean's Coffees'in Türkiye haklarına sahiptir ve markayı Türkiye'de 240 şubeye ulaştırmıştır.",
+    "dek": "Gloria Jean's'i Türkiye'de 240 şubeye taşıyan grubun başındaki Gaziantepli girişimci.",
+    "photo": {
+      "src": "/fotograflar/mehmet-dincerler.jpg",
+      "width": 960,
+      "height": 1440,
+      "author": "Mehmet Dinçerler",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mehmet-Dincerler-2.jpg"
+    },
+    "links": [
+      "https://www.instagram.com/mehmetdnc/"
+    ],
     "clips": [
       {
         "platform": "instagram",
@@ -229,14 +382,27 @@
         "title": "Boş Pazarı İlk Gören Kazanır",
         "topic": "vizyon",
         "publishedAt": "2026-10-05",
-        "cover": "/kapaklar/DeG3DvKANMR.jpg"
+        "cover": "/kapaklar/DeG3DvKANMR.jpg",
+        "quote": "Burada iyi bir marka…"
       }
-    ]
+    ],
+    "updatedAt": "2026-11-14",
+    "editor": "Şeyma Kelleci"
   },
   {
     "slug": "abdullah-kigili",
     "name": "Abdullah Kiğılı",
     "bio": "Abdullah Kiğılı, hazır giyim ve perakende sektöründe faaliyet gösteren bir girişimcidir. 1943 yılında Malatya'da doğmuştur ve 1965'te kurulan Kiğılı markasının sahibidir. İş hayatının yanı sıra 1997 yılında kısa bir süre Türkiye Futbol Federasyonu Başkanlığı, Fenerbahçe'de de başkan yardımcılığı yapmıştır.",
+    "dek": "Kiğılı markasından Futbol Federasyonu başkanlığına uzanan bir iş hayatı.",
+    "photo": {
+      "src": "/fotograflar/abdullah-kigili.jpg",
+      "width": 960,
+      "height": 1144,
+      "author": "Serkan Yakın",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Abdullah_Kiğılı.jpg"
+    },
     "links": [],
     "clips": [
       {
@@ -245,15 +411,34 @@
         "title": "Ortaklıkta Kâr Dengesi",
         "topic": "yatırım",
         "publishedAt": "2026-10-03",
-        "cover": "/kapaklar/DeBt7G0Ao9G.jpg"
+        "cover": "/kapaklar/DeBt7G0Ao9G.jpg",
+        "source": {
+          "episodeTitle": "Abdullah Kiğılı, Kiğılı",
+          "episodeUrl": "https://www.youtube.com/watch?v=bJ55o3i7azk"
+        },
+        "quote": "Bir miktar bizde ettiğimiz kârdan nasibimizi alalım."
       }
-    ]
+    ],
+    "updatedAt": "2026-11-14",
+    "editor": "Şeyma Kelleci"
   },
   {
     "slug": "mark-zuckerberg",
     "name": "Mark Zuckerberg",
     "bio": "Mark Zuckerberg, internet ve sosyal medya alanında faaliyet gösteren bir girişimcidir. 2004 yılında Harvard Üniversitesi'nde öğrenciyken Facebook'u kurmuştur. Zamanla Instagram ve WhatsApp platformlarını bünyesine katmış, 2021 yılında şirketinin adını Meta olarak değiştirmiştir.",
-    "links": ["https://www.instagram.com/zuck/"],
+    "dek": "Öğrenciyken kurduğu Facebook'tan Instagram ve WhatsApp'ı da içine alan Meta'ya.",
+    "photo": {
+      "src": "/fotograflar/mark-zuckerberg.jpg",
+      "width": 960,
+      "height": 1282,
+      "author": "Jeff Sainlar",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mark_Zuckerberg_(2025)_(cropped).jpg"
+    },
+    "links": [
+      "https://www.instagram.com/zuck/"
+    ],
     "clips": [
       {
         "platform": "instagram",
@@ -261,8 +446,14 @@
         "title": "Milyarlık Vesting Dersi",
         "topic": "yatırım",
         "publishedAt": "2026-10-10",
-        "cover": "/kapaklar/DeUWdYOgdW7.jpg"
+        "cover": "/kapaklar/DeUWdYOgdW7.jpg",
+        "source": {
+          "episodeTitle": "Mark Zuckerberg at Startup School 2013",
+          "episodeUrl": "https://www.youtube.com/watch?v=MGsalg2f9js"
+        }
       }
-    ]
+    ],
+    "updatedAt": "2026-11-14",
+    "editor": "Şeyma Kelleci"
   }
 ]

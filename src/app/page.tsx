@@ -17,6 +17,10 @@ export default function Home() {
   const kisiler = getAllPeople(); // Bütün kişileri al (şu an 12).
   const vitrin = kisiler.slice(0, 5); // Vitrin: ilk 5 kişi (0, 1, 2, 3, 4). slice'ın 2. sayısı dahil değil.
   const digerleri = kisiler.slice(5); // Diğer hikâyeler: 5. sıradan sona kadar, vitrinde olmayanlar.
+  const one = digerleri[0]; // Öne çıkan: ortadaki büyük kart
+  const sol = digerleri.slice(1, 3); // 1 ve 2 numaralı kişiler (sol sütun)
+  const sag = digerleri.slice(3, 5); // 3 ve 4 numaralı kişiler (sağ sütun)
+  const alt = digerleri.slice(5); // 5'ten sona kadar (alttaki yatay kartlar)
 
   return (
     // Bütün sayfa: krem zemin (amber-50), koyu mürekkep rengi yazı (stone-900)
@@ -27,21 +31,24 @@ export default function Home() {
           <h1 className={`${baslikFontu.className} text-center text-5xl font-bold italic sm:text-7xl`}>
             Klip Dergi
           </h1>
-          {/* Adın altındaki ince menü satırı */}
-            <nav className="mt-4 flex items-center justify-between gap-4 text-xs uppercase tracking-widest">
+
+          {/*  Adın altındaki menü: Lora, bordo, ortada, aralarında nokta (dergi künyesi gibi) */}
+     <nav className="mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 whitespace-nowrap font-serif text-sm text-rose-800 sm:gap-x-4 sm:text-lg">
             {/* Sayfa içi bağlantı: aşağıdaki "Diğer hikâyeler" bölümüne iner */}
-            <a href="#hikayeler" className="text-stone-500 hover:text-rose-800">
+            <a href="#hikayeler" className="hover:underline">
               Girişimci hikâyeleri
             </a>
-            <Link href="/kisiler" className="font-semibold text-rose-800 hover:underline">
+            <span className="text-stone-300">·</span>
+            <Link href="/kisiler" className="hover:underline">
               Kişiler
             </Link>
+            <span className="text-stone-300">·</span>
             {/* Dış bağlantı: yeni sekmede açılır, rel güvenlik için */}
             <a
               href="https://www.instagram.com/viralgirisimci/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-stone-500 hover:text-rose-800"
+              className="hover:underline"
             >
               Podcast klipleri
             </a>
@@ -54,22 +61,47 @@ export default function Home() {
         {/* Diğer kişiler: başlık satırı ve kartlar */}
         <section className="mt-14">
           {/* id="hikayeler": menüdeki "Girişimci hikâyeleri" linki buraya iner */}
-          <div id="hikayeler" className="mb-6 flex items-baseline justify-between border-b border-stone-300 pb-2">
+          {/*  items-center: hap (pill) buton başlıkla aynı hizada dursun */}
+          <div id="hikayeler" className="mb-6 flex items-center justify-between border-b border-stone-300 pb-3">
             <h2 className={`${baslikFontu.className} text-2xl font-bold`}>Diğer hikâyeler</h2>
-            <Link href="/kisiler" className="text-sm text-stone-500 hover:text-rose-800 hover:underline">
-              Tüm kişiler →
+            {/* Hap buton: Kirinti gibi krem çerçeve. Fare gelince bordo dolar, ok sağa kayar (group-hover) */}
+            <Link
+              href="/kisiler"
+              className="group inline-flex items-center gap-1.5 rounded-full border border-amber-200/70 bg-white/70 px-4 py-1.5 text-sm text-stone-600 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
+            >
+              Tüm kişiler
+              <span className="transition-transform group-hover:translate-x-1">→</span>
             </Link>
           </div>
 
-          {/* Telefonda alt alta, orta ekranda 2, geniş ekranda 4 kart yan yana */}
-          {/* Her kart KlipKarti: kişinin ilk klibinin kapağı, başlığı ve konusu */}
-          <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {digerleri.map((kisi) => (
-              <li key={kisi.slug}>
-                <KlipKarti kisi={kisi} klip={kisi.clips[0]} />
-              </li>
+          {/* Üst: 3 sütun (geniş ekranda). Ortadaki sütun daha geniş: 1fr · 1.55fr · 1fr */}
+          <div className="grid gap-6 lg:grid-cols-[1fr_1.55fr_1fr]">
+            {/* Sol sütun: 2 küçük kart alt alta */}
+            <div className="flex flex-col gap-6">
+              {sol.map((kisi) => (
+                <KlipKarti key={kisi.slug} kisi={kisi} klip={kisi.clips[0]} />
+              ))}
+            </div>
+
+            {/* Orta: öne çıkan büyük kart. Telefonda en üstte (order-first) */}
+            <div className="order-first lg:order-none">
+              <KlipKarti kisi={one} klip={one.clips[0]} boyut="buyuk" />
+            </div>
+
+            {/* Sağ sütun: 2 küçük kart alt alta */}
+            <div className="flex flex-col gap-6">
+              {sag.map((kisi) => (
+                <KlipKarti key={kisi.slug} kisi={kisi} klip={kisi.clips[0]} />
+              ))}
+            </div>
+          </div>
+
+          {/* Alt: yatay kartlar, orta ekranda 2 yan yana */}
+          <div className="mt-6 grid gap-6 md:grid-cols-2">
+            {alt.map((kisi) => (
+              <KlipKarti key={kisi.slug} kisi={kisi} klip={kisi.clips[0]} boyut="yatay" />
             ))}
-          </ul>
+          </div>
         </section>
       </main>
     </div>
