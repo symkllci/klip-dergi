@@ -126,7 +126,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
                   alt={`${kisi.name}: ${kapakKlip.title}`} // Ekran okuyucu: kişi ve klip başlığı
                   fill // Kutuyu doldur
                   loading="eager" // İlk ekranda en büyük resim (LCP): hemen yükle
-                  fetchPriority="high" // ⭐ Kuyruğun en önüne geç: önce bu görseli indir (Lighthouse: LCP request discovery)
+                  //fetchPriority="high" // ⭐ Kuyruğun en önüne geç: önce bu görseli indir (Lighthouse: LCP request discovery)
                   sizes="(min-width: 768px) 22rem, 20rem" // Kutunun genişliği kadar resim indir
                   className="object-cover grayscale" // Ezmeden doldur, siyah-beyaz
                 />
