@@ -114,6 +114,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
                 width={kisi.photo.width} // 960
                 height={kisi.photo.height} // ör. 1242: oranı bilsin, sayfa kaymasın
                 loading="eager" // İlk ekranda en büyük resim (LCP): hemen yükle
+                fetchPriority="high" // ⭐ Kuyruğun en önüne geç: önce bu görseli indir (Lighthouse: LCP request discovery)
                 sizes="(min-width: 768px) 22rem, 20rem" // Kutunun genişliği kadar resim indir
                 className="h-auto w-full rounded-lg grayscale" // Tam genişlik, boy orana göre, siyah-beyaz
               />
@@ -125,6 +126,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
                   alt={`${kisi.name}: ${kapakKlip.title}`} // Ekran okuyucu: kişi ve klip başlığı
                   fill // Kutuyu doldur
                   loading="eager" // İlk ekranda en büyük resim (LCP): hemen yükle
+                  fetchPriority="high" // ⭐ Kuyruğun en önüne geç: önce bu görseli indir (Lighthouse: LCP request discovery)
                   sizes="(min-width: 768px) 22rem, 20rem" // Kutunun genişliği kadar resim indir
                   className="object-cover grayscale" // Ezmeden doldur, siyah-beyaz
                 />

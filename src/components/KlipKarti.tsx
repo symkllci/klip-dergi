@@ -35,7 +35,11 @@ export default function KlipKarti({ kisi, klip, boyut = "kucuk" }: { kisi: Perso
           src={klip.cover}
           alt={klip.title}
           fill
-          sizes={buyuk ? "(min-width: 1024px) 22vw, 60vw" : yatay ? "112px" : "(min-width: 1024px) 12vw, 50vw"}
+          // ⭐ sizes = tarayıcıya "kapak ekranda bu genişlikte" demek → doğru boyda dosya iner
+          // Küçük kart: kapak KARTIN yarısı (ekranın değil). Telefonda: ekranın yarısı − boşluklar (45 px)
+          // 640 px'ten sonra 3 kart yan yana → ekranın ~%16'sı · 1152 px'ten sonra sayfa büyümez → 160 px
+          // (Lighthouse: 161 px'lik kutuya 384 px iniyordu)
+          sizes={buyuk ? "(min-width: 1024px) 22vw, 60vw" : yatay ? "112px" : "(min-width: 1152px) 160px, (min-width: 640px) 16vw, calc(50vw - 45px)"}
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>
