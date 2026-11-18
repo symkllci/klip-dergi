@@ -9,9 +9,28 @@ const inter = Inter({ variable: "--font-inter", subsets: ["latin", "latin-ext"] 
 // Lora: biyografi gibi uzun okuma metinleri
 const lora = Lora({ variable: "--font-lora", subsets: ["latin", "latin-ext"], style: ["normal", "italic"] });
 
+// ⭐ Sitenin tam adresi: paylaşım görseli (WhatsApp kapağı) için gerekli.
+// Vercel her ortamda bize kendi adresini "ortam değişkeni" (process.env) olarak verir:
+// - Ana sitede (production): VERCEL_PROJECT_PRODUCTION_URL → klip-dergi.vercel.app
+// - Önizlemede (preview, ör. hafta5): VERCEL_BRANCH_URL → klip-dergi-git-hafta5-....vercel.app
+// - Kendi bilgisayarımda: hiçbiri yok → localhost
+// Eskiden ana site adresi elle yazılıydı; önizlemede görsel ana siteden isteniyordu, yeni kapaklar orada olmadığı için görünmüyordu.
+function siteAdresi(): URL {
+  if (process.env.VERCEL_ENV === "production" && process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return new URL(`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`);
+  }
+  if (process.env.VERCEL_BRANCH_URL) {
+    return new URL(`https://${process.env.VERCEL_BRANCH_URL}`);
+  }
+  if (process.env.VERCEL_URL) {
+    return new URL(`https://${process.env.VERCEL_URL}`);
+  }
+  return new URL("http://localhost:3000");
+}
+
 // metadata: sekme başlığı, açıklama ve paylaşım bilgisi. Bütün sayfalar için geçerli.
 export const metadata: Metadata = {
-  metadataBase: new URL("https://klip-dergi.vercel.app"), // Paylaşım resimleri için sitenin gerçek adresi
+  metadataBase: siteAdresi(), // "/kapaklar/x.jpg" gibi yarım adresler bununla tam adrese çevrilir
   // default: sayfa başlık vermezse · template: %s yerine sayfanın başlığı gelir ("Hamdi Ulukaya · Klip Dergi")
   title: { default: "Klip Dergi", template: "%s · Klip Dergi" },
   description: "Viral olan girişimcilerin podcast kliplerini ve hikâyelerini bir araya getiren dergi.",
