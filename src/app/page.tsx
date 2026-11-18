@@ -25,7 +25,11 @@ export default function Home() {
   return (
     // Bütün sayfa: krem zemin (amber-50), koyu mürekkep rengi yazı (stone-900)
     <div className="min-h-screen bg-amber-50 text-stone-900">
-      <main className="mx-auto max-w-6xl px-6 py-10">
+      {/* main artık dar değil: vitrin ekranın iki kenarına kadar uzansın diye.
+          Dar kutu (max-w-6xl) sadece başlığı ve "Diğer hikâyeler"i sarıyor */}
+      <main className="py-10">
+        {/* Dar kutu 1: dergi adı ve menü */}
+        <div className="mx-auto max-w-6xl px-6">
         {/* Üst kısım: ortalanmış dergi adı. Lora italik: yumuşak, Colossus'tan farklı bir logo */}
         <header className="border-b-2 border-stone-900 pb-4">
           <h1 className={`${baslikFontu.className} text-center text-5xl font-bold italic sm:text-7xl`}>
@@ -54,10 +58,14 @@ export default function Home() {
             </a>
           </nav>
         </header>
+        </div>
 
-        {/* Vitrin: ilk 5 kişi, ayrı bileşende (src/components/Vitrin.tsx) */}
+        {/* Vitrin: ilk 5 kişi, ayrı bileşende (src/components/Vitrin.tsx).
+            Dar kutunun DIŞINDA → tam genişlik (kenardan kenara) */}
         <Vitrin kisiler={vitrin} />
 
+        {/* Dar kutu 2: diğer hikâyeler, başlıkla aynı genişlikte */}
+        <div className="mx-auto max-w-6xl px-6">
         {/* Diğer kişiler: başlık satırı ve kartlar */}
         <section className="mt-14">
           {/* id="hikayeler": menüdeki "Girişimci hikâyeleri" linki buraya iner */}
@@ -103,6 +111,7 @@ export default function Home() {
             ))}
           </div>
         </section>
+        </div>
       </main>
     </div>
   );
