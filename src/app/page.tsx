@@ -3,6 +3,7 @@ import { Lora } from "next/font/google"; // Google Fonts'tan serif (tırnaklı) 
 import { getAllPeople } from "@/lib/people"; // Bütün kişileri getiren tarif.
 import KlipKarti from "@/components/KlipKarti"; // Ortak kart bileşeni, kişiler sayfası da kullanıyor
 import Vitrin from "@/components/Vitrin"; // Kayan vitrin: tarayıcıda çalışan ("use client") bileşen
+import AlintiKarti from "@/components/AlintiKarti"; // Alıntı duvarı kartı (Diğer hikâyeler)
 
 // Başlık fontu: dergi hissi versin diye serif (kaynak: Next.js Fonts belgesi).
 // latin-ext: Türkçe harfler (ş, ğ, ı, İ) için.
@@ -85,12 +86,16 @@ export default function Home() {
           </div>
 
           {albumMu ? (
-            // ALBÜM: 📚 MDN CSS Grid · repeat(auto-fill, minmax(240px, 1fr))
-            // auto-fill = sığdığı kadar sütun aç · minmax = her sütun en az 240px, artan boşluk eşit paylaşılır
-            // Geniş ekran (1152px) → 4 sütun · tablet → 2–3 · telefon (375) → 1
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-6">
-              {digerleri.map((kisi) => (
-                <KlipKarti key={kisi.slug} kisi={kisi} klip={kisi.clips[0]} />
+            // ALINTI DUVARI (albüm): 📚 MDN CSS Grid · repeat(auto-fill, minmax(300px, 1fr))
+            // auto-fill = sığdığı kadar sütun aç · minmax = her sütun en az 300px, artan boşluk eşit paylaşılır
+            // Geniş ekran (1152px) → 3 sütun · tablet → 2 · telefon (375) → 1
+            // min(300px,100%): ekran 300px'ten darsa (ör. 320px telefon) kart taşmasın, ekran kadar olsun
+            // grid-flow-dense: geniş kart sığmazsa arkadaki küçük kart boşluğu doldursun (delik kalmasın)
+            <div className="grid grid-flow-dense grid-cols-[repeat(auto-fill,minmax(min(300px,100%),1fr))] gap-5">
+              {digerleri.map((kisi, sira) => (
+                // Her 5 karttan biri öne çıkan (0, 5, 10…): koyu ve 2 sütun.
+                // 7 kişide geniş ekran: [Acun ▬▬][Elon] · [Aykut][Efe][Mehmet] · [Abdullah ▬▬][Mark] → 3 dolu satır
+                <AlintiKarti key={kisi.slug} kisi={kisi} one={sira % 5 === 0} />
               ))}
             </div>
           ) : (
