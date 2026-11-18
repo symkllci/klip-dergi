@@ -124,13 +124,26 @@ export default function Vitrin({ kisiler }: { kisiler: Person[] }) {
                 />
               </div>
 
-              {/* Yazılar: alttaki kartlarla aynı, ortalı. Sadece ortadakinde görünür */}
-              <div className={`pt-5 transition-opacity duration-500 ${ortada ? "opacity-100" : "opacity-0"}`}>
-                <p className="text-xs font-semibold uppercase tracking-widest text-rose-800">{klip.topic}</p>
-                <h2 className="mt-2 font-serif text-3xl font-bold leading-tight">{klip.title}</h2>
-                <p className="mt-2 font-serif text-base leading-relaxed text-stone-600">{kisi.dek}</p>
-                <span className="mx-auto mb-2 mt-3 block h-0.5 w-9 rounded bg-rose-800" />
-                <p className="font-serif text-sm italic text-stone-500">{kisi.name}</p>
+              {/* Yazılar: başlık HER kartta var. Yanda küçük + gri (kart zaten soluk: opacity-40),
+                  ortada büyür ve koyulaşır (canlanır). transition-all: boyut ve renk yumuşakça değişsin */}
+              <div className="pt-5">
+                {/* Konu: sadece ortadakinde (yanda opacity-0 = görünmez ama yer tutar, kart zıplamaz) */}
+                <p className={`text-xs font-semibold uppercase tracking-widest text-rose-800 transition-opacity duration-500 ${ortada ? "opacity-100" : "opacity-0"}`}>
+                  {klip.topic}
+                </p>
+                <h2
+                  className={`mt-2 font-serif font-bold leading-tight transition-all duration-500 ${
+                    ortada ? "text-3xl text-stone-900" : "text-lg text-stone-500"
+                  }`}
+                >
+                  {klip.title}
+                </h2>
+                {/* Açıklama, çizgi, isim: sadece ortadakinde */}
+                <div className={`transition-opacity duration-500 ${ortada ? "opacity-100" : "opacity-0"}`}>
+                  <p className="mt-2 font-serif text-base leading-relaxed text-stone-600">{kisi.dek}</p>
+                  <span className="mx-auto mb-2 mt-3 block h-0.5 w-9 rounded bg-rose-800" />
+                  <p className="font-serif text-sm italic text-stone-500">{kisi.name}</p>
+                </div>
               </div>
             </Link>
           );
