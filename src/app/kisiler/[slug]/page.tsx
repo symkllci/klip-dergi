@@ -228,24 +228,26 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
 
         </div>
 
-        {/* 4. KLİPLER: tam genişlik, yatay şerit. Her klip 320px (oynatıcı bu genişlikte rahat sığıyor) */}
+        {/* 4. KLİPLER: albüm (grid). Klip sayısı artınca yana taşmaz, satır satır dizilir */}
         <section className="mt-16">
           {/* Başlık: KLİPLER · 2 (kaç klip olduğu) */}
           <h2 className={`${baslikFontu.className} text-2xl font-bold`}>
             Klipler <span className="text-rose-800">· {kisi.clips.length}</span>
           </h2>
-          {/* flex: yan yana · overflow-x-auto: yatayda kaydır · snap: her klibe otur · gap-6: aralık */}
-          <ul className="mt-6 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4">
+          {/* 📚 MDN CSS Grid · repeat(auto-fill, minmax(240px, 1fr)): sığdığı kadar sütun, her biri en az 240px
+              Geniş ekran (1152px) → 4 sütun (~270px, eskiden 320px → biraz küçüldü) · tablet → 2–3 · telefon → 1
+              min(240px,100%): çok dar ekranda taşmasın · gap-y-12: satırlar arası daha geniş (yazılar karışmasın) */}
+          <ul className="mt-6 grid grid-cols-[repeat(auto-fill,minmax(min(240px,100%),1fr))] gap-x-6 gap-y-12">
             {kisi.clips.map((klip, sira) => (
-              // shrink-0: küçülme · snap-start: sol kenarı şeride otursun · w-[320px]: her klip reel genişliğinde
-              <li key={klip.url} className="w-[320px] shrink-0 snap-start">
+              // Genişlik artık hücreden geliyor (w-[320px], shrink-0, snap-start gerek kalmadı)
+              <li key={klip.url}>
                 {/*  Dergi numarası + konu yan yana */}
                 <p className="flex items-baseline gap-3">
                   <span className="font-serif text-3xl italic text-rose-800">0{sira + 1}</span>
                   <span className="text-xs font-semibold uppercase tracking-widest text-rose-800">{klip.topic}</span>
                 </p>
                 {/*  Başlık: min-h-14 = 2 satırlık yer → bütün kapaklar aynı hizadan başlar */}
-                <h3 className="mb-3 mt-1 min-h-14 font-serif text-xl font-bold leading-snug">{klip.title}</h3>
+                <h3 className="mb-3 mt-1 min-h-14 font-serif text-lg font-bold leading-snug">{klip.title}</h3>
                 {/* Klip: önce kapak + ▶, tıklanınca Instagram yüklenir (sayfa hızlı açılsın) */}
                 <KlipOynatici klip={klip} />
                 {/*  Yedek link: küçük, altı çizili */}
