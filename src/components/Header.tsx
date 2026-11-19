@@ -4,11 +4,13 @@ import Link from "next/link";
 import { Lora } from "next/font/google";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import AramaKutusu, { type AramaKisisi } from "@/components/AramaKutusu"; // Önerili arama kutusu (combobox)
 
 const baslikFontu = Lora({ subsets: ["latin", "latin-ext"], style: ["normal", "italic"] });
 
 // İnce başlık: her sayfanın en üstünde
-export default function Header() {
+// kisiler: arama önerileri için (ad, slug, konu). layout.tsx sunucuda hazırlayıp veriyor
+export default function Header({ kisiler }: { kisiler: AramaKisisi[] }) {
   const anaSayfa = usePathname() === "/"; // Ana sayfada mıyız?
   const [kaydi, setKaydi] = useState(false); // Aşağı kaydırıldı mı?
   const [acik, setAcik] = useState(false); // Menü açık mı? Başta: kapalı
@@ -60,18 +62,8 @@ export default function Header() {
       {/* Sağ: 🔍 (tıklayınca arama kutusu açılır) + KİŞİLER (bordo) */}
       <div className="flex items-center gap-4 justify-self-end">
         {aramaAcik ? (
-          // Açıkken: arama kutusu. autoFocus: açılınca imleç hemen içinde olsun · onBlur: kutudan çıkınca kapansın
-          <form action="/kisiler">
-            <input
-              type="search"
-              name="ara"
-              placeholder="Ara..."
-              aria-label="Sitede ara"
-              autoFocus
-              onBlur={() => setAramaAcik(false)}
-              className="w-36 rounded-full border border-stone-300 bg-white px-4 py-1.5 text-sm focus:border-rose-800 focus:outline-none sm:w-52"
-            />
-          </form>
+          // Açıkken: önerili arama kutusu (src/components/AramaKutusu.tsx). kapat: kutudan çıkınca / Esc ile kapansın
+          <AramaKutusu kisiler={kisiler} kapat={() => setAramaAcik(false)} />
         ) : (
           // Kapalıyken: sadece büyüteç düğmesi
           <button
