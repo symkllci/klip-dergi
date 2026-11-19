@@ -5,6 +5,7 @@ import { getAllPeople, getPersonBySlug } from "@/lib/people"; // Herkesi getiren
 import KlipKarti from "@/components/KlipKarti"; // Diğer kişiler kartları, ana sayfayla aynı
 import Kirinti from "@/components/Kirinti"; // Ekmek kırıntısı: nerede olduğunu gösterir
 import KlipOynatici from "@/components/KlipOynatici"; //  Klip: önce kapak + ▶, tıklanınca Instagram
+import InstagramGlifi from "@/components/InstagramGlifi"; // Instagram'ın resmî tek renk glifi (Meta marka sayfasından)
 import type { Clip } from "@/types"; // Klip kalıbı (izleYazisi için)
 import type { Metadata } from "next"; // Sekme başlığı ve paylaşım bilgisinin kalıbı
 
@@ -13,7 +14,7 @@ const baslikFontu = Lora({ subsets: ["latin", "latin-ext"] });
 
 // embedAdresi buradan KlipOynatici.tsx'e taşındı (artık onu sadece oynatıcı kullanıyor)
 
-// Klibin altındaki link yazısını platforma göre üreten tarif
+// Klibin linkinin adı (platforma göre). Artık ekranda yazmıyor: glif linkinin aria-label'ı (ekran okuyucu bunu okur)
 function izleYazisi(klip: Clip): string {
   if (klip.platform === "youtube") {
     return "Klibi YouTube'da izle";
@@ -242,38 +243,55 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
               // Genişlik artık hücreden geliyor (w-[320px], shrink-0, snap-start gerek kalmadı)
               <li key={klip.url}>
                 {/*  Dergi numarası + konu yan yana */}
-                <p className="flex items-baseline gap-3">
+                <p className="mb-3 flex items-baseline gap-3">
                   <span className="font-serif text-3xl italic text-rose-800">0{sira + 1}</span>
                   <span className="text-xs font-semibold uppercase tracking-widest text-rose-800">{klip.topic}</span>
                 </p>
-                {/*  Başlık: min-h-14 = 2 satırlık yer → bütün kapaklar aynı hizadan başlar */}
-                <h3 className="mb-3 mt-1 min-h-14 font-serif text-lg font-bold leading-snug">{klip.title}</h3>
                 {/* Klip: önce kapak + ▶, tıklanınca Instagram yüklenir (sayfa hızlı açılsın) */}
                 <KlipOynatici klip={klip} />
-                {/*  Yedek link: küçük, altı çizili */}
-                <a
-                  href={klip.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-3 inline-block text-sm text-stone-600 underline hover:text-rose-800"
-                >
-                  {izleYazisi(klip)} ↗
-                </a>
-                {/* ⭐ Kaynak: klibin kesildiği bölüm. Sadece varsa (&&): 4 klipte yok */}
-                {klip.source && (
-                  <p className="mt-1 text-xs leading-relaxed text-stone-500">
-                    Kaynak:{" "}
+
+                {/* ⭐ Klip altı: solda Lora başlık + gri kaynak satırı, sağda Instagram glifi (link).
+                    Eskisi: "Klibi Instagram'da izle ↗" yazısı → kaldırıldı (plan) */}
+                <div className="mt-4 flex items-start justify-between gap-4">
+                  <div className="min-w-0">
+                    <h3 className="font-serif text-lg font-bold leading-snug">{klip.title}</h3>
+                    {/* Kaynak: klibin kesildiği bölüm. Küçük ve gri. Sadece varsa (&&): 4 klipte yok */}
+                    {klip.source && (
+                      <a
+                        href={klip.source.episodeUrl} // Bölümün YouTube linki
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-1 block text-xs leading-relaxed text-stone-500 hover:text-rose-800 hover:underline"
+                      >
+                        {klip.source.episodeTitle}
+                      </a>
+                    )}
+                  </div>
+                  {klip.platform === "instagram" ? (
+                    // Glif linki: 29×29 px (Meta'nın en küçük boyu) · gri, üstüne gelince bordo
+                    // aria-label: ekranda yazı yok, ekran okuyucu "Klibi Instagram'da izle" okusun
                     <a
-                      href={klip.source.episodeUrl} // Bölümün YouTube linki
+                      href={klip.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="underline hover:text-rose-800"
+                      aria-label={izleYazisi(klip)}
+                      title={izleYazisi(klip)} // Fare üstüne gelince küçük ipucu
+                      className="mt-1 shrink-0 text-stone-500 transition-colors hover:text-rose-800"
                     >
-                      {klip.source.episodeTitle}
-                    </a>{" "}
-                    ↗
-                  </p>
-                )}
+                      <InstagramGlifi className="h-[29px] w-[29px]" />
+                    </a>
+                  ) : (
+                    // YouTube klibi gelirse: glif yok, kısa yazı (Instagram glifi YouTube için kullanılmaz)
+                    <a
+                      href={klip.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-1 shrink-0 text-xs text-stone-500 underline hover:text-rose-800"
+                    >
+                      {izleYazisi(klip)} ↗
+                    </a>
+                  )}
+                </div>
               </li>
             ))}
           </ul>
