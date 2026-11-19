@@ -12,10 +12,12 @@ export default function KlipKarti({ kisi, klip, boyut = "kucuk" }: { kisi: Perso
 
   return (
     // Kutu: yuvarlak, ince çerçeve. Fare gelince hafif kalkar ve bordo gölge
+    // Zemin: küçük ve yatay kartta YOK (eskiden bg-white/70) → kart doğrudan site renginde (krem) durur.
+    // Sadece büyük (öne çıkan) kartta hafif amber zemin kaldı: öne çıksın diye
     <Link
       href={`/kisiler/${kisi.slug}`}
       className={`group flex h-full rounded-3xl border border-amber-200/70 p-5 transition duration-300 hover:-translate-y-1 hover:border-rose-200 hover:shadow-xl hover:shadow-rose-900/15 ${
-        buyuk ? "bg-amber-100/60" : "bg-white/70"
+        buyuk ? "bg-amber-100/60" : ""
       } ${yatay ? "items-center gap-5 text-left" : "flex-col justify-center text-center"}`}
     >
       {/* Sadece büyük kartta: "Öne çıkan" rozeti */}
