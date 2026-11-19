@@ -118,7 +118,9 @@ export default function Vitrin({ kisiler }: { kisiler: Person[] }) {
                   src={klip.cover}
                   alt={gercek ? klip.title : ""} // Kopyada boş alt: aynı yazı 3 kez okunmasın
                   fill
-                  loading={sira === adet ? "eager" : "lazy"} // İlk ortadaki kart hemen yüklensin (LCP)
+                  // 1. kişinin 3 kopyası da hemen yüklensin (LCP). Neden 3'ü? Sunucudan gelen ilk ekranda şerit en soldadır
+                  // (sıra 0 = kopya görünür), JS çalışınca sıra 5'e (gerçek) kayar. Üçü de AYNI dosya → bir kez iner
+                  loading={sira % adet === 0 ? "eager" : "lazy"}
                   sizes="300px"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
