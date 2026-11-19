@@ -131,9 +131,13 @@ export default function Vitrin({ kisiler }: { kisiler: Person[] }) {
                 <p className={`text-xs font-semibold uppercase tracking-widest text-rose-800 transition-opacity duration-500 ${ortada ? "opacity-100" : "opacity-0"}`}>
                   {klip.topic}
                 </p>
+                {/* ⚠️ Titreşim düzeltmesi: eskiden yazı BOYUTU değişiyordu (text-lg ↔ text-3xl).
+                    Boyut değişince kartın yüksekliği değişiyor → şerit uzayıp kısalıyor → alttaki sayfa her 5 sn'de zıplıyordu.
+                    Şimdi yazı HEP text-3xl (yer hep aynı), yan kartta sadece GÖRÜNÜŞÜ küçülüyor: scale (transform)
+                    transform sayfanın düzenini değiştirmez → hiçbir şey kaymaz. origin-top: yukarıdan küçülsün */}
                 <h2
-                  className={`mt-2 font-serif font-bold leading-tight transition-all duration-500 ${
-                    ortada ? "text-3xl text-stone-900" : "text-lg text-stone-500"
+                  className={`mt-2 origin-top font-serif text-3xl font-bold leading-tight transition duration-500 ${
+                    ortada ? "scale-100 text-stone-900" : "scale-[0.6] text-stone-500"
                   }`}
                 >
                   {klip.title}
