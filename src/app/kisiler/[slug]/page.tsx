@@ -1,26 +1,17 @@
 import Image from "next/image"; // Büyük kapak için Next.js'in resim bileşeni
+import Link from "next/link"; // Site içi sayfalara geçiş ("Tüm kişiler" linki)
 import { notFound } from "next/navigation"; // Next.js'in "sayfa bulunamadı" (404) aracı
 import { Lora } from "next/font/google"; // Ana sayfadaki serif başlık fontu
 import { getAllPeople, getPersonBySlug } from "@/lib/people"; // Herkesi getiren ve slug ile bulan tarifler
-import KlipKarti from "@/components/KlipKarti"; // Diğer kişiler kartları, ana sayfayla aynı
+import HikayeKarti from "@/components/HikayeKarti"; // Diğer kişiler kartları: ana sayfadaki kutusuz dergi kartı
 import Kirinti from "@/components/Kirinti"; // Ekmek kırıntısı: nerede olduğunu gösterir
-import KlipOynatici from "@/components/KlipOynatici"; //  Klip: önce kapak + ▶, tıklanınca Instagram
-import InstagramGlifi from "@/components/InstagramGlifi"; // Instagram'ın resmî tek renk glifi (Meta marka sayfasından)
-import type { Clip } from "@/types"; // Klip kalıbı (izleYazisi için)
+import KlipAlbumu from "@/components/KlipAlbumu"; // Klipler albümü (oynatıcı + başlık + kaynak + Instagram glifi)
 import type { Metadata } from "next"; // Sekme başlığı ve paylaşım bilgisinin kalıbı
 
 // Başlık fontu: ana sayfayla aynı Lora. latin-ext: Türkçe harfler için
 const baslikFontu = Lora({ subsets: ["latin", "latin-ext"] });
 
 // embedAdresi buradan KlipOynatici.tsx'e taşındı (artık onu sadece oynatıcı kullanıyor)
-
-// Klibin linkinin adı (platforma göre). Artık ekranda yazmıyor: glif linkinin aria-label'ı (ekran okuyucu bunu okur)
-function izleYazisi(klip: Clip): string {
-  if (klip.platform === "youtube") {
-    return "Klibi YouTube'da izle";
-  }
-  return "Klibi Instagram'da izle";
-}
 
 // Build sırasında hangi kişi sayfalarının önceden üretileceğini söyler (pastane vitrini)
 export function generateStaticParams() {
@@ -80,8 +71,10 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
   return (
     // Bütün sayfa: ana sayfayla aynı krem zemin ve koyu mürekkep yazı
     <div className="min-h-screen bg-amber-50 text-stone-900">
-      {/* Ana sayfayla aynı genişlik ve boşluklar */}
-      <main className="mx-auto max-w-6xl px-6 py-10">
+      {/* GENİŞLİK (ana sayfayla aynı mantık): sayfa tam genişlik, yanlarda clamp(16px, 3.2vw, 56px) boşluk.
+          Sadece fotoğraf + biyografi bölümü ortada dar (max-w-6xl): çok uzun satır okumayı zorlaştırır.
+          Gazete gibi: yazı sütunu dar, görseller ve bölüm çizgileri geniş */}
+      <main className="px-[clamp(16px,3.2vw,56px)] py-10">
         {/* Ekmek kırıntısı: Ana sayfa › Kişiler › (kişinin adı = buradasın, href yok → bordo) */}
         <Kirinti adimlar={[{ ad: "Ana sayfa", href: "/" }, { ad: "Kişiler", href: "/kisiler" }, { ad: kisi.name }]} />
 
@@ -102,8 +95,9 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
           <p className="mx-auto mt-3 max-w-2xl font-serif text-lg italic leading-relaxed text-stone-600 sm:text-xl">{kisi.dek}</p>
         </header>
 
-        {/* 3. İKİ SÜTUN: telefonda alt alta · orta ekrandan itibaren solda fotoğraf (4), sağda yazı (8). 4 + 8 = 12 */}
-        <div className="grid gap-10 md:grid-cols-12">
+        {/* 3. İKİ SÜTUN: telefonda alt alta · orta ekrandan itibaren solda fotoğraf (4), sağda yazı (8). 4 + 8 = 12
+            mx-auto max-w-6xl: bu bölüm ortada DAR kalır (okunabilirlik) */}
+        <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-12">
           {/* 3a. SOL: fotoğraf + atıf */}
           {/* figure = görsel + altındaki açıklama (atıf) bir arada. Telefonda ortada ve dar (max-w-xs) */}
           <figure className="mx-auto w-full max-w-xs md:col-span-4 md:max-w-none">
@@ -186,7 +180,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
                   <blockquote className="-mt-4 font-serif text-2xl italic leading-relaxed text-stone-800">{klip.quote}</blockquote>
                   {/* Kimin sözü, hangi klip: KLİP 02 gibi. indexOf = klibin listedeki sırası (0'dan başlar → +1) */}
                   <figcaption className="mt-3 text-xs font-semibold uppercase tracking-widest text-stone-500">
-                    {kisi.name} · Klip 0{kisi.clips.indexOf(klip) + 1}: {klip.title}
+                    {kisi.name} · Klip {String(kisi.clips.indexOf(klip) + 1).padStart(2, "0")}: {klip.title}
                   </figcaption>
                 </figure>
               ))}
@@ -229,86 +223,36 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
 
         </div>
 
-        {/* 4. KLİPLER: albüm (grid). Klip sayısı artınca yana taşmaz, satır satır dizilir */}
-        <section className="mt-16">
-          {/* Başlık: KLİPLER · 2 (kaç klip olduğu) */}
-          <h2 className={`${baslikFontu.className} text-2xl font-bold`}>
-            Klipler <span className="text-rose-800">· {kisi.clips.length}</span>
-          </h2>
-          {/* 📚 MDN CSS Grid · repeat(auto-fill, minmax(240px, 1fr)): sığdığı kadar sütun, her biri en az 240px
-              Geniş ekran (1152px) → 4 sütun (~270px, eskiden 320px → biraz küçüldü) · tablet → 2–3 · telefon → 1
-              min(240px,100%): çok dar ekranda taşmasın · gap-y-12: satırlar arası daha geniş (yazılar karışmasın) */}
-          <ul className="mt-6 grid grid-cols-[repeat(auto-fill,minmax(min(240px,100%),1fr))] gap-x-6 gap-y-12">
-            {kisi.clips.map((klip, sira) => (
-              // Genişlik artık hücreden geliyor (w-[320px], shrink-0, snap-start gerek kalmadı)
-              <li key={klip.url}>
-                {/*  Dergi numarası + konu yan yana */}
-                <p className="mb-3 flex items-baseline gap-3">
-                  <span className="font-serif text-3xl italic text-rose-800">0{sira + 1}</span>
-                  <span className="text-xs font-semibold uppercase tracking-widest text-rose-800">{klip.topic}</span>
-                </p>
-                {/* Klip: önce kapak + ▶, tıklanınca Instagram yüklenir (sayfa hızlı açılsın) */}
-                <KlipOynatici klip={klip} />
+        {/* 4. KLİPLER: tam genişlik albüm. Başlık ana sayfadaki gibi: büyük Lora + sağda bordo sayı + koyu çizgi */}
+        <section className="mt-20">
+          <div className="flex items-end justify-between border-b border-stone-900 pb-4">
+            <h2 className={`${baslikFontu.className} text-3xl sm:text-5xl`}>Klipler</h2>
+            <p className="text-sm font-semibold uppercase tracking-widest text-rose-800">{kisi.clips.length} klip</p>
+          </div>
+          {/* Albüm ayrı bileşende: src/components/KlipAlbumu.tsx (deneme sayfası da kullanıyor) */}
+          <KlipAlbumu klipler={kisi.clips} />
+        </section>
 
-                {/* ⭐ Klip altı: solda Lora başlık + gri kaynak satırı, sağda Instagram glifi (link).
-                    Eskisi: "Klibi Instagram'da izle ↗" yazısı → kaldırıldı (plan) */}
-                <div className="mt-4 flex items-start justify-between gap-4">
-                  <div className="min-w-0">
-                    <h3 className="font-serif text-lg font-bold leading-snug">{klip.title}</h3>
-                    {/* Kaynak: klibin kesildiği bölüm. Küçük ve gri. Sadece varsa (&&): 4 klipte yok */}
-                    {klip.source && (
-                      <a
-                        href={klip.source.episodeUrl} // Bölümün YouTube linki
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-1 block text-xs leading-relaxed text-stone-500 hover:text-rose-800 hover:underline"
-                      >
-                        {klip.source.episodeTitle}
-                      </a>
-                    )}
-                  </div>
-                  {klip.platform === "instagram" ? (
-                    // Glif linki: 29×29 px (Meta'nın en küçük boyu) · gri, üstüne gelince bordo
-                    // aria-label: ekranda yazı yok, ekran okuyucu "Klibi Instagram'da izle" okusun
-                    <a
-                      href={klip.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={izleYazisi(klip)}
-                      title={izleYazisi(klip)} // Fare üstüne gelince küçük ipucu
-                      className="mt-1 shrink-0 text-stone-500 transition-colors hover:text-rose-800"
-                    >
-                      <InstagramGlifi className="h-[29px] w-[29px]" />
-                    </a>
-                  ) : (
-                    // YouTube klibi gelirse: glif yok, kısa yazı (Instagram glifi YouTube için kullanılmaz)
-                    <a
-                      href={klip.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-1 shrink-0 text-xs text-stone-500 underline hover:text-rose-800"
-                    >
-                      {izleYazisi(klip)} ↗
-                    </a>
-                  )}
-                </div>
+        {/* 5. DİĞER KİŞİLER: ana sayfadaki kutusuz dergi kartı (HikayeKarti, yatay görsel, ortalı yazı) */}
+        <section className="mt-20">
+          <div className="flex items-end justify-between border-b border-stone-900 pb-4">
+            <h2 className={`${baslikFontu.className} text-3xl sm:text-5xl`}>Diğer kişiler</h2>
+            <Link
+              href="/kisiler"
+              className="group text-sm font-semibold uppercase tracking-widest text-rose-800 hover:underline"
+            >
+              Tüm kişiler <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
+            </Link>
+          </div>
+          {/* Telefonda alt alta, orta ekranda 3 yan yana */}
+          <ul className="mt-10 grid gap-x-12 gap-y-14 sm:grid-cols-3">
+            {digerKisiler.map((diger) => (
+              <li key={diger.slug}>
+                <HikayeKarti kisi={diger} duzen="orta" />
               </li>
             ))}
           </ul>
         </section>
-
-        {/* 5. DİĞER KİŞİLER: 3 KlipKarti (ana sayfadakiyle aynı kart) */}
-        <h2 className={`${baslikFontu.className} mt-16 text-2xl font-bold`}>
-          Diğer kişiler
-        </h2>
-        {/* Telefonda alt alta, orta ekranda 3 yan yana */}
-        <ul className="mt-6 grid gap-6 sm:grid-cols-3">
-          {digerKisiler.map((diger) => (
-            <li key={diger.slug}>
-              <KlipKarti kisi={diger} klip={diger.clips[0]} />
-            </li>
-          ))}
-        </ul>
       </main>
     </div>
   );
