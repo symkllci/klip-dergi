@@ -26,7 +26,8 @@ export default function HikayeKarti({ kisi, duzen = "album" }: { kisi: Person; d
         : "(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 100vw";
 
   return (
-    <Link href={`/kisiler/${kisi.slug}`} className="group block">
+    // flex flex-col h-full: kart, satırdaki en uzun kart kadar uzar → alttaki "N klip" hep aynı hizada (albümde)
+    <Link href={`/kisiler/${kisi.slug}`} className="group flex h-full flex-col">
       {/* Görsel: siyah-beyaz (grayscale), kutuyu doldurur (object-cover).
           Fotoğraf: object-[50%_25%] = yatayda orta, dikeyde üstten %25 → portrelerde saçın üstü de sığar (Elon, Mark),
           Acun'un kalabalık fotoğrafında hem tribün hem yüzü görünür
@@ -50,11 +51,18 @@ export default function HikayeKarti({ kisi, duzen = "album" }: { kisi: Person; d
       </div>
 
       {/* Yazılar. Öne çıkanda krem panel (bg-amber-100/50) */}
-      <div className={`${ortali ? "text-center" : ""} ${duzen === "one" ? "bg-amber-100/50 px-6 py-10" : "pt-5"}`}>
+      {/* flex-1 flex-col: yazı kısmı kalan boşluğu doldurur → "N klip" en alta (mt-auto) iner */}
+      <div className={`flex flex-1 flex-col ${ortali ? "text-center" : ""} ${duzen === "one" ? "bg-amber-100/50 px-6 py-10" : "pt-5"}`}>
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rose-800">{klip.topic}</p>
         <h3
           className={`mt-2 font-serif leading-tight transition-colors group-hover:text-rose-800 ${
-            duzen === "one" ? "text-5xl sm:text-6xl" : duzen === "orta" ? "text-3xl sm:text-4xl" : "text-2xl sm:text-3xl"
+            duzen === "one"
+              ? "text-5xl sm:text-6xl"
+              : duzen === "orta"
+                ? "text-3xl sm:text-4xl"
+                : // Albüm: isme HEP 2 satırlık yer ayır (min-h-[2lh], lh = bir satır yüksekliği).
+                  // "Mustafa Namoğlu" 2 satıra kayınca bile altındaki kanca bütün kartlarda aynı yerden başlar
+                  "min-h-[2lh] text-2xl sm:text-3xl"
           }`}
         >
           {kisi.name}
@@ -70,7 +78,8 @@ export default function HikayeKarti({ kisi, duzen = "album" }: { kisi: Person; d
             <p className="mt-3 font-serif italic text-stone-500">{kisi.clips.length} klip</p>
           </>
         ) : (
-          <p className="mt-3 text-sm text-stone-500">{kisi.clips.length} klip</p>
+          // mt-auto: kalan boşluğu üstüne al → kartın en altına in (satırdaki bütün kartlarda aynı hizada)
+          <p className="mt-auto pt-3 text-sm text-stone-500">{kisi.clips.length} klip</p>
         )}
       </div>
     </Link>
