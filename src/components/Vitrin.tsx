@@ -157,13 +157,14 @@ export default function Vitrin({ kisiler }: { kisiler: Person[] }) {
       </div>
 
       {/* Oklar: aktif kartın iki kenarında, kapağın tam ortası hizasında.
+          Zemin beyaz değil, sitenin krem rengi (bg-amber-50): şeffaf olsa fotoğrafın üstünde kaybolurdu
           Kart 260px (sm: 300px) → yarısı 130px (sm: 150px). Ok, kartın kenarına yarı biner (-translate-x-1/2).
           top: üst boşluk 16px + kapak yüksekliğinin yarısı (260 × 16/9 ÷ 2 ≈ 231 · 300 × 16/9 ÷ 2 ≈ 267) */}
       <button
         type="button"
         onClick={() => git(konum - 1)} // Hep bir sola: sayıyı başa sarmak yok, kopya karta geçer
         aria-label="Önceki hikâye"
-        className="absolute left-[calc(50%-130px)] top-[247px] z-10 -translate-x-1/2 -translate-y-1/2 shadow-md sm:left-[calc(50%-150px)] sm:top-[283px] flex h-11 w-11 items-center justify-center rounded-full border border-amber-200 bg-white text-stone-600 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
+        className="absolute left-[calc(50%-130px)] top-[247px] z-10 -translate-x-1/2 -translate-y-1/2 shadow-md sm:left-[calc(50%-150px)] sm:top-[283px] flex h-11 w-11 items-center justify-center rounded-full border border-amber-200 bg-amber-50 text-stone-600 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
       >
         ←
       </button>
@@ -171,7 +172,7 @@ export default function Vitrin({ kisiler }: { kisiler: Person[] }) {
         type="button"
         onClick={() => git(konum + 1)} // Hep bir sağa: sondan sonra kopyanın 1. kartı gelir
         aria-label="Sonraki hikâye"
-        className="absolute right-[calc(50%-130px)] top-[247px] z-10 translate-x-1/2 -translate-y-1/2 shadow-md sm:right-[calc(50%-150px)] sm:top-[283px] flex h-11 w-11 items-center justify-center rounded-full border border-amber-200 bg-white text-stone-600 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
+        className="absolute right-[calc(50%-130px)] top-[247px] z-10 translate-x-1/2 -translate-y-1/2 shadow-md sm:right-[calc(50%-150px)] sm:top-[283px] flex h-11 w-11 items-center justify-center rounded-full border border-amber-200 bg-amber-50 text-stone-600 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
       >
         →
       </button>

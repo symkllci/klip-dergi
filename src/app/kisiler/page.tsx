@@ -13,8 +13,8 @@ const baslikFontu = Lora({ subsets: ["latin", "latin-ext"] });
 const dugmeTemel = "rounded-full border px-4 py-1.5 text-xs font-semibold uppercase tracking-widest transition-colors";
 // Seçili düğme: kart etiketi gibi bordo zemin, beyaz yazı
 const dugmeSecili = "border-rose-800 bg-rose-800 text-white";
-// Seçili olmayan: beyaz zemin, gri çerçeve; üstüne gelince bordo
-const dugmeNormal = "border-stone-300 bg-white text-stone-600 hover:border-rose-800 hover:text-rose-800";
+// Seçili olmayan: şeffaf zemin (beyaz değil, arkadan krem sayfa görünür), gri çerçeve; üstüne gelince bordo
+const dugmeNormal = "border-stone-300 bg-transparent text-stone-600 hover:border-rose-800 hover:text-rose-800";
 
 // Kişiler sayfası. searchParams: adresteki ? sonrası bilgiler.
 // Örnek: /kisiler?konu=yatırım&ara=ata → { konu: "yatırım", ara: "ata" }
@@ -96,8 +96,8 @@ export default async function KisilerSayfasi({
             name="ara"
             defaultValue={aramaMetni}
             placeholder="İsim, konu ya da klip ara" // ⭐ Arama artık ad + konu + klip başlığında
-            // focus: kutuya tıklayınca çerçeve bordo olsun (outline-none: tarayıcının mavi çerçevesini kapat)
-            className="w-full max-w-sm rounded-full border border-stone-300 bg-white px-4 py-2 text-sm focus:border-rose-800 focus:outline-none"
+            // bg-transparent: zemin şeffaf (beyaz değil) · focus: kutuya tıklayınca çerçeve bordo olsun (outline-none: tarayıcının mavi çerçevesini kapat)
+            className="w-full max-w-sm rounded-full border border-stone-300 bg-transparent px-4 py-2 text-sm focus:border-rose-800 focus:outline-none"
           />
           {/* Konu seçiliyse aramada kaybolmasın diye gizli olarak forma ekle */}
           {seciliKonu && <input type="hidden" name="konu" value={seciliKonu} />}

@@ -8,8 +8,8 @@ export default function Kirinti({ adimlar }: { adimlar: Adim[] }) {
   return (
     // aria-label: ekran okuyucu "Konum" diye okusun
     <nav aria-label="Konum">
-      {/* Hap kutu: yuvarlak, ince krem çerçeve, hafif beyaz */}
-      <ol className="inline-flex flex-wrap items-center gap-2 rounded-full border border-amber-200/70 bg-white/70 px-4 py-1.5 text-sm text-stone-500">
+      {/* Kutu yok: beyaz hap kaldırıldı, yazı doğrudan krem sayfanın üstünde (dergi gibi sade) */}
+      <ol className="flex flex-wrap items-center gap-2 text-sm text-stone-500">
         {adimlar.map((adim, sira) => (
           <li key={adim.ad} className="flex items-center gap-2">
             {/* İlk adım hariç, her adımın önüne › işareti */}

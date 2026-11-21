@@ -183,7 +183,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
             </time>
           </p>
 
-          {/* Sosyal medya: yuvarlak Instagram ikonu. Linki yoksa hiç çıkmaz */}
+          {/* Sosyal medya: yuvarlak Instagram ikonu, zemini şeffaf (beyaz değil). Linki yoksa hiç çıkmaz */}
           {kisi.links.length > 0 && (
             <ul className="mt-4 flex flex-wrap gap-3">
               {kisi.links.map((link) => (
@@ -195,7 +195,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
                     rel="noopener noreferrer"
                     aria-label={`${kisi.name} Instagram'da`}
                     title="Instagram"
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-amber-200 bg-white text-stone-700 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-amber-200 bg-transparent text-stone-700 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
                   >
                     {/* Instagram ikonu: yuvarlak köşeli kare + daire + küçük nokta. currentColor = yazı rengini al */}
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5" aria-hidden="true">
