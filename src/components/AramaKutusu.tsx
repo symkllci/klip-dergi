@@ -3,17 +3,30 @@
 import { useId, useState, type KeyboardEvent } from "react"; // useId = benzersiz kimlik (id) · useState = hafıza · KeyboardEvent = tuş olayının tipi
 import { useRouter } from "next/navigation"; // Kod içinden sayfa değiştirmek için (Enter ile kişiye git)
 
-// Öneri listesinde bir kişi: sadece gereken 3 bilgi (biyografi vb. tarayıcıya gönderilmez)
-export type AramaKisisi = { ad: string; slug: string; konu: string };
+// Öneri listesinde bir kişi: ad, adres, konuları ve klip başlıkları (biyografi vb. tarayıcıya gönderilmez)
+export type AramaKisisi = { ad: string; slug: string; konular: string[]; basliklar: string[] };
 
 // Türkçe küçük harf: toLocaleLowerCase("tr-TR") → "I" → "ı", "İ" → "i"
 // (Sadece toLowerCase() deseydik "ILICALI" → "ilicali" olurdu, "ılıcalı" aramasıyla eşleşmezdi)
 const kucult = (yazi: string) => yazi.toLocaleLowerCase("tr-TR");
 
-// Eşleşme: adın HERHANGİ bir kelimesi yazılanla başlıyorsa → soyadı da bulunur ("ulu" → Hamdi Ulukaya)
-function eslesiyor(kisi: AramaKisisi, aranan: string): boolean {
-  const kelimeler = kucult(kisi.ad).split(" "); // "Hamdi Ulukaya" → ["hamdi", "ulukaya"]
-  return kelimeler.some((kelime) => kelime.startsWith(aranan)) || kucult(kisi.ad).startsWith(aranan);
+// Bir yazı arananla başlıyor mu? Bütünü YA DA herhangi bir kelimesi.
+// "Hamdi Ulukaya" + "ulu" → evet (soyadı) · "Milyarlık Vesting Dersi" + "vest" → evet · "harekete geçmek" + "geç" → evet
+function basliyor(yazi: string, aranan: string): boolean {
+  const kucuk = kucult(yazi);
+  return kucuk.startsWith(aranan) || kucuk.split(" ").some((kelime) => kelime.startsWith(aranan));
+}
+
+// Kişi aranana uyuyor mu? Uyuyorsa önerinin ALT SATIRINDA ne yazacağını döner, uymuyorsa null.
+// Sıra: 1) ad → ilk konusu yazılır · 2) konu (EKİP, VİZYON…) → o konu · 3) klip adı → o klibin adı
+// Böylece ziyaretçi kişinin NEDEN önerildiğini görür ("vest" → Mark Zuckerberg / Milyarlık Vesting Dersi)
+function eslesme(kisi: AramaKisisi, aranan: string): string | null {
+  if (basliyor(kisi.ad, aranan)) return kisi.konular[0];
+  const konu = kisi.konular.find((k) => basliyor(k, aranan)); // find: uyan ilk konu, yoksa undefined
+  if (konu) return konu;
+  const baslik = kisi.basliklar.find((b) => basliyor(b, aranan));
+  if (baslik) return baslik;
+  return null; // hiçbiri uymadı
 }
 
 const EN_FAZLA = 5; // Planın istediği: en fazla 5 öneri
@@ -39,8 +52,13 @@ export default function AramaKutusu({ kisiler, kapat, buyuk = false, ilkYazi = "
 
   const listeId = useId(); // Listenin kimliği (aria-controls bunu gösterecek)
   const aranan = kucult(yazi.trim());
-  // filter: eşleşenler · slice(0, 5): en fazla 5
-  const oneriler = aranan ? kisiler.filter((kisi) => eslesiyor(kisi, aranan)).slice(0, EN_FAZLA) : [];
+  // Her kişiye "neden uydu" yazısını ekle (map) → uymayanları at (filter) → en fazla 5 (slice)
+  const oneriler = aranan
+    ? kisiler
+        .map((kisi) => ({ kisi, alt: eslesme(kisi, aranan) }))
+        .filter((oneri) => oneri.alt !== null)
+        .slice(0, EN_FAZLA)
+    : [];
   const listeGorunur = acik && oneriler.length > 0;
 
   // Bir kişiye git: listeyi kapat, aramayı kapat, kişi sayfasını aç
@@ -66,7 +84,7 @@ export default function AramaKutusu({ kisiler, kapat, buyuk = false, ilkYazi = "
       // Enter: öneri vurguluysa o kişiye git. Değilse form gönderilir → /kisiler?ara=... (eski davranış)
       if (listeGorunur && vurgulu >= 0) {
         e.preventDefault();
-        git(oneriler[vurgulu]);
+        git(oneriler[vurgulu].kisi);
       }
     } else if (e.key === "Escape") {
       // Esc: liste açıksa SADECE listeyi kapat · kapalıysa kutuyu temizle · boşsa aramayı kapat
@@ -87,7 +105,8 @@ export default function AramaKutusu({ kisiler, kapat, buyuk = false, ilkYazi = "
 
   return (
     // relative: öneri listesi kutunun hemen altına (absolute) yerleşsin
-    // Kişiler sayfasında: altı çizgili tek satır (kapsül yok), sağında "Ara →"
+    // Kişiler sayfasında: kutu + Ara düğmesi yan yana (flex), kutu geniş
+    // Kişiler sayfasında: altı çizgili tek satır (kapsül yok), sağında "Ara"
     <form action="/kisiler" className={buyuk ? "relative flex w-full items-center gap-2 border-b border-stone-400 focus-within:border-rose-800" : "relative"}>
       <input
         type="search"
@@ -116,14 +135,14 @@ export default function AramaKutusu({ kisiler, kapat, buyuk = false, ilkYazi = "
           buyuk ? "w-full min-w-0 py-2" : "w-36 rounded-full border border-stone-300 px-4 py-1.5 focus:border-rose-800 sm:w-52"
         }`}
       />
-      {/* Kişiler sayfasında: seçili konu aramada kaybolmasın + bordo "Ara →" yazısı */}
+      {/* Kişiler sayfasında: seçili konu aramada kaybolmasın + bordo "Ara" yazısı */}
       {buyuk && konu && <input type="hidden" name="konu" value={konu} />}
       {buyuk && (
         <button
           type="submit"
           className="shrink-0 text-xs font-semibold uppercase tracking-[0.2em] text-rose-800 transition-colors hover:text-rose-950"
         >
-          Ara 
+          Ara
         </button>
       )}
 
@@ -138,7 +157,7 @@ export default function AramaKutusu({ kisiler, kapat, buyuk = false, ilkYazi = "
           buyuk ? "left-0" : "right-0"
         }`}
       >
-        {oneriler.map((kisi, sira) => (
+        {oneriler.map(({ kisi, alt }, sira) => (
           <li
             key={kisi.slug}
             id={`${listeId}-${sira}`} // aria-activedescendant bu kimliği gösterir
@@ -151,7 +170,8 @@ export default function AramaKutusu({ kisiler, kapat, buyuk = false, ilkYazi = "
             className={`cursor-pointer px-4 py-2 ${sira === vurgulu ? "bg-amber-100" : ""}`}
           >
             <span className="block font-serif text-base text-stone-900">{kisi.ad}</span>
-            <span className="block text-[10px] font-semibold uppercase tracking-widest text-rose-800">{kisi.konu}</span>
+            {/* Alt satır: neden önerildi (konu ya da klip adı) */}
+            <span className="block text-[10px] font-semibold uppercase tracking-widest text-rose-800">{alt}</span>
           </li>
         ))}
       </ul>

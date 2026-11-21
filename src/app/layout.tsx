@@ -1,6 +1,6 @@
 import Header from "@/components/Header"; // İnce başlık, her sayfada
 import Footer from "@/components/Footer"; // Alt bilgi, her sayfada
-import { getAllPeople } from "@/lib/people"; // Arama önerileri için kişiler
+import { getAramaKisileri } from "@/lib/people"; // Arama önerileri için kişiler
 import type { Metadata } from "next"; // Sayfa başlığı ve açıklaması için Next.js'in kalıbı
 import { Inter, Lora } from "next/font/google"; // Metin fontu Inter, uzun okuma fontu Lora
 import "./globals.css"; // Tailwind'in bağlandığı stil dosyası
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   // Arama önerileri: sadece ad, slug ve ilk klibin konusu (biyografi vb. tarayıcıya gönderilmesin, sayfa hafif kalsın)
-  const aramaKisileri = getAllPeople().map((kisi) => ({ ad: kisi.name, slug: kisi.slug, konu: kisi.clips[0].topic }));
+  const aramaKisileri = getAramaKisileri();
 
   return (
     // lang="tr": sayfanın dili Türkçe (i → İ doğru çevrilsin)

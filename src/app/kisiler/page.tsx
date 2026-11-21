@@ -1,6 +1,6 @@
 import Link from "next/link"; // Next.js'in sayfalar arası geçiş bileşenini getir.
 import { Lora } from "next/font/google"; // Ana sayfadaki serif başlık fontu (dergi hissi).
-import { getAllPeople } from "@/lib/people"; // Bütün kişileri getiren tarif.
+import { getAllPeople, getAramaKisileri } from "@/lib/people"; // Bütün kişiler + arama önerileri için kişiler
 import KlipKarti from "@/components/KlipKarti"; // Ortak kart bileşeni, ana sayfayla aynı
 import Kirinti from "@/components/Kirinti"; // ⭐ Ekmek kırıntısı: nerede olduğunu gösterir
 import AramaKutusu from "@/components/AramaKutusu"; // Önerili arama kutusu (üst menüdekiyle aynı, burada büyük hâli)
@@ -32,8 +32,8 @@ export default async function KisilerSayfasi({
   const aramaMetni = typeof ara === "string" ? ara.trim() : "";
 
   const tumKisiler = getAllPeople(); // Bütün kişiler (şu an 12).
-  // Öneri listesi için sadece ad, slug, konu (layout.tsx'teki gibi; biyografiler tarayıcıya gitmesin)
-  const aramaKisileri = tumKisiler.map((kisi) => ({ ad: kisi.name, slug: kisi.slug, konu: kisi.clips[0].topic }));
+  // Öneri listesi için ad, konular, klip başlıkları (üst menüdeki aramayla aynı liste, lib/people.ts'ten)
+  const aramaKisileri = getAramaKisileri();
 
   // Konu listesini kliplerden çıkar, elle yazma.
   // Her kişinin her klibine bak; konusu listede yoksa (includes = içeriyor mu?) ekle.
