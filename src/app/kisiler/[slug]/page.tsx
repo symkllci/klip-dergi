@@ -228,7 +228,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
               href="/kisiler"
               className="group text-sm font-semibold uppercase tracking-widest text-rose-800 hover:underline"
             >
-              Tüm kişiler <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
+              Tüm kişiler <span className="inline-block transition-transform group-hover:translate-x-1"></span>
             </Link>
           </div>
           {/* Telefonda alt alta, orta ekranda 3 yan yana */}

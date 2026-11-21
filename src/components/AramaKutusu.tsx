@@ -18,11 +18,22 @@ function eslesiyor(kisi: AramaKisisi, aranan: string): boolean {
 
 const EN_FAZLA = 5; // Planın istediği: en fazla 5 öneri
 
+// Bu kutu İKİ yerde kullanılıyor:
+//  1) Üst menüde (Header): küçük, açılınca odaklanır, kutudan çıkınca kapanır → kapat verilir
+//  2) Kişiler sayfasında: büyük, hep açık, yanında "Ara" düğmesi → buyuk verilir, kapat verilmez
+type Ozellikler = {
+  kisiler: AramaKisisi[];
+  kapat?: () => void; // ? = sadece üst menüde var (Kişiler sayfasında kutu kapanmaz)
+  buyuk?: boolean; // Kişiler sayfasındaki büyük kutu mu?
+  ilkYazi?: string; // Kişiler sayfasında adresteki ?ara= değeri: sayfa açılınca kutuda dursun
+  konu?: string; // Kişiler sayfasında seçili konu: aramada kaybolmasın diye forma gizli eklenir
+};
+
 // 📚 Kaynak: WAI-ARIA APG "Editable Combobox With List Autocomplete"
 // https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-autocomplete-list/
-export default function AramaKutusu({ kisiler, kapat }: { kisiler: AramaKisisi[]; kapat: () => void }) {
+export default function AramaKutusu({ kisiler, kapat, buyuk = false, ilkYazi = "", konu }: Ozellikler) {
   const router = useRouter();
-  const [yazi, setYazi] = useState(""); // Kutuya yazılan
+  const [yazi, setYazi] = useState(ilkYazi); // Kutuya yazılan (Kişiler sayfasında adresteki aramayla başlar)
   const [acik, setAcik] = useState(false); // Öneri listesi açık mı?
   const [vurgulu, setVurgulu] = useState(-1); // Klavyeyle vurgulanan öneri (-1 = hiçbiri)
 
@@ -35,7 +46,7 @@ export default function AramaKutusu({ kisiler, kapat }: { kisiler: AramaKisisi[]
   // Bir kişiye git: listeyi kapat, aramayı kapat, kişi sayfasını aç
   function git(kisi: AramaKisisi) {
     setAcik(false);
-    kapat();
+    kapat?.(); // ?.() = kapat varsa çağır, yoksa (Kişiler sayfası) hiçbir şey yapma
     router.push(`/kisiler/${kisi.slug}`);
   }
 
@@ -69,20 +80,21 @@ export default function AramaKutusu({ kisiler, kapat }: { kisiler: AramaKisisi[]
       } else if (yazi) {
         setYazi("");
       } else {
-        kapat();
+        kapat?.();
       }
     }
   }
 
   return (
     // relative: öneri listesi kutunun hemen altına (absolute) yerleşsin
-    <form action="/kisiler" className="relative">
+    // Kişiler sayfasında: altı çizgili tek satır (kapsül yok), sağında "Ara →"
+    <form action="/kisiler" className={buyuk ? "relative flex w-full items-center gap-2 border-b border-stone-400 focus-within:border-rose-800" : "relative"}>
       <input
         type="search"
         name="ara"
-        placeholder="Ara..."
+        placeholder={buyuk ? "İsim, konu, klip" : "Ara..."}
         aria-label="Sitede ara"
-        autoFocus
+        autoFocus={!buyuk} // Üst menüde açılınca hemen yazılabilsin · Kişiler sayfasında sayfa açılınca klavye fırlamasın
         autoComplete="off" // Tarayıcının kendi eski aramalar listesi bizimkinin üstüne binmesin
         // ===== Combobox etiketleri (kaynaktaki "Role, Property, State" tablosu) =====
         role="combobox" // "Ben öneri listesi olan bir kutuyum"
@@ -98,9 +110,22 @@ export default function AramaKutusu({ kisiler, kapat }: { kisiler: AramaKisisi[]
           setVurgulu(-1); // Yeni harf → vurgu sıfırlansın
         }}
         onKeyDown={tusaBasildi}
-        onBlur={kapat} // Kutudan çıkınca aramayı kapat (eski davranış)
-        className="w-36 rounded-full border border-stone-300 bg-white px-4 py-1.5 text-sm focus:border-rose-800 focus:outline-none sm:w-52"
+        // Kutudan çıkınca: üst menüde aramayı kapat · Kişiler sayfasında sadece listeyi kapat
+        onBlur={() => (kapat ? kapat() : setAcik(false))}
+        className={`bg-transparent text-sm focus:outline-none ${
+          buyuk ? "w-full min-w-0 py-2" : "w-36 rounded-full border border-stone-300 px-4 py-1.5 focus:border-rose-800 sm:w-52"
+        }`}
       />
+      {/* Kişiler sayfasında: seçili konu aramada kaybolmasın + bordo "Ara →" yazısı */}
+      {buyuk && konu && <input type="hidden" name="konu" value={konu} />}
+      {buyuk && (
+        <button
+          type="submit"
+          className="shrink-0 text-xs font-semibold uppercase tracking-[0.2em] text-rose-800 transition-colors hover:text-rose-950"
+        >
+          Ara 
+        </button>
+      )}
 
       {/* Öneri listesi: role="listbox". Kapalıyken de sayfada durur (hidden): aria-controls'un gösterdiği id hep var olsun */}
       <ul
@@ -108,7 +133,10 @@ export default function AramaKutusu({ kisiler, kapat }: { kisiler: AramaKisisi[]
         role="listbox"
         aria-label="Kişi önerileri"
         hidden={!listeGorunur}
-        className="absolute right-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-xl border border-stone-200 bg-white py-1 text-left shadow-xl"
+        // Liste zemini krem (beyaz değil). Üst menüde sağa, Kişiler sayfasında sola yaslı
+        className={`absolute top-full z-50 mt-2 w-64 overflow-hidden rounded-xl border border-stone-200 bg-amber-50 py-1 text-left shadow-xl ${
+          buyuk ? "left-0" : "right-0"
+        }`}
       >
         {oneriler.map((kisi, sira) => (
           <li

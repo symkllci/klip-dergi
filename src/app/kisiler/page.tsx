@@ -3,18 +3,19 @@ import { Lora } from "next/font/google"; // Ana sayfadaki serif başlık fontu (
 import { getAllPeople } from "@/lib/people"; // Bütün kişileri getiren tarif.
 import KlipKarti from "@/components/KlipKarti"; // Ortak kart bileşeni, ana sayfayla aynı
 import Kirinti from "@/components/Kirinti"; // ⭐ Ekmek kırıntısı: nerede olduğunu gösterir
+import AramaKutusu from "@/components/AramaKutusu"; // Önerili arama kutusu (üst menüdekiyle aynı, burada büyük hâli)
 
 // Başlık fontu: ana sayfadakiyle aynı Lora. latin-ext: Türkçe harfler (ş, ğ, ı, İ) için.
 const baslikFontu = Lora({ subsets: ["latin", "latin-ext"] });
 
 // Renkler (ana sayfayla aynı): krem zemin amber-50 · koyu mürekkep stone-900 · bordo vurgu rose-800
 
-// Filtre düğmelerinin ortak görünüşü: kartlardaki konu etiketiyle aynı dil (yuvarlak, BÜYÜK HARF, aralıklı)
-const dugmeTemel = "rounded-full border px-4 py-1.5 text-xs font-semibold uppercase tracking-widest transition-colors";
-// Seçili düğme: kart etiketi gibi bordo zemin, beyaz yazı
-const dugmeSecili = "border-rose-800 bg-rose-800 text-white";
-// Seçili olmayan: şeffaf zemin (beyaz değil, arkadan krem sayfa görünür), gri çerçeve; üstüne gelince bordo
-const dugmeNormal = "border-stone-300 bg-transparent text-stone-600 hover:border-rose-800 hover:text-rose-800";
+// Konu bağlantıları: kutu/kapsül YOK, gazete gibi düz yazı (BÜYÜK HARF, aralıklı), aralarında nokta
+const konuTemel = "text-xs font-semibold uppercase tracking-[0.2em] transition-colors";
+// Seçili konu: bordo ve altı çizili
+const konuSecili = "text-rose-800 underline decoration-2 underline-offset-4";
+// Seçili olmayan: gri, üstüne gelince bordo
+const konuNormal = "text-stone-500 hover:text-rose-800";
 
 // Kişiler sayfası. searchParams: adresteki ? sonrası bilgiler.
 // Örnek: /kisiler?konu=yatırım&ara=ata → { konu: "yatırım", ara: "ata" }
@@ -31,6 +32,8 @@ export default async function KisilerSayfasi({
   const aramaMetni = typeof ara === "string" ? ara.trim() : "";
 
   const tumKisiler = getAllPeople(); // Bütün kişiler (şu an 12).
+  // Öneri listesi için sadece ad, slug, konu (layout.tsx'teki gibi; biyografiler tarayıcıya gitmesin)
+  const aramaKisileri = tumKisiler.map((kisi) => ({ ad: kisi.name, slug: kisi.slug, konu: kisi.clips[0].topic }));
 
   // Konu listesini kliplerden çıkar, elle yazma.
   // Her kişinin her klibine bak; konusu listede yoksa (includes = içeriyor mu?) ekle.
@@ -71,88 +74,74 @@ export default async function KisilerSayfasi({
   return (
     // Bütün sayfa: ana sayfayla aynı krem zemin (amber-50) ve koyu mürekkep yazı (stone-900)
     <div className="min-h-screen bg-amber-50 text-stone-900">
-      {/* Ana sayfayla aynı genişlik ve boşluklar */}
       <main className="mx-auto max-w-6xl px-6 py-10">
-        {/* ⭐ Ekmek kırıntısı: Ana sayfa › Kişiler (Kişiler = buradasın, href yok → bordo) */}
+        {/* Ekmek kırıntısı: Ana sayfa › Kişiler */}
         <Kirinti adimlar={[{ ad: "Ana sayfa", href: "/" }, { ad: "Kişiler" }]} />
 
-        {/* Başlık bölümü: ana sayfadaki logo gibi altında kalın çizgi */}
-        <header className="mt-4 border-b-2 border-stone-900 pb-4">
-          {/* Lora başlık: ana sayfadaki "Diğer hikâyeler" ile aynı font */}
-          <h1 className={`${baslikFontu.className} text-4xl font-bold sm:text-5xl`}>Kişiler</h1>
-          {/* Açıklama: sıcak gri (stone) */}
-          <p className="mt-2 text-stone-600">
+        {/* ===== GAZETE DÜZENİ (Maket B): her şey ortalı =====
+            Manşet: ortada büyük başlık + italik açıklama (üstteki künye şeridi kaldırıldı) */}
+        <header className="py-10 text-center">
+          <h1 className={`${baslikFontu.className} text-6xl font-bold sm:text-7xl`}>Kişiler</h1>
+          <p className="mx-auto mt-3 max-w-xl font-serif text-lg italic leading-relaxed text-stone-600">
             Podcast kliplerinde konuşan girişimcilerin biyografileri, sosyal medya hesapları ve viral klipleri.
           </p>
         </header>
 
-        {/* Arama kutusu */}
-        {/* form action="/kisiler": Ara'ya basınca /kisiler?ara=... adresine gider */}
-        {/* name="ara": kutuya yazılan, adreste ara= olarak görünür */}
-        {/* defaultValue: sayfa yenilense de yazılan kutuda kalır */}
-        <form action="/kisiler" className="mt-6 mb-4 flex gap-2">
-          <input
-            type="search"
-            name="ara"
-            defaultValue={aramaMetni}
-            placeholder="İsim, konu ya da klip ara" // ⭐ Arama artık ad + konu + klip başlığında
-            // bg-transparent: zemin şeffaf (beyaz değil) · focus: kutuya tıklayınca çerçeve bordo olsun (outline-none: tarayıcının mavi çerçevesini kapat)
-            className="w-full max-w-sm rounded-full border border-stone-300 bg-transparent px-4 py-2 text-sm focus:border-rose-800 focus:outline-none"
-          />
-          {/* Konu seçiliyse aramada kaybolmasın diye gizli olarak forma ekle */}
-          {seciliKonu && <input type="hidden" name="konu" value={seciliKonu} />}
-          {/* Ara düğmesi: bordo vurgu rengi */}
-          <button
-            type="submit"
-            className="rounded-full bg-rose-800 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-rose-900"
-          >
-            Ara
-          </button>
-        </form>
-
-        {/* Konu düğmeleri: "Tümü" ve kliplerden çıkan her konu */}
-        {/* flex-wrap: sığmayan düğmeler alt satıra geçsin (telefonda taşmasın) */}
-        <div className="mb-4 flex flex-wrap gap-2">
-          {/* Tümü: konu filtresini kaldırır. Arama varsa onu korur. */}
-          <Link
-            href={{ pathname: "/kisiler", query: aramaMetni ? { ara: aramaMetni } : {} }}
-            className={`${dugmeTemel} ${!seciliKonu ? dugmeSecili : dugmeNormal}`}
-          >
-            Tümü
-          </Link>
-
-          {konular.map((k) => (
-            // href'i nesne olarak veriyoruz: Next.js boşluk ve Türkçe harfleri adrese kendisi uygun yazar.
-            // Arama varsa konuya tıklayınca kaybolmasın diye onu da ekliyoruz.
-            <Link
-              key={k}
-              href={{ pathname: "/kisiler", query: aramaMetni ? { konu: k, ara: aramaMetni } : { konu: k } }}
-              className={`${dugmeTemel} ${seciliKonu === k ? dugmeSecili : dugmeNormal}`}
-            >
-              {k}
-            </Link>
-          ))}
+        {/* Arama: ortada, altı çizgili tek satır (AramaKutusu, buyuk). Yazınca en fazla 5 kişi önerir.
+            Öneri seçilirse kişinin sayfasına gider · seçilmeden Enter ya da "Ara" → /kisiler?ara=... */}
+        <div className="mx-auto max-w-sm">
+          <AramaKutusu kisiler={aramaKisileri} buyuk ilkYazi={aramaMetni} konu={seciliKonu} />
         </div>
 
-        {/* Kaç kişi gösteriliyor */}
-        <p className="mb-6 text-sm text-stone-500">
-          {kisiler.length} kişi
-          {seciliKonu && ` · konu: "${seciliKonu}"`}
-          {aramaMetni && ` · arama: "${aramaMetni}"`}
-        </p>
+        {/* Konular: iki ince çizgi arasında, ortalı tek akış, aralarında · (gazetedeki bölüm listesi gibi) */}
+        <nav aria-label="Konular" className="mt-8 border-y border-stone-300 py-3">
+          <ul className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-stone-300">
+            {/* Tümü: konu filtresini kaldırır. Arama varsa onu korur. */}
+            <li>
+              <Link
+                href={{ pathname: "/kisiler", query: aramaMetni ? { ara: aramaMetni } : {} }}
+                aria-current={!seciliKonu ? "page" : undefined}
+                className={`${konuTemel} ${!seciliKonu ? konuSecili : konuNormal}`}
+              >
+                Tümü
+              </Link>
+            </li>
+            {konular.map((k) => (
+              // href'i nesne olarak veriyoruz: Next.js boşluk ve Türkçe harfleri adrese kendisi uygun yazar.
+              // Arama varsa konuya tıklayınca kaybolmasın diye onu da ekliyoruz.
+              // Önündeki · süs: ekran okuyucu okumasın (aria-hidden)
+              <li key={k} className="flex items-center gap-x-3">
+                <span aria-hidden="true">·</span>
+                <Link
+                  href={{ pathname: "/kisiler", query: aramaMetni ? { konu: k, ara: aramaMetni } : { konu: k } }}
+                  aria-current={seciliKonu === k ? "page" : undefined}
+                  className={`${konuTemel} ${seciliKonu === k ? konuSecili : konuNormal}`}
+                >
+                  {k}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-        {/* Hiç sonuç yoksa bilgi ver */}
-        {kisiler.length === 0 && (
-          <p className="text-stone-600">
-            Sonuç bulunamadı.{" "}
+        {/* Süzgeç varsa ne seçildiğini yaz (yoksa hiç çıkmaz) */}
+        {(seciliKonu || aramaMetni) && (
+          <p className="mt-6 text-center text-sm text-stone-500">
+            {seciliKonu && `Konu: "${seciliKonu}"`}
+            {seciliKonu && aramaMetni && " · "}
+            {aramaMetni && `Arama: "${aramaMetni}"`}
+            {" · "}
             <Link href="/kisiler" className="text-rose-800 hover:underline">
-              Filtreleri temizle
+              Temizle
             </Link>
           </p>
         )}
 
+        {/* Hiç sonuç yoksa bilgi ver */}
+        {kisiler.length === 0 && <p className="mt-10 text-center text-stone-600">Sonuç bulunamadı.</p>}
+
         {/* Kartlar: ana sayfayla aynı KlipKarti. Telefonda 1, orta ekranda 2, geniş ekranda 4 yan yana */}
-        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {kisiler.map((kisi) => {
             // Konu seçiliyse o konudaki ilk klibi göster (find), bulamazsa (??) kişinin ilk klibini
             const klip = kisi.clips.find((c) => c.topic === seciliKonu) ?? kisi.clips[0];
