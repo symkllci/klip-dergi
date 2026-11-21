@@ -1,7 +1,7 @@
 import Link from "next/link"; // Next.js'in sayfalar arası geçiş bileşenini getir.
 import { Lora } from "next/font/google"; // Ana sayfadaki serif başlık fontu (dergi hissi).
 import { getAllPeople, getAramaKisileri } from "@/lib/people"; // Bütün kişiler + arama önerileri için kişiler
-import KlipKarti from "@/components/KlipKarti"; // Ortak kart bileşeni, ana sayfayla aynı
+import HikayeKarti from "@/components/HikayeKarti"; // Kişi kartı: ana sayfadaki "Bütün hikâyeler" albümüyle aynı (kişi fotoğrafı, siyah-beyaz, kutusuz)
 import Kirinti from "@/components/Kirinti"; // ⭐ Ekmek kırıntısı: nerede olduğunu gösterir
 import AramaKutusu from "@/components/AramaKutusu"; // Önerili arama kutusu (üst menüdekiyle aynı, burada büyük hâli)
 
@@ -142,17 +142,15 @@ export default async function KisilerSayfasi({
         {/* Hiç sonuç yoksa bilgi ver */}
         {kisiler.length === 0 && <p className="mt-10 text-center text-stone-600">Sonuç bulunamadı.</p>}
 
-        {/* Kartlar: ana sayfayla aynı KlipKarti. Telefonda 1, orta ekranda 2, geniş ekranda 4 yan yana */}
-        <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {kisiler.map((kisi) => {
-            // Konu seçiliyse o konudaki ilk klibi göster (find), bulamazsa (??) kişinin ilk klibini
-            const klip = kisi.clips.find((c) => c.topic === seciliKonu) ?? kisi.clips[0];
-            return (
-              <li key={kisi.slug}>
-                <KlipKarti kisi={kisi} klip={klip} />
-              </li>
-            );
-          })}
+        {/* Kartlar: klip kapağı yerine KİŞİ FOTOĞRAFI (Wikipedia/Commons, siyah-beyaz). Fotoğrafı olmayanda reel kapağı.
+            Ana sayfadaki "Bütün hikâyeler" ile aynı kart (HikayeKarti, album) ve aynı ızgara:
+            📚 MDN CSS Grid · auto-fill = sığdığı kadar sütun · minmax = her kart en az 230px */}
+        <ul className="mt-10 grid grid-cols-[repeat(auto-fill,minmax(min(230px,100%),1fr))] gap-x-12 gap-y-14">
+          {kisiler.map((kisi) => (
+            <li key={kisi.slug}>
+              <HikayeKarti kisi={kisi} duzen="album" />
+            </li>
+          ))}
         </ul>
       </main>
     </div>

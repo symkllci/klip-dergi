@@ -88,7 +88,7 @@ export default function Home() {
               href="/kisiler"
               className="group text-sm font-semibold uppercase tracking-widest text-rose-800 hover:underline"
             >
-              Tüm kişiler <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
+              Tüm kişiler
             </Link>
           </div>
 
