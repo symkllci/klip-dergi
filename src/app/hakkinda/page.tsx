@@ -11,9 +11,8 @@ export const metadata: Metadata = {
 };
 
 // Ortak görünüşler (kalıplar)
-const etiket = "text-xs font-medium uppercase tracking-[0.2em] text-rose-800"; // küçük bordo etiket
-const bolumBasligi = `${baslikFontu.className} mt-3 text-2xl`; // sakin Lora başlık
-const bolum = "mt-20 border-t border-stone-200 pt-10"; // bölümler arası geniş boşluk, ince çizgi
+// Bölüm başlığı: Kişiler sayfasındaki konular gibi küçük BÜYÜK HARF, üstünde kalın çizgi (gazete bölüm ayracı)
+const bolumBasligi = "border-t-2 border-stone-900 pt-3 text-xs font-semibold uppercase tracking-[0.3em] text-stone-500";
 
 // İlkelerimiz: 3 madde (planda yazan)
 const ilkeler = [
@@ -40,50 +39,51 @@ const kunye = [
   { gorev: "İletişim", isim: "info@klipdergi.com" }, // DEMO: gerçek adres gelince değişecek
 ];
 
-// Hakkımızda sayfası (adres: /hakkinda)
+// Hakkımızda sayfası (adres: /hakkinda) · Maket A: gazete künyesi
 export default function HakkindaSayfasi() {
   return (
     <div className="bg-amber-50 text-stone-900">
-      <main className="mx-auto max-w-2xl px-6 py-10">
-        {/* ⭐ Ekmek kırıntısı: Ana sayfa › Hakkımızda. Son adımda href yok → "buradasın" (bordo, tıklanmaz) */}
-        <Kirinti adimlar={[{ ad: "Ana sayfa", href: "/" }, { ad: "Hakkımızda" }]} />
-
-        {/* Giriş: ortalı, sakin. mt-12: kırıntıyla arasında boşluk */}
-        <div className="mt-12 text-center">
-          <p className={etiket}>Hakkımızda</p>
-          <h1 className={`${baslikFontu.className} mt-4 text-5xl italic`}>Klip Dergi</h1>
-          <p className="mx-auto mt-6 max-w-xl font-serif text-lg leading-loose text-stone-600">
+      {/* max-w-5xl: eskisinden (max-w-2xl) geniş → ilkeler yan yana 3 sütun sığsın */}
+      <main className="mx-auto max-w-5xl px-6 pb-10 pt-6">
+        {/* GİRİŞ: Kişiler sayfasıyla aynı → ortada kırıntı + kalın Lora başlık + italik açıklama */}
+        <header className="pb-12 text-center">
+          {/* Ekmek kırıntısı: ortada (flex justify-center) */}
+          <div className="flex justify-center">
+            <Kirinti adimlar={[{ ad: "Ana sayfa", href: "/" }, { ad: "Hakkımızda" }]} />
+          </div>
+          <h1 className={`${baslikFontu.className} mt-3 text-4xl font-bold sm:text-5xl`}>Hakkımızda</h1>
+          <p className="mx-auto mt-3 max-w-xl font-serif text-lg italic leading-relaxed text-stone-600">
             Podcast&apos;lerde viral olan girişimci kliplerini bir araya getiren çevrim içi bir dergi.
             Her kişi için kısa bir biyografi, sosyal medya hesapları ve konuştukları klipler tek sayfada.
           </p>
-        </div>
+        </header>
 
-        {/* İlkelerimiz: solda bordo numara, sağda yazı */}
-        <section className={bolum}>
-          <p className={etiket}>Nasıl çalışıyoruz</p>
+        {/* İLKELERİMİZ: yan yana 3 sütun (telefonda alt alta). Büyük bordo Lora numara, altında başlık ve yazı */}
+        <section>
           <h2 className={bolumBasligi}>İlkelerimiz</h2>
-          <ol className="mt-8 space-y-8">
+          <ol className="mt-8 grid gap-10 sm:grid-cols-3">
             {ilkeler.map((ilke, sira) => (
-              <li key={ilke.baslik} className="grid grid-cols-[3rem_1fr] gap-4">
-                <span className={`${baslikFontu.className} text-3xl italic text-rose-800`}>0{sira + 1}</span>
-                <div>
-                  <h3 className="font-medium">{ilke.baslik}</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-stone-600">{ilke.metin}</p>
-                </div>
+              <li key={ilke.baslik}>
+                {/* padStart(2, "0"): 1 → "01" (klip albümündeki numaralar gibi) */}
+                <span className={`${baslikFontu.className} block text-5xl leading-none text-rose-800`}>
+                  {String(sira + 1).padStart(2, "0")}
+                </span>
+                <h3 className={`${baslikFontu.className} mt-4 text-xl font-bold`}>{ilke.baslik}</h3>
+                <p className="mt-2 leading-relaxed text-stone-600">{ilke.metin}</p>
               </li>
             ))}
           </ol>
         </section>
 
-        {/* Künye: solda görev, sağda isim. İsim linkliyse üstüne gelince bordo */}
-        <section className={bolum}>
-          <p className={etiket}>Yayın bilgileri</p>
+        {/* KÜNYE: basılı dergilerin künyesi gibi ORTALI. Üstte küçük görev, altında büyük Lora isim */}
+        <section className="mt-20">
           <h2 className={bolumBasligi}>Künye</h2>
-          <dl className="mt-8 divide-y divide-stone-200">
+          <dl className="mt-10 space-y-7 text-center">
             {kunye.map((satir) => (
-              <div key={satir.gorev} className="grid gap-1 py-4 sm:grid-cols-[14rem_1fr] sm:gap-4">
-                <dt className="text-sm text-stone-500">{satir.gorev}</dt>
-                <dd className="font-medium">
+              <div key={satir.gorev}>
+                <dt className="text-[10px] font-semibold uppercase tracking-[0.3em] text-stone-500">{satir.gorev}</dt>
+                <dd className={`${baslikFontu.className} mt-1 text-2xl`}>
+                  {/* Linki varsa (Instagram) tıklanır, üstüne gelince bordo */}
                   {satir.link ? (
                     <a href={satir.link} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-rose-800">
                       {satir.isim}
@@ -97,13 +97,12 @@ export default function HakkindaSayfasi() {
           </dl>
         </section>
 
-        {/* Kaldırma politikası: yumuşak beyaz kutu */}
-        <section className={bolum}>
-          <p className={etiket}>Hak sahipleri için</p>
-          <h2 className={bolumBasligi}>Kaldırma politikası</h2>
-          <p className="mt-6 rounded-2xl bg-white p-6 leading-relaxed text-stone-600">
+        {/* KALDIRMA POLİTİKASI: beyaz kutu YERİNE koyu bant (ana sayfadaki alıntı bandıyla aynı dil) */}
+        <section className="mt-20 bg-stone-900 px-8 py-10 text-amber-50 sm:px-12">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-rose-300">Hak sahipleri için · Kaldırma politikası</p>
+          <p className={`${baslikFontu.className} mt-4 max-w-3xl text-2xl leading-relaxed sm:text-3xl`}>
             Sitemizde yer alan bir klip, biyografi ya da fotoğraf hakkında itirazınız varsa iletişim adresimizden bize yazın.
-            İtiraz edilen içerik <span className="font-medium text-rose-800">24 saat içinde kaldırılır.</span>
+            İtiraz edilen içerik <span className="text-rose-300">24 saat içinde kaldırılır.</span>
           </p>
         </section>
       </main>
