@@ -52,7 +52,7 @@ Dal: `hafta5`
 
 ![](18-kasim-12-klip-deneme.png)
 
-link : 
+link : https://klip-dergi-git-hafta5-symkllcis-projects.vercel.app/klip-deneme
 
 ## 1. Albüm ızgarası 📚 MDN CSS Grid
 
