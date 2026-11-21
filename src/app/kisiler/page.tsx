@@ -74,14 +74,16 @@ export default async function KisilerSayfasi({
   return (
     // Bütün sayfa: ana sayfayla aynı krem zemin (amber-50) ve koyu mürekkep yazı (stone-900)
     <div className="min-h-screen bg-amber-50 text-stone-900">
-      <main className="mx-auto max-w-6xl px-6 py-10">
-        {/* Ekmek kırıntısı: Ana sayfa › Kişiler */}
-        <Kirinti adimlar={[{ ad: "Ana sayfa", href: "/" }, { ad: "Kişiler" }]} />
-
+      {/* pt-6: üstte az boşluk → başlık yukarıda */}
+      <main className="mx-auto max-w-6xl px-6 pb-10 pt-6">
         {/* ===== GAZETE DÜZENİ (Maket B): her şey ortalı =====
-            Manşet: ortada büyük başlık + italik açıklama (üstteki künye şeridi kaldırıldı) */}
-        <header className="py-10 text-center">
-          <h1 className={`${baslikFontu.className} text-6xl font-bold sm:text-7xl`}>Kişiler</h1>
+            Manşet: ekmek kırıntısı + büyük başlık + italik açıklama, hepsi ortada (künye şeridi kaldırıldı) */}
+        <header className="pb-10 text-center">
+          {/* Ekmek kırıntısı: başlığın hemen üstünde, ortada (flex justify-center: kırıntıyı ortaya al) */}
+          <div className="flex justify-center">
+            <Kirinti adimlar={[{ ad: "Ana sayfa", href: "/" }, { ad: "Kişiler" }]} />
+          </div>
+          <h1 className={`${baslikFontu.className} mt-3 text-4xl font-bold sm:text-5xl`}>Kişiler</h1>
           <p className="mx-auto mt-3 max-w-xl font-serif text-lg italic leading-relaxed text-stone-600">
             Podcast kliplerinde konuşan girişimcilerin biyografileri, sosyal medya hesapları ve viral klipleri.
           </p>
