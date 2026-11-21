@@ -80,12 +80,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
 
         {/* ===== GAZETE SAYFASI (Maket E) ===== */}
 
-        {/* 1. KÜNYE ŞERİDİ: üstte tek kalın çizgi. Solda PROFİL, ortada KLİP DERGİ, sağda konu */}
-        <div className="mt-6 flex items-center justify-between border-t-2 border-stone-900 pt-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-stone-600 sm:text-xs">
-          <span>Profil</span>
-          <span className="hidden sm:inline">Klip Dergi</span>
-          <span className="text-rose-800">{kapakKlip.topic}</span>
-        </div>
+        {/* Künye şeridi (çizgi + PROFİL · KLİP DERGİ · konu) kaldırıldı: üstte sadece ekmek kırıntısı */}
 
         {/* 2. YATAY FOTOĞRAF: ismin ÜSTÜNDE, 3:2 oranında (fotoğraf makinesi oranı). Dikey portrelerde 16:9'dan az kırpar.
             max-w-4xl: çok büyümesin, isim ilk ekranda görünsün */}
@@ -228,7 +223,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
               href="/kisiler"
               className="group text-sm font-semibold uppercase tracking-widest text-rose-800 hover:underline"
             >
-              Tüm kişiler <span className="inline-block transition-transform group-hover:translate-x-1"></span>
+              Tüm kişiler
             </Link>
           </div>
           {/* Telefonda alt alta, orta ekranda 3 yan yana */}
