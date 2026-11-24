@@ -37,9 +37,9 @@ export const metadata: Metadata = {
   description: "Viral olan girişimcilerin podcast kliplerini ve hikâyelerini bir araya getiren dergi.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
   // Arama önerileri: sadece ad, slug ve ilk klibin konusu (biyografi vb. tarayıcıya gönderilmesin, sayfa hafif kalsın)
-  const aramaKisileri = getAramaKisileri();
+  const aramaKisileri = await getAramaKisileri(); // await: veri hazır olana kadar bekle
 
   return (
     // lang="tr": sayfanın dili Türkçe (i → İ doğru çevrilsin)

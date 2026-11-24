@@ -13,9 +13,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function KlipDeneme() {
+export default async function KlipDeneme() {
   // flatMap: her kişinin klip listesini tek uzun listeye dök → 21 klip · slice(0, 12): ilk 12'si
-  const klipler = getAllPeople()
+  const klipler = (await getAllPeople())
     .flatMap((kisi) => kisi.clips)
     .slice(0, 12);
 

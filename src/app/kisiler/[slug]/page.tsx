@@ -14,8 +14,8 @@ const baslikFontu = Lora({ subsets: ["latin", "latin-ext"] });
 // embedAdresi buradan KlipOynatici.tsx'e taşındı (artık onu sadece oynatıcı kullanıyor)
 
 // Build sırasında hangi kişi sayfalarının önceden üretileceğini söyler (pastane vitrini)
-export function generateStaticParams() {
-  return getAllPeople().map((kisi) => ({ slug: kisi.slug }));
+export async function generateStaticParams() {
+  return (await getAllPeople()).map((kisi) => ({ slug: kisi.slug }));
 }
 
 // Sekme başlığı, açıklama ve paylaşım görseli: her kişi için ayrı
@@ -25,7 +25,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params; // Adresteki kişi kodu (ör. hamdi-ulukaya)
-  const kisi = getPersonBySlug(slug); // O kişiyi bul
+  const kisi = await getPersonBySlug(slug); // O kişiyi bul
   if (!kisi) return {}; // Kişi yoksa boş bırak
 
   const kapak = kisi.clips[0]?.cover; // İlk klibin kapağı = paylaşım görseli
@@ -44,7 +44,7 @@ export async function generateMetadata({
 // Kişi sayfası: /kisiler/nevzat-aydin gibi adreslerde açılır
 export default async function KisiSayfasi({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params; // Adresten slug'ı al
-  const kisi = getPersonBySlug(slug); // Slug ile kişiyi bul (find). Bulamazsa undefined
+  const kisi = await getPersonBySlug(slug); // Slug ile kişiyi bul (find). Bulamazsa undefined
 
   // Kişi yoksa 404 göster ve burada dur
   if (!kisi) {
@@ -56,7 +56,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
   const konular = [...new Set(kisi.clips.map((klip) => klip.topic))];
 
   // Diğer kişiler: önce AYNI KONUDAKİLER, yer kalırsa geri kalanlar (en fazla 3 kişi)
-  const tumKisiler = getAllPeople(); // Bütün kişiler (12)
+  const tumKisiler = await getAllPeople(); // Bütün kişiler (12)
 
   // 1) Aynı konudakiler: kendisi olmayan VE en az bir klibinin konusu bu kişinin konularında geçenler
   const ayniKonu = tumKisiler.filter((k) => k.slug !== kisi.slug && k.clips.some((klip) => konular.includes(klip.topic)));

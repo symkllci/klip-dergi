@@ -14,8 +14,8 @@ const baslikFontu = Lora({ subsets: ["latin", "latin-ext"], style: ["normal", "i
 // krem zemin amber-50 · koyu mürekkep stone-900 · bordo vurgu rose-800
 
 // Ana sayfa: sitenin adresi "/" (localhost:3000). Sunucuda hazırlanır, sadece vitrin tarayıcıda çalışır.
-export default function Home() {
-  const kisiler = getAllPeople(); // Bütün kişileri al (şu an 12).
+export default async function Home() {
+  const kisiler = await getAllPeople(); // Bütün kişileri al (şu an 12).
   const vitrin = kisiler.slice(0, 5); // Vitrin: ilk 5 kişi (0, 1, 2, 3, 4). slice'ın 2. sayısı dahil değil.
   // EDİTÖR SEÇİMİ: "Diğer hikâyeler"de kim görünsün? Adları (slug) buradan değiştirmek yeterli.
   // Öne çıkan: soldaki büyük hikâye (6 sütun) · Yan: sağdaki 4 kart (soldan sağa, yukarıdan aşağı okunur)

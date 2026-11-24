@@ -21,6 +21,18 @@ export type Person = {
     editor: string; // biyografiyi hazırlayan editör. Bütün sayfaya ait → Person'da (klibe değil)
 };
 
+// Klibe BİZİM eklediğimiz bilgi (people.json'da durur). Klibin kendisi (başlık, link, tarih, kaynak) API'den / örnek dosyadan gelir.
+// İkisi reel koduyla eşleşir.
+export type ClipNote = {
+    reel: string; // Instagram kodu, ör. "Ddqm-BsAxNj" (API'deki "reel" ile aynı)
+    topic: string; // konu: editör kararı
+    quote?: string; // klipten alıntı, kişinin kendi sözü. ? = her klipte yok
+};
+
+// people.json'daki bir kişinin hâli: clips yerine clipNotes (klip notları)
+// Omit<Person, "clips"> = Person'ın "clips" dışındaki bütün alanları
+export type PersonData = Omit<Person, "clips"> & { clipNotes: ClipNote[] };
+
 // Fotoğrafın kimlik kartı (Wikipedia/Commons'tan)
 export type Photo = {
     src: string; // görselin sitedeki adresi
