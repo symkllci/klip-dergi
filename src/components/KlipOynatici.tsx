@@ -11,6 +11,8 @@ function embedAdresi(klip: Clip): string {
 }
 
 // Klip oynatıcı: önce kapak + ▶, tıklanınca Instagram yüklenir (sayfa hızlı açılsın)
+// Genişlik artık SABİT DEĞİL (eskiden 320px): bulunduğu albüm hücresi kadar (w-full).
+// Yükseklik genişlikten hesaplanır (aspect-[9/16]) → hücre daralınca oynatıcı da orantılı küçülür
 export default function KlipOynatici({ klip }: { klip: Clip }) {
   const [oynat, setOynat] = useState(false); // ⭐ Oynatıldı mı? Başta: hayır (ışık düğmesi kapalı)
 
@@ -20,9 +22,8 @@ export default function KlipOynatici({ klip }: { klip: Clip }) {
       <iframe
         src={embedAdresi(klip)}
         title={klip.title}
-        width="320"
-        height="570"
-        className="rounded-lg border border-stone-300 bg-white"
+        // width/height sayıları kaldırıldı: w-full + aspect-[9/16] → kapakla aynı boyut, sayfa kaymaz
+        className="block aspect-[9/16] w-full rounded-lg border border-stone-300 bg-white"
         allowFullScreen
       ></iframe>
     );
@@ -34,18 +35,19 @@ export default function KlipOynatici({ klip }: { klip: Clip }) {
       type="button"
       onClick={() => setOynat(true)}
       aria-label={`Klibi oynat: ${klip.title}`}
-      className="group relative block aspect-[9/16] w-[320px] overflow-hidden rounded-lg bg-stone-900"
+      className="group relative block aspect-[9/16] w-full overflow-hidden rounded-lg bg-stone-900"
     >
       <Image
         src={klip.cover}
         alt=""
         fill
-        sizes="320px"
+        // Albümde kapak genişliği: geniş ekranda 4 sütun ≈ 270px · tablette 2 sütun ≈ ekranın yarısı · telefonda 1 sütun ≈ ekran − 48px
+        sizes="(min-width: 1152px) 270px, (min-width: 640px) 45vw, calc(100vw - 48px)"
         className="object-cover transition-transform duration-500 group-hover:scale-105"
       />
       {/* ▶ düğmesi: ortada, bordo yuvarlak, üstüne gelince büyür */}
       <span className="absolute inset-0 flex items-center justify-center">
-        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-rose-800 text-2xl text-white shadow-xl transition-transform group-hover:scale-110">
+        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-rose-800 text-xl text-white shadow-xl transition-transform group-hover:scale-110">
           ▶
         </span>
       </span>

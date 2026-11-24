@@ -26,6 +26,7 @@ export type Photo = {
     src: string; // görselin sitedeki adresi
     width: number; // genişlik (piksel)
     height: number; // yükseklik (piksel)
+    focus?: string; // yüz nerede: object-position değeri, ör. "50% 25%". ? = yoksa varsayılan (sayfada "50% 25%")
     author: string; // fotoğrafçı
     license: string; // lisans adı (CC BY 4.0 gibi)
     licenseUrl?: string; // lisansın bağlantısı. ? = olmayabilir (kamu malında yok)

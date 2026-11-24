@@ -1,75 +1,108 @@
 "use client"; // Tarayıcıda çalışsın: tıklama, kaydırma, hafıza (state), alarm
 
-import { useEffect, useRef, useState } from "react"; // useState = hafıza · useRef = kutuyu elde tutmak · useEffect = alarm/kulak
+import { useEffect, useLayoutEffect, useRef, useState } from "react"; // useLayoutEffect = ekran çizilmeden HEMEN önce çalışan useEffect
 import Link from "next/link"; // Site içi sayfalara geçiş
 import Image from "next/image"; // Resmi küçültüp hızlı yükler
 import type { Person } from "@/types"; // Kişi kalıbı
 
 // Kendiliğinden kayma aralığı: 5 saniye
 const KAYMA_SURESI = 5000;
+// Kaydırma bitti mi? Son kaydırmadan 150 ms sonra hâlâ hareket yoksa "bitti" sayıyoruz
+const BEKLEME = 150;
 
-// Şeridi "sira"ncı hikâyeye kaydır: hikâye şeridin TAM ORTASINA gelsin
-function seridiKaydir(serit: HTMLDivElement | null, sira: number) {
-  const hedef = serit?.children[sira] as HTMLElement | undefined; // Hedef hikâye kutusu
+// Şeridi "sira"ncı karta kaydır: kart şeridin TAM ORTASINA gelsin
+// davranis: "smooth" = yumuşak kayma · "instant" = göz fark etmeden ışınlanma
+function seridiKaydir(serit: HTMLDivElement | null, sira: number, davranis: ScrollBehavior = "smooth") {
+  const hedef = serit?.children[sira] as HTMLElement | undefined; // Hedef kart
   if (serit && hedef) {
-    // Ortalamak için: hedefin solu − (şerit genişliği − hikâye genişliği) / 2
+    // Ortalamak için: hedefin solu − (şerit genişliği − kart genişliği) / 2
     const sol = hedef.offsetLeft - (serit.clientWidth - hedef.clientWidth) / 2;
-    serit.scrollTo({ left: sol, behavior: "smooth" }); // Yumuşakça kaydır
+    serit.scrollTo({ left: sol, behavior: davranis });
   }
 }
 
-// Vitrin: ortada büyük hikâye, yanlarda sıradakiler soluk (kayan)
+// Vitrin: ortada büyük hikâye, yanlarda sıradakiler soluk (sonsuz döngü)
 export default function Vitrin({ kisiler }: { kisiler: Person[] }) {
-  const [aktif, setAktif] = useState(0); // Hangi hikâye ortada? (kitap ayracı)
-  const seritRef = useRef<HTMLDivElement>(null); // Şeridi elde tut
+  const adet = kisiler.length; // Gerçek kişi sayısı (5)
 
-  // Kendiliğinden kayma: 5 sn'de bir sıradakine geç
+  // ♾️ SONSUZ DÖNGÜ: kartları 3 kez yan yana diz → [kopya] [GERÇEK] [kopya] = 15 kart
+  // Şeritteki sıra (0–14) ≠ kişi sırası (0–4). Kişi sırası = şerit sırası % adet
+  const dizi = [...kisiler, ...kisiler, ...kisiler];
+
+  const [konum, setKonum] = useState(adet); // Şeritte hangi kart ortada? Başlangıç: GERÇEK grubun 1. kartı (5)
+  const aktif = konum % adet; // Noktalar için kişi sırası (0–4). Örn. 7 % 5 = 2
+  const seritRef = useRef<HTMLDivElement>(null); // Şeridi elde tut
+  const beklemeRef = useRef<ReturnType<typeof setTimeout> | null>(null); // "Kaydırma bitti mi" zamanlayıcısı
+
+  // İlk açılış: ekran çizilmeden önce GERÇEK grubun 1. kartını ortaya getir → iki yanı dolu görünür
+  useLayoutEffect(() => {
+    seridiKaydir(seritRef.current, adet, "instant");
+  }, [adet]);
+
+  // Kendiliğinden kayma: 5 sn'de bir sağdaki karta geç
   useEffect(() => {
     // Hareket azaltma: ziyaretçi cihazında "hareketi azalt" açtıysa kendiliğinden kayma olmasın
     const hareketAzalt = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (hareketAzalt) return; // Hareket istemiyorsa alarmı kurma, çık
 
     const zamanlayici = setInterval(() => {
-      const yeni = (aktif + 1) % kisiler.length; // Sondan sonra başa dön
-      seridiKaydir(seritRef.current, yeni);
-      setAktif(yeni);
+      seridiKaydir(seritRef.current, konum + 1); // Hep bir sağa (sondan sonra kopyanın 1. kartı)
+      setKonum(konum + 1);
     }, KAYMA_SURESI);
     return () => clearInterval(zamanlayici); // Giderken alarmı kapat
-  }, [aktif, kisiler.length]);
+  }, [konum]);
 
-  // Ok ve noktalar için: verilen hikâyeye git
+  // Oklar ve noktalar için: şeritteki "sira"ncı karta yumuşakça git
   function git(sira: number) {
-    const yeni = (sira + kisiler.length) % kisiler.length; // -1 → son, 5 → 0
-    seridiKaydir(seritRef.current, yeni);
-    setAktif(yeni);
+    seridiKaydir(seritRef.current, sira);
+    setKonum(sira);
   }
 
-  // Elle kaydırınca: hangi hikâye ortada, bul (noktalar takip etsin)
+  // Kaydırma sırasında: hangi kart ortada, bul. Kaydırma bitince kopyadaysak GERÇEK gruba ışınlan
   function kaydirinca() {
     const serit = seritRef.current;
     if (!serit || serit.children.length < 2) return;
     const ilk = serit.children[0] as HTMLElement;
     const ikinci = serit.children[1] as HTMLElement;
-    const adim = ikinci.offsetLeft - ilk.offsetLeft; // Bir hikâyeden ötekine mesafe (genişlik + boşluk)
-    setAktif(Math.round(serit.scrollLeft / adim)); // Kaç adım kaydı?
+    const adim = ikinci.offsetLeft - ilk.offsetLeft; // Bir karttan ötekine mesafe (genişlik + boşluk)
+    // Ortadaki kart: (kaydırılan + yarım boşluk − ilk kartın solu) / adım
+    const kenar = (serit.clientWidth - ilk.clientWidth) / 2;
+    const ortadaki = Math.round((serit.scrollLeft + kenar - ilk.offsetLeft) / adim);
+    setKonum(ortadaki); // Noktalar ve büyük kart kaydırmayı takip etsin
+
+    // Kaydırma bitti mi? Her kaydırmada sayacı baştan kur; 150 ms sessizlik = bitti
+    if (beklemeRef.current) clearTimeout(beklemeRef.current);
+    beklemeRef.current = setTimeout(() => {
+      // Soldaki kopyadaysak (0–4) → +5 · sağdaki kopyadaysak (10–14) → −5. Aynı kişi, GERÇEK grupta
+      if (ortadaki < adet || ortadaki >= adet * 2) {
+        const gercek = (ortadaki % adet) + adet; // Örn. 10 → 0 + 5 = 5 · 4 → 4 + 5 = 9
+        seridiKaydir(serit, gercek, "instant"); // Işınlan: kartlar aynı, göz fark etmez
+        setKonum(gercek);
+      }
+    }, BEKLEME);
   }
 
   return (
-    <section className="mt-10">
+    // relative: oklar bu kutuya göre konumlansın (absolute)
+    <section className="relative mt-10">
       {/* Şerit: yan yana, ortaya oturan (snap-center), çubuksuz.
-          px-[calc(50%-...)]: ilk ve son hikâye de ortaya gelebilsin diye iki yanda boşluk */}
+          Artık iki yanda boşluk (px) yok: solda ve sağda hep kopya kartlar var */}
       <div
         ref={seritRef}
         onScroll={kaydirinca}
-        className="relative flex snap-x snap-mandatory items-start gap-7 overflow-x-auto px-[calc(50%-130px)] pb-4 pt-4 scrollbar-gizle sm:px-[calc(50%-150px)]"
+        className="relative flex snap-x snap-mandatory items-start gap-7 overflow-x-auto pb-4 pt-4 scrollbar-gizle"
       >
-        {kisiler.map((kisi, sira) => {
+        {dizi.map((kisi, sira) => {
           const klip = kisi.clips[0];
-          const ortada = sira === aktif; // Bu hikâye ortadaki mi?
+          const ortada = sira === konum; // Bu kart ortadaki mi?
+          const gercek = sira >= adet && sira < adet * 2; // GERÇEK grupta mı (5–9)?
           return (
             <Link
-              key={kisi.slug}
+              key={`${sira}-${kisi.slug}`} // Aynı kişi 3 kez var → key'e şerit sırası da eklendi (benzersiz olsun)
               href={`/kisiler/${kisi.slug}`}
+              // Kopyalar ekran okuyucuya ve Tab tuşuna gizli: her kişi bir kez okunsun
+              aria-hidden={gercek ? undefined : true}
+              tabIndex={gercek ? undefined : -1}
               // Ortadaki: tam boy, net · yandakiler: küçük (scale-90) ve soluk (opacity-40)
               className={`group w-[260px] shrink-0 snap-center text-center transition-all duration-500 sm:w-[300px] ${
                 ortada ? "scale-100 opacity-100" : "scale-90 opacity-40"
@@ -83,60 +116,80 @@ export default function Vitrin({ kisiler }: { kisiler: Person[] }) {
               >
                 <Image
                   src={klip.cover}
-                  alt={klip.title}
+                  alt={gercek ? klip.title : ""} // Kopyada boş alt: aynı yazı 3 kez okunmasın
                   fill
-                  loading={sira === 0 ? "eager" : "lazy"} // İlk hikâye hemen yüklensin (LCP)
+                  // 1. kişinin 3 kopyası da hemen yüklensin (LCP). Neden 3'ü? Sunucudan gelen ilk ekranda şerit en soldadır
+                  // (sıra 0 = kopya görünür), JS çalışınca sıra 5'e (gerçek) kayar. Üçü de AYNI dosya → bir kez iner
+                  loading={sira % adet === 0 ? "eager" : "lazy"}
                   sizes="300px"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
 
-              {/* Yazılar: alttaki kartlarla aynı, ortalı. Sadece ortadakinde görünür */}
-              <div className={`pt-5 transition-opacity duration-500 ${ortada ? "opacity-100" : "opacity-0"}`}>
-                <p className="text-xs font-semibold uppercase tracking-widest text-rose-800">{klip.topic}</p>
-                <h2 className="mt-2 font-serif text-3xl font-bold leading-tight">{klip.title}</h2>
-                <p className="mt-2 font-serif text-base leading-relaxed text-stone-600">{kisi.dek}</p>
-                <span className="mx-auto mb-2 mt-3 block h-0.5 w-9 rounded bg-rose-800" />
-                <p className="font-serif text-sm italic text-stone-500">{kisi.name}</p>
+              {/* Yazılar: başlık HER kartta var. Yanda küçük + gri (kart zaten soluk: opacity-40),
+                  ortada büyür ve koyulaşır (canlanır). transition-all: boyut ve renk yumuşakça değişsin */}
+              <div className="pt-5">
+                {/* Konu: sadece ortadakinde (yanda opacity-0 = görünmez ama yer tutar, kart zıplamaz) */}
+                <p className={`text-xs font-semibold uppercase tracking-widest text-rose-800 transition-opacity duration-500 ${ortada ? "opacity-100" : "opacity-0"}`}>
+                  {klip.topic}
+                </p>
+                {/* ⚠️ Titreşim düzeltmesi: eskiden yazı BOYUTU değişiyordu (text-lg ↔ text-3xl).
+                    Boyut değişince kartın yüksekliği değişiyor → şerit uzayıp kısalıyor → alttaki sayfa her 5 sn'de zıplıyordu.
+                    Şimdi yazı HEP text-3xl (yer hep aynı), yan kartta sadece GÖRÜNÜŞÜ küçülüyor: scale (transform)
+                    transform sayfanın düzenini değiştirmez → hiçbir şey kaymaz. origin-top: yukarıdan küçülsün */}
+                <h2
+                  className={`mt-2 origin-top font-serif text-3xl font-bold leading-tight transition duration-500 ${
+                    ortada ? "scale-100 text-stone-900" : "scale-[0.6] text-stone-500"
+                  }`}
+                >
+                  {klip.title}
+                </h2>
+                {/* Açıklama, çizgi, isim: sadece ortadakinde */}
+                <div className={`transition-opacity duration-500 ${ortada ? "opacity-100" : "opacity-0"}`}>
+                  <p className="mt-2 font-serif text-base leading-relaxed text-stone-600">{kisi.dek}</p>
+                  <span className="mx-auto mb-2 mt-3 block h-0.5 w-9 rounded bg-rose-800" />
+                  <p className="font-serif text-sm italic text-stone-500">{kisi.name}</p>
+                </div>
               </div>
             </Link>
           );
         })}
       </div>
 
-      {/* Alt satır: ← noktalar → */}
-      <div className="mt-2 flex items-center justify-center gap-4">
-        <button
-          type="button"
-          onClick={() => git(aktif - 1)}
-          aria-label="Önceki hikâye"
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-amber-200 bg-white text-stone-600 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
-        >
-          ←
-        </button>
+      {/* Oklar: aktif kartın iki kenarında, kapağın tam ortası hizasında.
+          Zemin beyaz değil, sitenin krem rengi (bg-amber-50): şeffaf olsa fotoğrafın üstünde kaybolurdu
+          Kart 260px (sm: 300px) → yarısı 130px (sm: 150px). Ok, kartın kenarına yarı biner (-translate-x-1/2).
+          top: üst boşluk 16px + kapak yüksekliğinin yarısı (260 × 16/9 ÷ 2 ≈ 231 · 300 × 16/9 ÷ 2 ≈ 267) */}
+      <button
+        type="button"
+        onClick={() => git(konum - 1)} // Hep bir sola: sayıyı başa sarmak yok, kopya karta geçer
+        aria-label="Önceki hikâye"
+        className="absolute left-[calc(50%-130px)] top-[247px] z-10 -translate-x-1/2 -translate-y-1/2 shadow-md sm:left-[calc(50%-150px)] sm:top-[283px] flex h-11 w-11 items-center justify-center rounded-full border border-amber-200 bg-amber-50 text-stone-600 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
+      >
+        ←
+      </button>
+      <button
+        type="button"
+        onClick={() => git(konum + 1)} // Hep bir sağa: sondan sonra kopyanın 1. kartı gelir
+        aria-label="Sonraki hikâye"
+        className="absolute right-[calc(50%-130px)] top-[247px] z-10 translate-x-1/2 -translate-y-1/2 shadow-md sm:right-[calc(50%-150px)] sm:top-[283px] flex h-11 w-11 items-center justify-center rounded-full border border-amber-200 bg-amber-50 text-stone-600 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
+      >
+        →
+      </button>
 
-        <div className="flex gap-2">
-          {kisiler.map((kisi, sira) => (
-            <button
-              key={kisi.slug}
-              type="button"
-              onClick={() => git(sira)}
-              aria-label={`${sira + 1}. hikâye: ${kisi.name}`}
-              className={`h-2 rounded-full transition-all ${
-                sira === aktif ? "w-7 bg-rose-800" : "w-2 bg-stone-300 hover:bg-stone-400"
-              }`}
-            />
-          ))}
-        </div>
-
-        <button
-          type="button"
-          onClick={() => git(aktif + 1)}
-          aria-label="Sonraki hikâye"
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-amber-200 bg-white text-stone-600 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
-        >
-          →
-        </button>
+      {/* Alt satır: sadece noktalar (oklar yukarı, kartın yanına taşındı) */}
+      <div className="mt-2 flex justify-center gap-2">
+        {kisiler.map((kisi, sira) => (
+          <button
+            key={kisi.slug}
+            type="button"
+            onClick={() => git(konum - aktif + sira)} // Aynı grup içinde o kişiye git
+            aria-label={`${sira + 1}. hikâye: ${kisi.name}`}
+            className={`h-2 rounded-full transition-all ${
+              sira === aktif ? "w-7 bg-rose-800" : "w-2 bg-stone-300 hover:bg-stone-400"
+            }`}
+          />
+        ))}
       </div>
     </section>
   );

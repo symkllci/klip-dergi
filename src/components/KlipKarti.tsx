@@ -12,10 +12,12 @@ export default function KlipKarti({ kisi, klip, boyut = "kucuk" }: { kisi: Perso
 
   return (
     // Kutu: yuvarlak, ince çerçeve. Fare gelince hafif kalkar ve bordo gölge
+    // Zemin: küçük ve yatay kartta YOK (eskiden bg-white/70) → kart doğrudan site renginde (krem) durur.
+    // Sadece büyük (öne çıkan) kartta hafif amber zemin kaldı: öne çıksın diye
     <Link
       href={`/kisiler/${kisi.slug}`}
       className={`group flex h-full rounded-3xl border border-amber-200/70 p-5 transition duration-300 hover:-translate-y-1 hover:border-rose-200 hover:shadow-xl hover:shadow-rose-900/15 ${
-        buyuk ? "bg-amber-100/60" : "bg-white/70"
+        buyuk ? "bg-amber-100/60" : ""
       } ${yatay ? "items-center gap-5 text-left" : "flex-col justify-center text-center"}`}
     >
       {/* Sadece büyük kartta: "Öne çıkan" rozeti */}
@@ -35,7 +37,11 @@ export default function KlipKarti({ kisi, klip, boyut = "kucuk" }: { kisi: Perso
           src={klip.cover}
           alt={klip.title}
           fill
-          sizes={buyuk ? "(min-width: 1024px) 22vw, 60vw" : yatay ? "112px" : "(min-width: 1024px) 12vw, 50vw"}
+          // ⭐ sizes = tarayıcıya "kapak ekranda bu genişlikte" demek → doğru boyda dosya iner
+          // Küçük kart: kapak KARTIN yarısı (ekranın değil). Telefonda: ekranın yarısı − boşluklar (45 px)
+          // 640 px'ten sonra 3 kart yan yana → ekranın ~%16'sı · 1152 px'ten sonra sayfa büyümez → 160 px
+          // (Lighthouse: 161 px'lik kutuya 384 px iniyordu)
+          sizes={buyuk ? "(min-width: 1024px) 22vw, 60vw" : yatay ? "112px" : "(min-width: 1152px) 160px, (min-width: 640px) 16vw, calc(50vw - 45px)"}
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>

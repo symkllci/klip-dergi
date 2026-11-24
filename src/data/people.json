@@ -43,6 +43,7 @@
       "src": "/fotograflar/hamdi-ulukaya.jpg",
       "width": 960,
       "height": 1242,
+      "focus": "50% 20%",
       "author": "Benjamin Applebaum",
       "license": "Public domain",
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hamdi_Ulukaya,_official_portrait,_Homeland_Security_Council.jpg"
@@ -197,6 +198,7 @@
       "src": "/fotograflar/acun-ilicali.jpg",
       "width": 960,
       "height": 1280,
+      "focus": "45% 58%",   
       "author": "Zafer",
       "license": "CC BY 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
@@ -245,6 +247,7 @@
       "src": "/fotograflar/elon-musk.jpg",
       "width": 960,
       "height": 1262,
+      "focus": "50% 30%",
       "author": "Gage Skidmore",
       "license": "CC BY-SA 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
@@ -303,7 +306,8 @@
         "source": {
           "episodeTitle": "Aykut Karaalioğlu, MobileAction",
           "episodeUrl": "https://www.youtube.com/watch?v=Tz9K1miVrCg"
-        }
+        },
+        "quote": "Ben de aynısını Apple'a Türkiye için yapmak istiyorum. Gurbete giden bir Türk hikâyesini böyle hero's journey olarak en sonunda taçlandırmak istedim."
       },
       {
         "platform": "instagram",
@@ -315,16 +319,17 @@
         "source": {
           "episodeTitle": "Aykut Karaalioğlu, MobileAction",
           "episodeUrl": "https://www.youtube.com/watch?v=Tz9K1miVrCg"
-        }
+        },
+        "quote": "Bana ne verirlerse okeyim zaten."
       }
     ],
-    "updatedAt": "2026-11-14",
+    "updatedAt": "2026-11-18",
     "editor": "Şeyma Kelleci"
   },
   {
     "slug": "efe-celebi",
     "name": "Efe Çelebi",
-    "bio": "Efe Çelebi, sağlık işletmeciliği alanında faaliyet gösteren bir diş hekimi ve girişimcidir. 2006 yılında İstanbul Bağdat Caddesi'nde DentGroup'un ilk kliniğini açmıştır. Bugün DentGroup'un Yönetim Kurulu Başkanıdır.",
+    "bio": "Efe Çelebi, sağlık işletmeciliği alanında faaliyet gösteren bir diş hekimi ve girişimcidir. 2006 yılında İstanbul Bağdat Caddesi'nde DentGroup'un ilk kliniğini açmıştır. DentalPrices'ın da kurucusudur.",
     "dek": "Bağdat Caddesi'ndeki ilk klinikten büyüyen DentGroup'un kurucu ortağı.",
     "links": [
       "https://www.instagram.com/dr.efecelebi/"
@@ -355,7 +360,7 @@
         }
       }
     ],
-    "updatedAt": "2026-11-14",
+    "updatedAt": "2026-11-18",
     "editor": "Şeyma Kelleci"
   },
   {
@@ -363,15 +368,6 @@
     "name": "Mehmet Dinçerler",
     "bio": "Mehmet Dinçerler, gıda ve yeme-içme sektöründe faaliyet gösteren bir girişimcidir. 1988 yılında doğmuş olup aslen Gazianteplidir; ailesi Hacı Sayid markasının kurucusudur. Bugün Dinçerler Group'un CEO'sudur. Grup, Gloria Jean's Coffees'in Türkiye haklarına sahiptir ve markayı Türkiye'de 240 şubeye ulaştırmıştır.",
     "dek": "Gloria Jean's'i Türkiye'de 240 şubeye taşıyan grubun başındaki Gaziantepli girişimci.",
-    "photo": {
-      "src": "/fotograflar/mehmet-dincerler.jpg",
-      "width": 960,
-      "height": 1440,
-      "author": "Mehmet Dinçerler",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mehmet-Dincerler-2.jpg"
-    },
     "links": [
       "https://www.instagram.com/mehmetdnc/"
     ],
@@ -386,7 +382,7 @@
         "quote": "Burada iyi bir marka…"
       }
     ],
-    "updatedAt": "2026-11-14",
+    "updatedAt": "2026-11-18",
     "editor": "Şeyma Kelleci"
   },
   {
@@ -398,6 +394,7 @@
       "src": "/fotograflar/abdullah-kigili.jpg",
       "width": 960,
       "height": 1144,
+      "focus": "50% 25%",
       "author": "Serkan Yakın",
       "license": "CC BY-SA 3.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
@@ -431,6 +428,7 @@
       "src": "/fotograflar/mark-zuckerberg.jpg",
       "width": 960,
       "height": 1282,
+      "focus": "50% 30%",
       "author": "Jeff Sainlar",
       "license": "CC BY-SA 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
