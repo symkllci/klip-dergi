@@ -3,7 +3,9 @@
     "slug": "nevzat-aydin",
     "name": "Nevzat Aydın",
     "bio": "Nevzat Aydın, Yemeksepeti'nin kurucusudur. Boğaziçi Üniversitesi Bilgisayar Mühendisliği mezunudur. Şirket 2015 yılında Delivery Hero tarafından satın alınmıştır. Bugün melek yatırımcı olarak teknoloji girişimlerine yatırım yapmaktadır.",
+    "bioEn": "Nevzat Aydın is the founder of Yemeksepeti. He graduated in Computer Engineering from Boğaziçi University. The company was acquired by Delivery Hero in 2015. Today he invests in technology startups as an angel investor.",
     "dek": "Yemeksepeti'ni kurup sattıktan sonra şimdi yeni girişimlere yatırım yapıyor.",
+    "dekEn": "After founding and selling Yemeksepeti, he now invests in new startups.",
     "links": [
       "https://instagram.com/zagortenay76"
     ],
@@ -26,7 +28,9 @@
     "slug": "hamdi-ulukaya",
     "name": "Hamdi Ulukaya",
     "bio": "Hamdi Ulukaya, Erzincan İliç doğumlu bir girişimcidir. Chobani markasının kurucusudur. Markanın temeli, 2005 yılında kapatılmış bir yoğurt fabrikasını satın almasıyla atılmıştır. Mültecilere istihdam sağlaması ile de tanınmaktadır.",
+    "bioEn": "Hamdi Ulukaya is an entrepreneur born in İliç, Erzincan. He is the founder of the Chobani brand. The brand began in 2005, when he bought a yogurt factory that had been closed down. He is also known for providing employment to refugees.",
     "dek": "Kapanmış bir yoğurt fabrikasını satın alıp Chobani'ye dönüştürdü.",
+    "dekEn": "He bought a closed yogurt factory and turned it into Chobani.",
     "photo": {
       "src": "/fotograflar/hamdi-ulukaya.jpg",
       "width": 960,
@@ -58,7 +62,9 @@
     "slug": "adnan-sahin",
     "name": "Adnan Şahin",
     "bio": "Adnan Şahin, metal sanayi alanında bir girişimcidir. İş hayatına 1979 yılında Bayrampaşa'da küçük bir atölye açarak başlamıştır. Aile evini satarak makine yatırımı yapması, işletmesinin büyümesinde bir dönüm noktası olmuştur.",
+    "bioEn": "Adnan Şahin is an entrepreneur in the metal industry. He started his business life in 1979 by opening a small workshop in Bayrampaşa. Selling the family home to invest in machinery was a turning point in the growth of his business.",
     "dek": "Küçük bir atölyeyle başladı, büyümek için aile evini sattı.",
+    "dekEn": "He started with a small workshop and sold the family home to grow.",
     "links": [],
     "clipNotes": [
       {
@@ -79,7 +85,9 @@
     "slug": "mustafa-namoglu",
     "name": "Mustafa Namoğlu",
     "bio": "Mustafa Namoğlu, e-ticaret teknolojileri alanında bir girişimcidir. 2011 yılında Mugo markasını kurmuştur. Bugün ikas'ın kurucu ortağı ve CEO'sudur.",
+    "bioEn": "Mustafa Namoğlu is an entrepreneur in e-commerce technology. He founded the Mugo brand in 2011. Today he is the co-founder and CEO of ikas.",
     "dek": "Mugo'dan ikas'a uzanan yolda doğru müşteriyi bulmanın önemini anlatıyor.",
+    "dekEn": "On the road from Mugo to ikas, he explains why finding the right customer matters.",
     "links": [
       "https://www.instagram.com/mustafanamoglu/"
     ],
@@ -102,7 +110,9 @@
     "slug": "ata-uzunhasan",
     "name": "Ata Uzunhasan",
     "bio": "Ata Uzunhasan, Galata Business Angels'ın (GBA) Yönetici Direktörüdür. Koç Üniversitesi İşletme ve Ekonomi mezunudur. Kariyerine PwC'de başlamıştır.",
+    "bioEn": "Ata Uzunhasan is the Managing Director of Galata Business Angels (GBA). He graduated in Business Administration and Economics from Koç University. He began his career at PwC.",
     "dek": "PwC'den melek yatırımcı ağına uzanan yolda yatırım almayı evliliğe benzetiyor.",
+    "dekEn": "On his way from PwC to an angel investor network, he compares raising investment to marriage.",
     "links": [
       "https://www.instagram.com/atauzunhasan/"
     ],
@@ -125,7 +135,9 @@
     "slug": "acun-ilicali",
     "name": "Acun Ilıcalı",
     "bio": "Acun Ilıcalı, medya ve televizyon sektöründe faaliyet gösteren bir girişimcidir. Muhabirlikle başladığı medya kariyerinde 2004 yılında Acun Medya'yı kurmuştur. 2013 yılında TV8 kanalını, 2022'de ise İngiliz futbol kulübü Hull City'yi satın almıştır.",
+    "bioEn": "Acun Ilıcalı is an entrepreneur working in media and television. In a media career that began as a reporter, he founded Acun Medya in 2004. He bought the TV8 channel in 2013 and the English football club Hull City in 2022.",
     "dek": "Muhabirlikten TV8'e ve bir İngiliz futbol kulübüne uzanan yolculuk.",
+    "dekEn": "A journey from reporter to TV8 and an English football club.",
     "photo": {
       "src": "/fotograflar/acun-ilicali.jpg",
       "width": 960,
@@ -158,7 +170,9 @@
     "slug": "elon-musk",
     "name": "Elon Musk",
     "bio": "Elon Musk, teknoloji ve uzay sanayisi alanında faaliyet gösteren bir girişimcidir. İlk internet girişimi Zip2'nin ardından PayPal'ın temelini oluşturan X.com'u kurmuştur. 2002'de uzay taşımacılığı şirketi SpaceX'i kurmuş, elektrikli araç üreticisi Tesla'nın yönetimini üstlenmiştir. Bugün bu şirketlerin başında yöneticilik yapmaktadır.",
+    "bioEn": "Elon Musk is an entrepreneur working in technology and the space industry. After his first internet venture, Zip2, he founded X.com, which became the basis of PayPal. In 2002 he founded the space transport company SpaceX and took on the leadership of electric car maker Tesla. Today he leads these companies.",
     "dek": "PayPal'ın temelinden SpaceX'e, çılgın denilen kararların ardındaki isim.",
+    "dekEn": "From the foundations of PayPal to SpaceX, the name behind decisions once called crazy.",
     "photo": {
       "src": "/fotograflar/elon-musk.jpg",
       "width": 960,
@@ -191,7 +205,9 @@
     "slug": "aykut-karaalioglu",
     "name": "Aykut Karaalioğlu",
     "bio": "Aykut Karaalioğlu, mobil teknoloji ve yazılım alanında bir girişimcidir. 2013 yılında San Francisco'da mobil uygulama mağaza analitiği sunan MobileAction şirketini kurmuştur. Şirketiyle mobil uygulama geliştiricilerine pazar analizi ve optimizasyon verileri sağlamaktadır.",
+    "bioEn": "Aykut Karaalioğlu is an entrepreneur in mobile technology and software. In 2013 he founded MobileAction in San Francisco, a company offering app store analytics for mobile apps. Through his company he provides market analysis and optimisation data to mobile app developers.",
     "dek": "San Francisco'da kurduğu MobileAction'la Türk yetenekleri için büyük hayal kuruyor.",
+    "dekEn": "With MobileAction, founded in San Francisco, he dreams big for Turkish talent.",
     "links": [
       "https://www.instagram.com/aykutmobileaction/"
     ],
@@ -214,7 +230,9 @@
     "slug": "efe-celebi",
     "name": "Efe Çelebi",
     "bio": "Efe Çelebi, sağlık işletmeciliği alanında faaliyet gösteren bir diş hekimi ve girişimcidir. 2006 yılında İstanbul Bağdat Caddesi'nde DentGroup'un ilk kliniğini açmıştır. DentalPrices'ın da kurucusudur.",
+    "bioEn": "Efe Çelebi is a dentist and entrepreneur working in healthcare management. In 2006 he opened DentGroup's first clinic on Bağdat Avenue in Istanbul. He is also the founder of DentalPrices.",
     "dek": "Bağdat Caddesi'ndeki ilk klinikten büyüyen DentGroup'un kurucu ortağı.",
+    "dekEn": "Co-founder of DentGroup, which grew from its first clinic on Bağdat Avenue.",
     "links": [
       "https://www.instagram.com/dr.efecelebi/"
     ],
@@ -235,7 +253,9 @@
     "slug": "mehmet-dincerler",
     "name": "Mehmet Dinçerler",
     "bio": "Mehmet Dinçerler, gıda ve yeme-içme sektöründe faaliyet gösteren bir girişimcidir. 1988 yılında doğmuş olup aslen Gazianteplidir; ailesi Hacı Sayid markasının kurucusudur. Bugün Dinçerler Group'un CEO'sudur. Grup, Gloria Jean's Coffees'in Türkiye haklarına sahiptir ve markayı Türkiye'de 240 şubeye ulaştırmıştır.",
+    "bioEn": "Mehmet Dinçerler is an entrepreneur in the food and beverage sector. He was born in 1988 and is originally from Gaziantep; his family founded the Hacı Sayid brand. Today he is the CEO of Dinçerler Group. The group holds the Türkiye rights to Gloria Jean's Coffees and has grown the brand to 240 branches in Türkiye.",
     "dek": "Gloria Jean's'i Türkiye'de 240 şubeye taşıyan grubun başındaki Gaziantepli girişimci.",
+    "dekEn": "The entrepreneur from Gaziantep leading the group that took Gloria Jean's to 240 branches in Türkiye.",
     "links": [
       "https://www.instagram.com/mehmetdnc/"
     ],
@@ -253,7 +273,9 @@
     "slug": "abdullah-kigili",
     "name": "Abdullah Kiğılı",
     "bio": "Abdullah Kiğılı, hazır giyim ve perakende sektöründe faaliyet gösteren bir girişimcidir. 1943 yılında Malatya'da doğmuştur ve 1965'te kurulan Kiğılı markasının sahibidir. İş hayatının yanı sıra 1997 yılında kısa bir süre Türkiye Futbol Federasyonu Başkanlığı, Fenerbahçe'de de başkan yardımcılığı yapmıştır.",
+    "bioEn": "Abdullah Kiğılı is an entrepreneur in ready-to-wear clothing and retail. He was born in Malatya in 1943 and owns the Kiğılı brand, founded in 1965. Alongside his business life, he briefly served as President of the Turkish Football Federation in 1997 and as vice-president of Fenerbahçe.",
     "dek": "Kiğılı markasından Futbol Federasyonu başkanlığına uzanan bir iş hayatı.",
+    "dekEn": "A business life stretching from the Kiğılı brand to the presidency of the Football Federation.",
     "photo": {
       "src": "/fotograflar/abdullah-kigili.jpg",
       "width": 960,
@@ -279,7 +301,9 @@
     "slug": "mark-zuckerberg",
     "name": "Mark Zuckerberg",
     "bio": "Mark Zuckerberg, internet ve sosyal medya alanında faaliyet gösteren bir girişimcidir. 2004 yılında Harvard Üniversitesi'nde öğrenciyken Facebook'u kurmuştur. Zamanla Instagram ve WhatsApp platformlarını bünyesine katmış, 2021 yılında şirketinin adını Meta olarak değiştirmiştir.",
+    "bioEn": "Mark Zuckerberg is an entrepreneur in the internet and social media field. He founded Facebook in 2004 while he was a student at Harvard University. Over time the company took in the Instagram and WhatsApp platforms, and in 2021 he changed its name to Meta.",
     "dek": "Öğrenciyken kurduğu Facebook'tan Instagram ve WhatsApp'ı da içine alan Meta'ya.",
+    "dekEn": "From Facebook, which he founded as a student, to Meta, which now includes Instagram and WhatsApp.",
     "photo": {
       "src": "/fotograflar/mark-zuckerberg.jpg",
       "width": 960,

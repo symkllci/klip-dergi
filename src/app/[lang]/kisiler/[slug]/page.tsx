@@ -26,8 +26,9 @@ export async function generateMetadata({
   params: Promise<{ lang: string; slug: string }>;
 }): Promise<Metadata> {
   const { lang, slug } = await params; // Adresteki dil ve kişi kodu (ör. en, hamdi-ulukaya)
-  const s = getSozluk(dilAl(lang)); // O dilin sözlüğü
-  const kisi = await getPersonBySlug(slug); // O kişiyi bul
+  const dil = dilAl(lang); // "tr" ya da "en"
+  const s = getSozluk(dil); // O dilin sözlüğü
+  const kisi = await getPersonBySlug(slug, dil); // O kişiyi bul (biyografisi o dilde)
   if (!kisi) return {}; // Kişi yoksa boş bırak
 
   const kapak = kisi.clips[0]?.cover; // İlk klibin kapağı = paylaşım görseli
@@ -48,7 +49,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ lang: 
   const { lang, slug } = await params; // Adresten dili ve slug'ı al
   const dil = dilAl(lang); // "tr" ya da "en"
   const s = getSozluk(dil); // O dilin sözlüğü
-  const kisi = await getPersonBySlug(slug); // Slug ile kişiyi bul (find). Bulamazsa undefined
+  const kisi = await getPersonBySlug(slug, dil); // Slug ile kişiyi bul (find), biyografisi o dilde. Bulamazsa undefined
 
   // Kişi yoksa 404 göster ve burada dur
   if (!kisi) {
@@ -60,7 +61,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ lang: 
   const konular = [...new Set(kisi.clips.map((klip) => klip.topic))];
 
   // Diğer kişiler: önce AYNI KONUDAKİLER, yer kalırsa geri kalanlar (en fazla 3 kişi)
-  const tumKisiler = await getAllPeople(); // Bütün kişiler (12)
+  const tumKisiler = await getAllPeople(dil); // Bütün kişiler (12), kancaları o dilde
 
   // 1) Aynı konudakiler: kendisi olmayan VE en az bir klibinin konusu bu kişinin konularında geçenler
   const ayniKonu = tumKisiler.filter((k) => k.slug !== kisi.slug && k.clips.some((klip) => konular.includes(klip.topic)));

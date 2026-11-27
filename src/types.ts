@@ -13,7 +13,9 @@ export type Person = {
     slug: string; // adresteki ad, ör. seyma-kelleci
     name: string; // kişinin adı
     bio: string; // biyografi, kendi cümlelerimle
+    bioEn: string; // biyografinin İngilizcesi (/en sayfalarında). Kişi adları çevrilmez
     dek: string; // kanca: başlığın altındaki tek cümlelik tanıtım
+    dekEn: string; // kancanın İngilizcesi
     photo?: Photo; // fotoğraf (Wikipedia/Commons). ? = olmayabilir, 6 kişide yok
     links: string[]; // kişinin sosyal medya adresleri, birden fazla olabildiği için liste
     clips: Clip[]; // her klip 8 bilgi içerdiği için string değil, Clip kalıbını kullandık

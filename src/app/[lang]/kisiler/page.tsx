@@ -37,7 +37,7 @@ export default async function KisilerSayfasi({
   // trim: baştaki ve sondaki boşlukları sil ("  nevzat " → "nevzat")
   const aramaMetni = typeof ara === "string" ? ara.trim() : "";
 
-  const tumKisiler = await getAllPeople(); // Bütün kişiler (şu an 12).
+  const tumKisiler = await getAllPeople(dil); // Bütün kişiler (şu an 12). dil: kanca o dilde gelsin
   // Öneri listesi için ad, konular, klip başlıkları (üst menüdeki aramayla aynı liste, lib/people.ts'ten)
   // Konular o dile çevrilir (layout.tsx'teki gibi)
   const aramaKisileri = (await getAramaKisileri()).map((kisi) => ({

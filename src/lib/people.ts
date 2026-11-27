@@ -5,6 +5,7 @@ import ornekApi from "@/data/ornek-api.json"; // API hazır olana kadar örnek c
 import { CevapSemasi, KlipSemasi, type ApiKlip } from "@/lib/klip-semasi"; // Zod bekçisi
 import type { Clip, ClipNote, Person, PersonData } from "@/types";
 import type { AramaKisisi } from "@/components/AramaKutusu"; // Öneri listesinin kişi kalıbı (sadece tip)
+import type { Dil } from "@/lib/sozluk"; // "tr" | "en"
 
 // Sayfalar veriyi YALNIZ bu dosyadan alır. Veri nereden gelirse gelsin (örnek dosya ya da API), sayfalar değişmez.
 
@@ -59,7 +60,9 @@ function klibeCevir(klip: ApiKlip, not?: ClipNote): Clip {
 }
 
 // Bütün kişiler, klipleriyle birlikte. async = veri gelmesini bekleyebilir (API'den gelince süre alır)
-export async function getAllPeople(): Promise<Person[]> {
+// dil: "en" ise bio ve dek alanlarına İngilizcesi konur → sayfalar ve kartlar hiç değişmeden kisi.bio / kisi.dek okur
+// = "tr": dil verilmezse Türkçe (varsayılan değer)
+export async function getAllPeople(dil: Dil = "tr"): Promise<Person[]> {
   const klipler = await klipleriGetir();
   const hepsi = kisiler.map(({ clipNotes, ...kisi }) => {
     // Klipler kişiye ADINDAN bağlanır ("kisiler": ["Nevzat Aydın"])
@@ -75,7 +78,9 @@ export async function getAllPeople(): Promise<Person[]> {
     const yeniler = kendiKlipleri
       .filter((klip) => !clipNotes.some((not) => not.reel === klip.reel))
       .map((klip) => klibeCevir(klip));
-    return { ...kisi, clips: [...notlular, ...yeniler] };
+    // İngilizcede bio ve dek'in yerine bioEn ve dekEn geçer (kişi adı aynı kalır)
+    const metin = dil === "en" ? { bio: kisi.bioEn, dek: kisi.dekEn } : {};
+    return { ...kisi, ...metin, clips: [...notlular, ...yeniler] };
   });
   // Hiç klibi kalmayan kişi gösterilmez (sayfalar en az bir klip bekliyor)
   return hepsi.filter((kisi) => {
@@ -85,8 +90,8 @@ export async function getAllPeople(): Promise<Person[]> {
 }
 
 // Slug ile tek bir kişiyi bulan tarif, ör. /kisiler/acun-ilicali. Bulamazsa undefined
-export async function getPersonBySlug(slug: string): Promise<Person | undefined> {
-  const hepsi = await getAllPeople();
+export async function getPersonBySlug(slug: string, dil: Dil = "tr"): Promise<Person | undefined> {
+  const hepsi = await getAllPeople(dil);
   return hepsi.find((person) => person.slug === slug);
 }
 

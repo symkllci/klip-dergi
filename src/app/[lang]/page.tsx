@@ -18,7 +18,7 @@ const baslikFontu = Lora({ subsets: ["latin", "latin-ext"], style: ["normal", "i
 export default async function Home({ params }: PageProps<"/[lang]">) {
   const dil = dilAl((await params).lang); // Adresteki dil: "tr" ya da "en"
   const s = getSozluk(dil); // O dilin sözlüğü: yazılar buradan
-  const kisiler = await getAllPeople(); // Bütün kişileri al (şu an 12).
+  const kisiler = await getAllPeople(dil); // Bütün kişileri al (şu an 12). dil: kanca o dilde gelsin
   const vitrin = kisiler.slice(0, 5); // Vitrin: ilk 5 kişi (0, 1, 2, 3, 4). slice'ın 2. sayısı dahil değil.
   // EDİTÖR SEÇİMİ: "Diğer hikâyeler"de kim görünsün? Adları (slug) buradan değiştirmek yeterli.
   // Öne çıkan: soldaki büyük hikâye (6 sütun) · Yan: sağdaki 4 kart (soldan sağa, yukarıdan aşağı okunur)
