@@ -3,7 +3,7 @@ import Footer from "@/components/Footer"; // Alt bilgi, her sayfada
 import { getAramaKisileri } from "@/lib/people"; // Arama önerileri için kişiler
 import type { Metadata } from "next"; // Sayfa başlığı ve açıklaması için Next.js'in kalıbı
 import { Inter, Lora } from "next/font/google"; // Metin fontu Inter, uzun okuma fontu Lora
-import "./globals.css"; // Tailwind'in bağlandığı stil dosyası
+import "../globals.css"; // Tailwind'in bağlandığı stil dosyası (bir üst klasörde, app/ içinde)
 
 // Inter: menü, düğme, kart gibi kısa yazılar
 const inter = Inter({ variable: "--font-inter", subsets: ["latin", "latin-ext"] });
@@ -37,13 +37,23 @@ export const metadata: Metadata = {
   description: "Viral olan girişimcilerin podcast kliplerini ve hikâyelerini bir araya getiren dergi.",
 };
 
-export default async function RootLayout({ children }: LayoutProps<"/">) {
+// Sitenin dilleri. Bu listede olmayan bir dil (ör. /de) 404 verir (dynamicParams = false)
+const DILLER = ["tr", "en"];
+
+// Build sırasında iki dil için de sayfalar önceden hazırlanır: /tr/... ve /en/...
+export function generateStaticParams() {
+  return DILLER.map((lang) => ({ lang }));
+}
+export const dynamicParams = false; // Listede olmayan dil → 404
+
+export default async function RootLayout({ children, params }: LayoutProps<"/[lang]">) {
+  const { lang } = await params; // Adresteki dil: "tr" ya da "en"
   // Arama önerileri: sadece ad, slug ve ilk klibin konusu (biyografi vb. tarayıcıya gönderilmesin, sayfa hafif kalsın)
   const aramaKisileri = await getAramaKisileri(); // await: veri hazır olana kadar bekle
 
   return (
-    // lang="tr": sayfanın dili Türkçe (i → İ doğru çevrilsin)
-    <html lang="tr" className={`${inter.variable} ${lora.variable} h-full antialiased`}>
+    // lang: sayfanın dili adresten gelir (tr ya da en). Ekran okuyucu ve Google doğru dilde okusun
+    <html lang={lang} className={`${inter.variable} ${lora.variable} h-full antialiased`}>
       {/* Üstte ince başlık, ortada açılan sayfa, altta alt bilgi */}
       <body className="flex min-h-full flex-col">
         <Header kisiler={aramaKisileri} />

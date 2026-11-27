@@ -11,7 +11,7 @@ const baslikFontu = Lora({ subsets: ["latin", "latin-ext"], style: ["normal", "i
 // İnce başlık: her sayfanın en üstünde
 // kisiler: arama önerileri için (ad, slug, konu). layout.tsx sunucuda hazırlayıp veriyor
 export default function Header({ kisiler }: { kisiler: AramaKisisi[] }) {
-  const anaSayfa = usePathname() === "/"; // Ana sayfada mıyız?
+  const anaSayfa = ["/", "/tr", "/en"].includes(usePathname()); // Ana sayfada mıyız? (Türkçe: "/" ya da sunucuda "/tr", İngilizce: "/en")
   const [kaydi, setKaydi] = useState(false); // Aşağı kaydırıldı mı?
   const [acik, setAcik] = useState(false); // Menü açık mı? Başta: kapalı
   const [aramaAcik, setAramaAcik] = useState(false); // Arama kutusu açık mı? Başta: kapalı
