@@ -1,6 +1,7 @@
 import Image from "next/image"; // Next.js'in resim bileşeni
 import Link from "next/link"; // Site içi sayfalara geçiş
 import type { Person } from "@/types"; // Kişi kalıbı
+import { konuAdi, klipSayisi, yol, type Dil, type Sozluk } from "@/lib/sozluk"; // Dile göre konu adı, klip sayısı, adres
 
 // Hikâye kartı: KUTU YOK (Colossus gibi). Üstte siyah-beyaz görsel, altında konu, isim, kanca, klip sayısı.
 // 3 düzen:
@@ -9,7 +10,7 @@ import type { Person } from "@/types"; // Kişi kalıbı
 //  "album" → Bütün hikâyeler albümü: kare görsel, yazılar sola yaslı
 type Duzen = "one" | "orta" | "album";
 
-export default function HikayeKarti({ kisi, duzen = "album" }: { kisi: Person; duzen?: Duzen }) {
+export default function HikayeKarti({ kisi, duzen = "album", dil, s }: { kisi: Person; duzen?: Duzen; dil: Dil; s: Sozluk }) {
   const klip = kisi.clips[0]; // Konu ve (fotoğraf yoksa) kapak için ilk klip
   // Görsel: Wikipedia fotoğrafı varsa o, yoksa reel kapağı
   const fotografVar = Boolean(kisi.photo);
@@ -27,7 +28,7 @@ export default function HikayeKarti({ kisi, duzen = "album" }: { kisi: Person; d
 
   return (
     // flex flex-col h-full: kart, satırdaki en uzun kart kadar uzar → alttaki "N klip" hep aynı hizada (albümde)
-    <Link href={`/kisiler/${kisi.slug}`} className="group flex h-full flex-col">
+    <Link href={yol(dil, `/kisiler/${kisi.slug}`)} className="group flex h-full flex-col">
       {/* Görsel: siyah-beyaz (grayscale), kutuyu doldurur (object-cover).
           Fotoğraf: object-[50%_25%] = yatayda orta, dikeyde üstten %25 → portrelerde saçın üstü de sığar (Elon, Mark),
           Acun'un kalabalık fotoğrafında hem tribün hem yüzü görünür
@@ -53,7 +54,7 @@ export default function HikayeKarti({ kisi, duzen = "album" }: { kisi: Person; d
       {/* Yazılar. Öne çıkanda krem panel (bg-amber-100/50) */}
       {/* flex-1 flex-col: yazı kısmı kalan boşluğu doldurur → "N klip" en alta (mt-auto) iner */}
       <div className={`flex flex-1 flex-col ${ortali ? "text-center" : ""} ${duzen === "one" ? "bg-amber-100/50 px-6 py-10" : "pt-5"}`}>
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rose-800">{klip.topic}</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rose-800">{konuAdi(s, klip.topic)}</p>
         <h3
           className={`mt-2 font-serif leading-tight transition-colors group-hover:text-rose-800 ${
             duzen === "one"
@@ -75,11 +76,11 @@ export default function HikayeKarti({ kisi, duzen = "album" }: { kisi: Person; d
         {ortali ? (
           <>
             <span className="mx-auto mt-5 block h-px w-16 bg-stone-300" />
-            <p className="mt-3 font-serif italic text-stone-500">{kisi.clips.length} klip</p>
+            <p className="mt-3 font-serif italic text-stone-500">{klipSayisi(s, kisi.clips.length)}</p>
           </>
         ) : (
           // mt-auto: kalan boşluğu üstüne al → kartın en altına in (satırdaki bütün kartlarda aynı hizada)
-          <p className="mt-auto pt-3 text-sm text-stone-500">{kisi.clips.length} klip</p>
+          <p className="mt-auto pt-3 text-sm text-stone-500">{klipSayisi(s, kisi.clips.length)}</p>
         )}
       </div>
     </Link>

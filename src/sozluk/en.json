@@ -1,0 +1,117 @@
+{
+  "genel": {
+    "siteAdi": "Klip Dergi",
+    "aciklama": "A magazine bringing together podcast clips and stories of entrepreneurs who went viral.",
+    "anaSayfa": "Home",
+    "kisiler": "People",
+    "hakkimizda": "About",
+    "klip": "clip",
+    "klipler": "clips",
+    "kisi": "people",
+    "yerel": "en-GB"
+  },
+  "header": {
+    "menuyuAc": "Open menu",
+    "menuyuKapat": "Close menu",
+    "aramayiAc": "Open search"
+  },
+  "arama": {
+    "kisaYer": "Search...",
+    "buyukYer": "Name, topic, clip",
+    "etiket": "Search the site",
+    "oneriler": "People suggestions",
+    "dugme": "Search"
+  },
+  "footer": {
+    "dergi": "Magazine",
+    "iletisim": "Contact",
+    "takip": "Follow us",
+    "telif": "© 2026 Klip Dergi. Clips and images belong to their owners.",
+    "basaDon": "Back to top ↑"
+  },
+  "anaSayfa": {
+    "girisimciHikayeleri": "Founder stories",
+    "podcastKlipleri": "Podcast clips",
+    "digerHikayeler": "More stories",
+    "tumKisiler": "All people",
+    "butunHikayeler": "All stories"
+  },
+  "vitrin": {
+    "onceki": "Previous story",
+    "sonraki": "Next story",
+    "hikaye": "story"
+  },
+  "klip": {
+    "izle": "Watch the clip",
+    "instagramdaIzle": "Watch the clip on Instagram",
+    "youtubedaIzle": "Watch the clip on YouTube",
+    "oynat": "Play clip"
+  },
+  "kirinti": {
+    "etiket": "Breadcrumb"
+  },
+  "kisilerSayfasi": {
+    "aciklama": "Biographies, social media accounts and viral clips of the entrepreneurs who speak in podcast clips.",
+    "konular": "Topics",
+    "tumu": "All",
+    "konu": "Topic",
+    "arama": "Search",
+    "temizle": "Clear",
+    "sonucYok": "No results found."
+  },
+  "kisiSayfasi": {
+    "fotografi": "photo",
+    "fotograf": "Photo",
+    "duzenleme": "converted to black and white, cropped",
+    "editor": "Editor",
+    "guncellendi": "Updated",
+    "instagramda": "on Instagram",
+    "klipler": "Clips",
+    "klipNo": "Clip",
+    "digerKisiler": "More people"
+  },
+  "hakkinda": {
+    "aciklama": "What Klip Dergi is, our principles, masthead and takedown policy.",
+    "giris": "An online magazine that brings together entrepreneur clips that went viral on podcasts. For each person: a short biography, social media accounts and the clips they speak in, on a single page.",
+    "ilkelerimiz": "Our principles",
+    "ilkeler": [
+      {
+        "baslik": "We don't host clips",
+        "metin": "No video files are stored on our site. Clips are shown only through links and the platforms' official embed tools."
+      },
+      {
+        "baslik": "Original biographies",
+        "metin": "Every biography is written by our team in our own words, based on verified sources."
+      },
+      {
+        "baslik": "Openly licensed photos",
+        "metin": "The photos we use are openly licensed; the photographer, license and source are credited under each photo."
+      }
+    ],
+    "kunye": "Masthead",
+    "gorevler": {
+      "yayinAdi": "Publication",
+      "yayinTuru": "Type",
+      "tasarim": "Design · Software developer",
+      "proje": "Project manager · Software developer",
+      "iletisim": "Contact"
+    },
+    "yayinTuru": "Online magazine",
+    "kaldirmaEtiket": "For rights holders · Takedown policy",
+    "kaldirmaMetin": "If you object to a clip, biography or photo on our site, write to us at our contact address. Content that is objected to",
+    "kaldirmaVurgu": "is removed within 24 hours."
+  },
+  "konular": {
+    "girişimcilik": "entrepreneurship",
+    "başarısızlık": "failure",
+    "harekete geçmek": "taking action",
+    "risk almak": "taking risks",
+    "büyüme": "growth",
+    "müşteri": "customers",
+    "ekip": "team",
+    "yatırım": "investment",
+    "pazarlama": "marketing",
+    "vizyon": "vision",
+    "klip": "clip"
+  }
+}

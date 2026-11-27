@@ -4,10 +4,11 @@ import Link from "next/link"; // Site içi geçiş
 type Adim = { ad: string; href?: string };
 
 // Ekmek kırıntısı: "Ana sayfa › Kişiler › Acun Ilıcalı" gibi, nerede olduğunu gösterir
-export default function Kirinti({ adimlar }: { adimlar: Adim[] }) {
+// etiket: ekran okuyucunun okuyacağı ad (sözlükten: "Konum" / "Breadcrumb")
+export default function Kirinti({ adimlar, etiket }: { adimlar: Adim[]; etiket: string }) {
   return (
-    // aria-label: ekran okuyucu "Konum" diye okusun
-    <nav aria-label="Konum">
+    // aria-label: ekran okuyucu "Konum" (İngilizcede "Breadcrumb") diye okusun
+    <nav aria-label={etiket}>
       {/* Kutu yok: beyaz hap kaldırıldı, yazı doğrudan krem sayfanın üstünde (dergi gibi sade) */}
       <ol className="flex flex-wrap items-center gap-2 text-sm text-stone-500">
         {adimlar.map((adim, sira) => (

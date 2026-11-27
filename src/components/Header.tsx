@@ -5,12 +5,14 @@ import { Lora } from "next/font/google";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import AramaKutusu, { type AramaKisisi } from "@/components/AramaKutusu"; // Önerili arama kutusu (combobox)
+import { yol, type Dil, type Sozluk } from "@/lib/sozluk"; // Dil, sözlük ve dile göre adres
 
 const baslikFontu = Lora({ subsets: ["latin", "latin-ext"], style: ["normal", "italic"] });
 
 // İnce başlık: her sayfanın en üstünde
 // kisiler: arama önerileri için (ad, slug, konu). layout.tsx sunucuda hazırlayıp veriyor
-export default function Header({ kisiler }: { kisiler: AramaKisisi[] }) {
+// dil: "tr" ya da "en" · s: o dilin sözlüğü (yazılar buradan okunur)
+export default function Header({ kisiler, dil, s }: { kisiler: AramaKisisi[]; dil: Dil; s: Sozluk }) {
   const anaSayfa = ["/", "/tr", "/en"].includes(usePathname()); // Ana sayfada mıyız? (Türkçe: "/" ya da sunucuda "/tr", İngilizce: "/en")
   const [kaydi, setKaydi] = useState(false); // Aşağı kaydırıldı mı?
   const [acik, setAcik] = useState(false); // Menü açık mı? Başta: kapalı
@@ -48,28 +50,28 @@ export default function Header({ kisiler }: { kisiler: AramaKisisi[] }) {
         type="button"
         onClick={() => setAcik(!acik)}
         aria-expanded={acik}
-        aria-label={acik ? "Menüyü kapat" : "Menüyü aç"}
+        aria-label={acik ? s.header.menuyuKapat : s.header.menuyuAc}
         className="justify-self-start text-xl"
       >
         {acik ? "×" : "☰"}
       </button>
 
       {/* Orta: logo (biraz daha büyük: text-3xl) */}
-      <Link href="/" className={`${baslikFontu.className} justify-self-center text-3xl font-bold italic`}>
-        Klip Dergi
+      <Link href={yol(dil, "/")} className={`${baslikFontu.className} justify-self-center text-3xl font-bold italic`}>
+        {s.genel.siteAdi}
       </Link>
 
       {/* Sağ: 🔍 (tıklayınca arama kutusu açılır) + KİŞİLER (bordo) */}
       <div className="flex items-center gap-4 justify-self-end">
         {aramaAcik ? (
           // Açıkken: önerili arama kutusu (src/components/AramaKutusu.tsx). kapat: kutudan çıkınca / Esc ile kapansın
-          <AramaKutusu kisiler={kisiler} kapat={() => setAramaAcik(false)} />
+          <AramaKutusu kisiler={kisiler} dil={dil} s={s} kapat={() => setAramaAcik(false)} />
         ) : (
           // Kapalıyken: sadece büyüteç düğmesi
           <button
             type="button"
             onClick={() => setAramaAcik(true)}
-            aria-label="Aramayı aç"
+            aria-label={s.header.aramayiAc}
             className="text-stone-700 transition-colors hover:text-rose-800"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5" aria-hidden="true">
@@ -81,10 +83,10 @@ export default function Header({ kisiler }: { kisiler: AramaKisisi[] }) {
 
         {/* KİŞİLER: bordo, BÜYÜK HARF, aralıklı (slayttaki gibi) */}
         <Link
-          href="/kisiler"
+          href={yol(dil, "/kisiler")}
           className="text-xs font-semibold uppercase tracking-[0.18em] text-rose-800 hover:underline"
         >
-          Kişiler
+          {s.genel.kisiler}
         </Link>
       </div>
 
@@ -93,9 +95,9 @@ export default function Header({ kisiler }: { kisiler: AramaKisisi[] }) {
       {acik && (
         <nav className="absolute left-0 top-full h-screen w-72 bg-stone-900 text-amber-50">
           <ul className="divide-y divide-stone-700">
-            <li><Link href="/" onClick={() => setAcik(false)} className="block px-6 py-4 hover:text-rose-300">Ana sayfa</Link></li>
-            <li><Link href="/kisiler" onClick={() => setAcik(false)} className="block px-6 py-4 hover:text-rose-300">Kişiler</Link></li>
-            <li><Link href="/hakkinda" onClick={() => setAcik(false)} className="block px-6 py-4 hover:text-rose-300">Hakkımızda</Link></li>
+            <li><Link href={yol(dil, "/")} onClick={() => setAcik(false)} className="block px-6 py-4 hover:text-rose-300">{s.genel.anaSayfa}</Link></li>
+            <li><Link href={yol(dil, "/kisiler")} onClick={() => setAcik(false)} className="block px-6 py-4 hover:text-rose-300">{s.genel.kisiler}</Link></li>
+            <li><Link href={yol(dil, "/hakkinda")} onClick={() => setAcik(false)} className="block px-6 py-4 hover:text-rose-300">{s.genel.hakkimizda}</Link></li>
           </ul>
         </nav>
       )}

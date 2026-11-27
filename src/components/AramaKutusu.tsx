@@ -2,29 +2,31 @@
 
 import { useId, useState, type KeyboardEvent } from "react"; // useId = benzersiz kimlik (id) · useState = hafıza · KeyboardEvent = tuş olayının tipi
 import { useRouter } from "next/navigation"; // Kod içinden sayfa değiştirmek için (Enter ile kişiye git)
+import { yol, type Dil, type Sozluk } from "@/lib/sozluk"; // Dil, sözlük ve dile göre adres
 
 // Öneri listesinde bir kişi: ad, adres, konuları ve klip başlıkları (biyografi vb. tarayıcıya gönderilmez)
 export type AramaKisisi = { ad: string; slug: string; konular: string[]; basliklar: string[] };
 
-// Türkçe küçük harf: toLocaleLowerCase("tr-TR") → "I" → "ı", "İ" → "i"
+// Dilin kurallarıyla küçük harf. Türkçede (tr-TR): "I" → "ı", "İ" → "i"
 // (Sadece toLowerCase() deseydik "ILICALI" → "ilicali" olurdu, "ılıcalı" aramasıyla eşleşmezdi)
-const kucult = (yazi: string) => yazi.toLocaleLowerCase("tr-TR");
+// İngilizcede (en-GB): "I" → "i" ("Investment" → "investment"). yerel sözlükten gelir: s.genel.yerel
+const kucult = (yazi: string, yerel: string) => yazi.toLocaleLowerCase(yerel);
 
 // Bir yazı arananla başlıyor mu? Bütünü YA DA herhangi bir kelimesi.
 // "Hamdi Ulukaya" + "ulu" → evet (soyadı) · "Milyarlık Vesting Dersi" + "vest" → evet · "harekete geçmek" + "geç" → evet
-function basliyor(yazi: string, aranan: string): boolean {
-  const kucuk = kucult(yazi);
+function basliyor(yazi: string, aranan: string, yerel: string): boolean {
+  const kucuk = kucult(yazi, yerel);
   return kucuk.startsWith(aranan) || kucuk.split(" ").some((kelime) => kelime.startsWith(aranan));
 }
 
 // Kişi aranana uyuyor mu? Uyuyorsa önerinin ALT SATIRINDA ne yazacağını döner, uymuyorsa null.
 // Sıra: 1) ad → ilk konusu yazılır · 2) konu (EKİP, VİZYON…) → o konu · 3) klip adı → o klibin adı
 // Böylece ziyaretçi kişinin NEDEN önerildiğini görür ("vest" → Mark Zuckerberg / Milyarlık Vesting Dersi)
-function eslesme(kisi: AramaKisisi, aranan: string): string | null {
-  if (basliyor(kisi.ad, aranan)) return kisi.konular[0];
-  const konu = kisi.konular.find((k) => basliyor(k, aranan)); // find: uyan ilk konu, yoksa undefined
+function eslesme(kisi: AramaKisisi, aranan: string, yerel: string): string | null {
+  if (basliyor(kisi.ad, aranan, yerel)) return kisi.konular[0];
+  const konu = kisi.konular.find((k) => basliyor(k, aranan, yerel)); // find: uyan ilk konu, yoksa undefined
   if (konu) return konu;
-  const baslik = kisi.basliklar.find((b) => basliyor(b, aranan));
+  const baslik = kisi.basliklar.find((b) => basliyor(b, aranan, yerel));
   if (baslik) return baslik;
   return null; // hiçbiri uymadı
 }
@@ -36,6 +38,8 @@ const EN_FAZLA = 5; // Planın istediği: en fazla 5 öneri
 //  2) Kişiler sayfasında: büyük, hep açık, yanında "Ara" düğmesi → buyuk verilir, kapat verilmez
 type Ozellikler = {
   kisiler: AramaKisisi[];
+  dil: Dil; // "tr" ya da "en": kişi sayfasına ve /kisiler aramasına giden adres buna göre
+  s: Sozluk; // O dilin sözlüğü (yer tutucu yazı, düğme)
   kapat?: () => void; // ? = sadece üst menüde var (Kişiler sayfasında kutu kapanmaz)
   buyuk?: boolean; // Kişiler sayfasındaki büyük kutu mu?
   ilkYazi?: string; // Kişiler sayfasında adresteki ?ara= değeri: sayfa açılınca kutuda dursun
@@ -44,18 +48,18 @@ type Ozellikler = {
 
 // 📚 Kaynak: WAI-ARIA APG "Editable Combobox With List Autocomplete"
 // https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-autocomplete-list/
-export default function AramaKutusu({ kisiler, kapat, buyuk = false, ilkYazi = "", konu }: Ozellikler) {
+export default function AramaKutusu({ kisiler, dil, s, kapat, buyuk = false, ilkYazi = "", konu }: Ozellikler) {
   const router = useRouter();
   const [yazi, setYazi] = useState(ilkYazi); // Kutuya yazılan (Kişiler sayfasında adresteki aramayla başlar)
   const [acik, setAcik] = useState(false); // Öneri listesi açık mı?
   const [vurgulu, setVurgulu] = useState(-1); // Klavyeyle vurgulanan öneri (-1 = hiçbiri)
 
   const listeId = useId(); // Listenin kimliği (aria-controls bunu gösterecek)
-  const aranan = kucult(yazi.trim());
+  const aranan = kucult(yazi.trim(), s.genel.yerel);
   // Her kişiye "neden uydu" yazısını ekle (map) → uymayanları at (filter) → en fazla 5 (slice)
   const oneriler = aranan
     ? kisiler
-        .map((kisi) => ({ kisi, alt: eslesme(kisi, aranan) }))
+        .map((kisi) => ({ kisi, alt: eslesme(kisi, aranan, s.genel.yerel) }))
         .filter((oneri) => oneri.alt !== null)
         .slice(0, EN_FAZLA)
     : [];
@@ -65,7 +69,7 @@ export default function AramaKutusu({ kisiler, kapat, buyuk = false, ilkYazi = "
   function git(kisi: AramaKisisi) {
     setAcik(false);
     kapat?.(); // ?.() = kapat varsa çağır, yoksa (Kişiler sayfası) hiçbir şey yapma
-    router.push(`/kisiler/${kisi.slug}`);
+    router.push(yol(dil, `/kisiler/${kisi.slug}`));
   }
 
   // ⌨️ Klavye (kaynaktaki tablo)
@@ -107,12 +111,12 @@ export default function AramaKutusu({ kisiler, kapat, buyuk = false, ilkYazi = "
     // relative: öneri listesi kutunun hemen altına (absolute) yerleşsin
     // Kişiler sayfasında: kutu + Ara düğmesi yan yana (flex), kutu geniş
     // Kişiler sayfasında: altı çizgili tek satır (kapsül yok), sağında "Ara"
-    <form action="/kisiler" className={buyuk ? "relative flex w-full items-center gap-2 border-b border-stone-400 focus-within:border-rose-800" : "relative"}>
+    <form action={yol(dil, "/kisiler")} className={buyuk ? "relative flex w-full items-center gap-2 border-b border-stone-400 focus-within:border-rose-800" : "relative"}>
       <input
         type="search"
         name="ara"
-        placeholder={buyuk ? "İsim, konu, klip" : "Ara..."}
-        aria-label="Sitede ara"
+        placeholder={buyuk ? s.arama.buyukYer : s.arama.kisaYer}
+        aria-label={s.arama.etiket}
         autoFocus={!buyuk} // Üst menüde açılınca hemen yazılabilsin · Kişiler sayfasında sayfa açılınca klavye fırlamasın
         autoComplete="off" // Tarayıcının kendi eski aramalar listesi bizimkinin üstüne binmesin
         // ===== Combobox etiketleri (kaynaktaki "Role, Property, State" tablosu) =====
@@ -142,7 +146,7 @@ export default function AramaKutusu({ kisiler, kapat, buyuk = false, ilkYazi = "
           type="submit"
           className="shrink-0 text-xs font-semibold uppercase tracking-[0.2em] text-rose-800 transition-colors hover:text-rose-950"
         >
-          Ara
+          {s.arama.dugme}
         </button>
       )}
 
@@ -150,7 +154,7 @@ export default function AramaKutusu({ kisiler, kapat, buyuk = false, ilkYazi = "
       <ul
         id={listeId}
         role="listbox"
-        aria-label="Kişi önerileri"
+        aria-label={s.arama.oneriler}
         hidden={!listeGorunur}
         // Liste zemini krem (beyaz değil). Üst menüde sağa, Kişiler sayfasında sola yaslı
         className={`absolute top-full z-50 mt-2 w-64 overflow-hidden rounded-xl border border-stone-200 bg-amber-50 py-1 text-left shadow-xl ${

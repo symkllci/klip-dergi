@@ -1,10 +1,11 @@
 import Image from "next/image"; // Next.js'in resim bileşeni
 import type { Person } from "@/types"; // Kişi kalıbı
+import type { Sozluk } from "@/lib/sozluk"; // Sözlük kalıbı
 
 // Alıntı bandı: ekranın iki kenarına kadar uzanan koyu bant. Sayfada BİR alıntı, büyük.
 // Solda yuvarlak siyah-beyaz görsel · ortada kişinin klipteki sözü (italik Lora) · sağda isim, klip başlığı, "Klibi izle"
 // Alıntısı olmayan kişi gelirse hiç çizilmez (uydurma söz yok)
-export default function AlintiBandi({ kisi }: { kisi: Person }) {
+export default function AlintiBandi({ kisi, s }: { kisi: Person; s: Sozluk }) {
   const klip = kisi.clips.find((k) => k.quote); // Alıntısı olan ilk klip
   if (!klip) return null; // Alıntı yoksa bant yok
   const resim = kisi.photo?.src ?? klip.cover; // Fotoğraf yoksa reel kapağı
@@ -35,7 +36,7 @@ export default function AlintiBandi({ kisi }: { kisi: Person }) {
             rel="noopener noreferrer"
             className="mt-3 inline-block border-b border-amber-50/60 pb-0.5 transition-colors hover:border-rose-300 hover:text-rose-300"
           >
-            Klibi izle
+            {s.klip.izle}
           </a>
         </figcaption>
       </figure>

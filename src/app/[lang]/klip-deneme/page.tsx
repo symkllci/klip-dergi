@@ -2,6 +2,7 @@ import type { Metadata } from "next"; // Sekme başlığı ve robots ayarının 
 import { Lora } from "next/font/google"; // Başlık fontu (kişi sayfasıyla aynı)
 import { getAllPeople } from "@/lib/people"; // Bütün kişileri getiren tarif
 import KlipAlbumu from "@/components/KlipAlbumu"; // Kişi sayfasındaki albümün AYNISI
+import { dilAl, getSozluk } from "@/lib/sozluk"; // Albümdeki küçük yazılar (konu, "Klibi oynat") için sözlük
 
 // 12 KLİP DENEMESİ (plan çıktısı): "12 klip olsa kişi sayfası nasıl görünür?"
 // Deneme verisi: elimizdeki 21 gerçek klipten ilk 12'si (uydurma klip yok). Sadece görünüş denemesi.
@@ -13,7 +14,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function KlipDeneme() {
+// Bu sayfa Çarşamba silinecek: sayfa yazıları Türkçe kaldı, sadece albüm sözlükten okuyor
+export default async function KlipDeneme({ params }: PageProps<"/[lang]/klip-deneme">) {
+  const s = getSozluk(dilAl((await params).lang));
   // flatMap: her kişinin klip listesini tek uzun listeye dök → 21 klip · slice(0, 12): ilk 12'si
   const klipler = (await getAllPeople())
     .flatMap((kisi) => kisi.clips)
@@ -44,7 +47,7 @@ export default async function KlipDeneme() {
           </div>
           {/* Albüm: kişi sayfasındakinin aynısı (auto-fill, minmax(240px, 1fr)) */}
           <div className="mt-4">
-            <KlipAlbumu klipler={klipler} />
+            <KlipAlbumu klipler={klipler} s={s} />
           </div>
         </section>
       </main>

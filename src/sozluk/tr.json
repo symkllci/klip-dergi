@@ -1,0 +1,117 @@
+{
+  "genel": {
+    "siteAdi": "Klip Dergi",
+    "aciklama": "Viral olan girişimcilerin podcast kliplerini ve hikâyelerini bir araya getiren dergi.",
+    "anaSayfa": "Ana sayfa",
+    "kisiler": "Kişiler",
+    "hakkimizda": "Hakkımızda",
+    "klip": "klip",
+    "klipler": "klip",
+    "kisi": "kişi",
+    "yerel": "tr-TR"
+  },
+  "header": {
+    "menuyuAc": "Menüyü aç",
+    "menuyuKapat": "Menüyü kapat",
+    "aramayiAc": "Aramayı aç"
+  },
+  "arama": {
+    "kisaYer": "Ara...",
+    "buyukYer": "İsim, konu, klip",
+    "etiket": "Sitede ara",
+    "oneriler": "Kişi önerileri",
+    "dugme": "Ara"
+  },
+  "footer": {
+    "dergi": "Dergi",
+    "iletisim": "İletişim",
+    "takip": "Bizi takip edin",
+    "telif": "© 2026 Klip Dergi. Klipler ve görseller sahiplerine aittir.",
+    "basaDon": "Başa dön ↑"
+  },
+  "anaSayfa": {
+    "girisimciHikayeleri": "Girişimci hikâyeleri",
+    "podcastKlipleri": "Podcast klipleri",
+    "digerHikayeler": "Diğer hikâyeler",
+    "tumKisiler": "Tüm kişiler",
+    "butunHikayeler": "Bütün hikâyeler"
+  },
+  "vitrin": {
+    "onceki": "Önceki hikâye",
+    "sonraki": "Sonraki hikâye",
+    "hikaye": "hikâye"
+  },
+  "klip": {
+    "izle": "Klibi izle",
+    "instagramdaIzle": "Klibi Instagram'da izle",
+    "youtubedaIzle": "Klibi YouTube'da izle",
+    "oynat": "Klibi oynat"
+  },
+  "kirinti": {
+    "etiket": "Konum"
+  },
+  "kisilerSayfasi": {
+    "aciklama": "Podcast kliplerinde konuşan girişimcilerin biyografileri, sosyal medya hesapları ve viral klipleri.",
+    "konular": "Konular",
+    "tumu": "Tümü",
+    "konu": "Konu",
+    "arama": "Arama",
+    "temizle": "Temizle",
+    "sonucYok": "Sonuç bulunamadı."
+  },
+  "kisiSayfasi": {
+    "fotografi": "fotoğrafı",
+    "fotograf": "Fotoğraf",
+    "duzenleme": "siyah-beyaz yapıldı, kırpıldı",
+    "editor": "Editör",
+    "guncellendi": "Güncellendi",
+    "instagramda": "Instagram'da",
+    "klipler": "Klipler",
+    "klipNo": "Klip",
+    "digerKisiler": "Diğer kişiler"
+  },
+  "hakkinda": {
+    "aciklama": "Klip Dergi nedir, ilkelerimiz, künye ve kaldırma politikası.",
+    "giris": "Podcast'lerde viral olan girişimci kliplerini bir araya getiren çevrim içi bir dergi. Her kişi için kısa bir biyografi, sosyal medya hesapları ve konuştukları klipler tek sayfada.",
+    "ilkelerimiz": "İlkelerimiz",
+    "ilkeler": [
+      {
+        "baslik": "Klip barındırmıyoruz",
+        "metin": "Sitemizde hiçbir video dosyası saklanmaz. Klipler yalnızca bağlantı ve platformların resmî yerleştirme (embed) araçlarıyla gösterilir."
+      },
+      {
+        "baslik": "Biyografiler özgün",
+        "metin": "Her biyografi ekibimiz tarafından, doğrulanmış kaynaklardan yararlanılarak kendi cümleleriyle yazılır."
+      },
+      {
+        "baslik": "Fotoğraflar açık lisanslı",
+        "metin": "Kullandığımız fotoğraflar açık lisanslıdır; fotoğrafçı, lisans ve kaynak bilgisi fotoğrafın altında belirtilir."
+      }
+    ],
+    "kunye": "Künye",
+    "gorevler": {
+      "yayinAdi": "Yayın adı",
+      "yayinTuru": "Yayın türü",
+      "tasarim": "Tasarım · Yazılım geliştirici",
+      "proje": "Proje yöneticisi · Yazılım geliştirici",
+      "iletisim": "İletişim"
+    },
+    "yayinTuru": "Çevrim içi dergi",
+    "kaldirmaEtiket": "Hak sahipleri için · Kaldırma politikası",
+    "kaldirmaMetin": "Sitemizde yer alan bir klip, biyografi ya da fotoğraf hakkında itirazınız varsa iletişim adresimizden bize yazın. İtiraz edilen içerik",
+    "kaldirmaVurgu": "24 saat içinde kaldırılır."
+  },
+  "konular": {
+    "girişimcilik": "girişimcilik",
+    "başarısızlık": "başarısızlık",
+    "harekete geçmek": "harekete geçmek",
+    "risk almak": "risk almak",
+    "büyüme": "büyüme",
+    "müşteri": "müşteri",
+    "ekip": "ekip",
+    "yatırım": "yatırım",
+    "pazarlama": "pazarlama",
+    "vizyon": "vizyon",
+    "klip": "klip"
+  }
+}

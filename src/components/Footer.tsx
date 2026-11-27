@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Lora } from "next/font/google";
+import { yol, type Dil, type Sozluk } from "@/lib/sozluk"; // Dil, sözlük ve dile göre adres
 
 const baslikFontu = Lora({ subsets: ["latin", "latin-ext"], style: ["normal", "italic"] });
 
@@ -8,41 +9,39 @@ const sutunBasligi = "text-xs font-semibold uppercase tracking-widest text-white
 // Sosyal medya düğmelerinin ortak görünüşü: yuvarlak, ince beyaz çerçeve, üstüne gelince beyaz dolar
 const simgeDugmesi = "inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/40 transition-colors hover:bg-white hover:text-rose-800";
 
-// Alt bilgi: her sayfanın en altında. Bordo zemin, beyaz yazı
-export default function Footer() {
+// Alt bilgi: her sayfanın en altında. Bordo zemin, beyaz yazı. Yazılar sözlükten (s)
+export default function Footer({ dil, s }: { dil: Dil; s: Sozluk }) {
   return (
     <footer className="mt-16 bg-rose-800 px-6 pb-8 pt-14 text-white">
       <div className="mx-auto max-w-6xl">
         {/* Üst: ortada logo ve tek cümle */}
         <div className="text-center">
-          <Link href="/" className={`${baslikFontu.className} text-4xl font-bold italic sm:text-5xl`}>
-            Klip Dergi
+          <Link href={yol(dil, "/")} className={`${baslikFontu.className} text-4xl font-bold italic sm:text-5xl`}>
+            {s.genel.siteAdi}
           </Link>
-          <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-white/80">
-            Viral olan girişimcilerin podcast kliplerini ve hikâyelerini bir araya getiren dergi.
-          </p>
+          <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-white/80">{s.genel.aciklama}</p>
         </div>
 
         {/* Orta: 3 sütun, ortalı. Üstünde ince çizgi. Telefonda alt alta */}
         <div className="mt-10 grid gap-8 border-t border-white/20 pt-10 text-center sm:grid-cols-3">
           {/* Dergi */}
           <div>
-            <p className={sutunBasligi}>Dergi</p>
+            <p className={sutunBasligi}>{s.footer.dergi}</p>
             <ul className="mt-4 space-y-2 text-sm text-white/80">
-              <li><Link href="/hakkinda" className="hover:text-white hover:underline">Hakkımızda</Link></li>
-              <li><Link href="/kisiler" className="hover:text-white hover:underline">Kişiler</Link></li>
+              <li><Link href={yol(dil, "/hakkinda")} className="hover:text-white hover:underline">{s.genel.hakkimizda}</Link></li>
+              <li><Link href={yol(dil, "/kisiler")} className="hover:text-white hover:underline">{s.genel.kisiler}</Link></li>
             </ul>
           </div>
 
           {/* İletişim. DEMO: gerçek adres hocadan gelince mailto: linki olacak */}
           <div>
-            <p className={sutunBasligi}>İletişim</p>
+            <p className={sutunBasligi}>{s.footer.iletisim}</p>
             <p className="mt-4 text-sm text-white/80">info@klipdergi.com</p>
           </div>
 
           {/* Sosyal medya */}
           <div>
-            <p className={sutunBasligi}>Bizi takip edin</p>
+            <p className={sutunBasligi}>{s.footer.takip}</p>
             <div className="mt-4 flex justify-center gap-3">
               {/* Instagram (gerçek) */}
               <a href="https://www.instagram.com/viralgirisimci/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className={simgeDugmesi}>
@@ -71,8 +70,8 @@ export default function Footer() {
 
         {/* Alt satır: telif solda, başa dön sağda */}
         <div className="mt-10 flex flex-col items-center gap-2 border-t border-white/20 pt-6 text-xs text-white/70 sm:flex-row sm:justify-between">
-          <p>© 2026 Klip Dergi. Klipler ve görseller sahiplerine aittir.</p>
-          <a href="#" className="hover:text-white">Başa dön ↑</a>
+          <p>{s.footer.telif}</p>
+          <a href="#" className="hover:text-white">{s.footer.basaDon}</a>
         </div>
       </div>
     </footer>

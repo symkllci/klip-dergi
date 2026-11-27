@@ -7,6 +7,7 @@ import HikayeKarti from "@/components/HikayeKarti"; // Diğer kişiler kartları
 import Kirinti from "@/components/Kirinti"; // Ekmek kırıntısı: nerede olduğunu gösterir
 import KlipAlbumu from "@/components/KlipAlbumu"; // Klipler albümü (oynatıcı + başlık + kaynak + Instagram glifi)
 import type { Metadata } from "next"; // Sekme başlığı ve paylaşım bilgisinin kalıbı
+import { dilAl, getSozluk, klipSayisi, yol } from "@/lib/sozluk"; // Dil, sözlük, klip sayısı, dile göre adres
 
 // Başlık fontu: ana sayfayla aynı Lora. latin-ext: Türkçe harfler için
 const baslikFontu = Lora({ subsets: ["latin", "latin-ext"] });
@@ -22,9 +23,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ lang: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params; // Adresteki kişi kodu (ör. hamdi-ulukaya)
+  const { lang, slug } = await params; // Adresteki dil ve kişi kodu (ör. en, hamdi-ulukaya)
+  const s = getSozluk(dilAl(lang)); // O dilin sözlüğü
   const kisi = await getPersonBySlug(slug); // O kişiyi bul
   if (!kisi) return {}; // Kişi yoksa boş bırak
 
@@ -34,7 +36,7 @@ export async function generateMetadata({
     title: kisi.name, // Kalıptaki %s yerine geçer → "Hamdi Ulukaya · Klip Dergi"
     description: kisi.bio, // Google'da ve paylaşımda görünen açıklama
     openGraph: {
-      title: `${kisi.name} · Klip Dergi`, // WhatsApp önizlemesindeki başlık
+      title: `${kisi.name} · ${s.genel.siteAdi}`, // WhatsApp önizlemesindeki başlık
       description: kisi.bio,
       images: kapak ? [kapak] : [], // WhatsApp önizlemesindeki resim
     },
@@ -42,8 +44,10 @@ export async function generateMetadata({
 }
 
 // Kişi sayfası: /kisiler/nevzat-aydin gibi adreslerde açılır
-export default async function KisiSayfasi({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params; // Adresten slug'ı al
+export default async function KisiSayfasi({ params }: { params: Promise<{ lang: string; slug: string }> }) {
+  const { lang, slug } = await params; // Adresten dili ve slug'ı al
+  const dil = dilAl(lang); // "tr" ya da "en"
+  const s = getSozluk(dil); // O dilin sözlüğü
   const kisi = await getPersonBySlug(slug); // Slug ile kişiyi bul (find). Bulamazsa undefined
 
   // Kişi yoksa 404 göster ve burada dur
@@ -76,7 +80,10 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
           Gazete gibi: yazı sütunu dar, görseller ve bölüm çizgileri geniş */}
       <main className="px-[clamp(16px,3.2vw,56px)] py-10">
         {/* Ekmek kırıntısı: Ana sayfa › Kişiler › (kişinin adı = buradasın, href yok → bordo) */}
-        <Kirinti adimlar={[{ ad: "Ana sayfa", href: "/" }, { ad: "Kişiler", href: "/kisiler" }, { ad: kisi.name }]} />
+        <Kirinti
+          etiket={s.kirinti.etiket}
+          adimlar={[{ ad: s.genel.anaSayfa, href: yol(dil, "/") }, { ad: s.genel.kisiler, href: yol(dil, "/kisiler") }, { ad: kisi.name }]}
+        />
 
         {/* ===== GAZETE SAYFASI (Maket E) ===== */}
 
@@ -88,7 +95,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
           <div className="relative aspect-[3/2] w-full overflow-hidden rounded-lg bg-stone-900">
             <Image
               src={kisi.photo ? kisi.photo.src : kapakKlip.cover}
-              alt={kisi.photo ? `${kisi.name} fotoğrafı` : `${kisi.name}: ${kapakKlip.title}`}
+              alt={kisi.photo ? `${kisi.name} ${s.kisiSayfasi.fotografi}` : `${kisi.name}: ${kapakKlip.title}`}
               fill // Kutuyu doldur
               loading="eager" // İlk ekranda en büyük resim (LCP): hemen yükle
               fetchPriority="high" // Önce bu görseli indir
@@ -106,7 +113,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
           {/* Atıf: sadece fotoğraf varsa (&&). Fotoğrafçı · lisans · kaynak · siyah-beyaz yapıldı */}
           {kisi.photo && (
             <figcaption className="mt-2 text-right text-xs leading-relaxed text-stone-500">
-              Fotoğraf: {kisi.photo.author} ·{" "}
+              {s.kisiSayfasi.fotograf}: {kisi.photo.author} ·{" "}
               {/* Lisans linki varsa tıklanır, yoksa düz yazı (kamu malında link yok) */}
               {kisi.photo.licenseUrl ? (
                 <a
@@ -130,7 +137,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
               >
                 Wikimedia Commons
               </a>{" "}
-              · siyah-beyaz yapıldı, kırpıldı
+              · {s.kisiSayfasi.duzenleme}
             </figcaption>
           )}
         </figure>
@@ -164,7 +171,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
                 <blockquote className="-mt-4 font-serif text-2xl italic leading-relaxed text-stone-800">{klip.quote}</blockquote>
                 {/* Kimin sözü, hangi klip: KLİP 02 gibi. indexOf = klibin listedeki sırası (0'dan başlar → +1) */}
                 <figcaption className="mt-3 text-xs font-semibold uppercase tracking-widest text-stone-500">
-                  {kisi.name} · Klip {String(kisi.clips.indexOf(klip) + 1).padStart(2, "0")}: {klip.title}
+                  {kisi.name} · {s.kisiSayfasi.klipNo} {String(kisi.clips.indexOf(klip) + 1).padStart(2, "0")}: {klip.title}
                 </figcaption>
               </figure>
             ))}
@@ -172,9 +179,9 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
           {/* ⭐ Editör satırı: biyografiyi kim hazırladı, en son ne zaman güncellendi */}
           {/* time = makinenin okuyacağı tarih (dateTime) + insanın okuyacağı tarih (14 Kasım 2026) */}
           <p className="mt-10 text-xs uppercase tracking-widest text-stone-500">
-            Editör: {kisi.editor} · Güncellendi:{" "}
+            {s.kisiSayfasi.editor}: {kisi.editor} · {s.kisiSayfasi.guncellendi}:{" "}
             <time dateTime={kisi.updatedAt}>
-              {new Date(kisi.updatedAt).toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })}
+              {new Date(kisi.updatedAt).toLocaleDateString(s.genel.yerel, { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })}
             </time>
           </p>
 
@@ -188,7 +195,7 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
                     href={link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`${kisi.name} Instagram'da`}
+                    aria-label={`${kisi.name} ${s.kisiSayfasi.instagramda}`}
                     title="Instagram"
                     className="flex h-11 w-11 items-center justify-center rounded-full border border-amber-200 bg-transparent text-stone-700 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
                   >
@@ -208,29 +215,29 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ slug: 
         {/* 5. KLİPLER: tam genişlik albüm. Başlık ana sayfadaki gibi: büyük Lora + sağda bordo sayı + koyu çizgi */}
         <section className="mt-20">
           <div className="flex items-end justify-between border-b border-stone-900 pb-4">
-            <h2 className={`${baslikFontu.className} text-3xl sm:text-5xl`}>Klipler</h2>
-            <p className="text-sm font-semibold uppercase tracking-widest text-rose-800">{kisi.clips.length} klip</p>
+            <h2 className={`${baslikFontu.className} text-3xl sm:text-5xl`}>{s.kisiSayfasi.klipler}</h2>
+            <p className="text-sm font-semibold uppercase tracking-widest text-rose-800">{klipSayisi(s, kisi.clips.length)}</p>
           </div>
           {/* Albüm ayrı bileşende: src/components/KlipAlbumu.tsx (deneme sayfası da kullanıyor) */}
-          <KlipAlbumu klipler={kisi.clips} />
+          <KlipAlbumu klipler={kisi.clips} s={s} />
         </section>
 
         {/* 6. DİĞER KİŞİLER: ana sayfadaki kutusuz dergi kartı (HikayeKarti, yatay görsel, ortalı yazı) */}
         <section className="mt-20">
           <div className="flex items-end justify-between border-b border-stone-900 pb-4">
-            <h2 className={`${baslikFontu.className} text-3xl sm:text-5xl`}>Diğer kişiler</h2>
+            <h2 className={`${baslikFontu.className} text-3xl sm:text-5xl`}>{s.kisiSayfasi.digerKisiler}</h2>
             <Link
-              href="/kisiler"
+              href={yol(dil, "/kisiler")}
               className="group text-sm font-semibold uppercase tracking-widest text-rose-800 hover:underline"
             >
-              Tüm kişiler
+              {s.anaSayfa.tumKisiler}
             </Link>
           </div>
           {/* Telefonda alt alta, orta ekranda 3 yan yana */}
           <ul className="mt-10 grid gap-x-12 gap-y-14 sm:grid-cols-3">
             {digerKisiler.map((diger) => (
               <li key={diger.slug}>
-                <HikayeKarti kisi={diger} duzen="orta" />
+                <HikayeKarti kisi={diger} duzen="orta" dil={dil} s={s} />
               </li>
             ))}
           </ul>

@@ -13,7 +13,8 @@ function embedAdresi(klip: Clip): string {
 // Klip oynatıcı: önce kapak + ▶, tıklanınca Instagram yüklenir (sayfa hızlı açılsın)
 // Genişlik artık SABİT DEĞİL (eskiden 320px): bulunduğu albüm hücresi kadar (w-full).
 // Yükseklik genişlikten hesaplanır (aspect-[9/16]) → hücre daralınca oynatıcı da orantılı küçülür
-export default function KlipOynatici({ klip }: { klip: Clip }) {
+// oynatYazisi: düğmenin ekran okuyucu adı, sözlükten ("Klibi oynat" / "Play clip")
+export default function KlipOynatici({ klip, oynatYazisi }: { klip: Clip; oynatYazisi: string }) {
   const [oynat, setOynat] = useState(false); // ⭐ Oynatıldı mı? Başta: hayır (ışık düğmesi kapalı)
 
   // Oynatıldıysa: gerçek Instagram penceresi (ağır, ama artık sadece istenince)
@@ -34,7 +35,7 @@ export default function KlipOynatici({ klip }: { klip: Clip }) {
     <button
       type="button"
       onClick={() => setOynat(true)}
-      aria-label={`Klibi oynat: ${klip.title}`}
+      aria-label={`${oynatYazisi}: ${klip.title}`}
       className="group relative block aspect-[9/16] w-full overflow-hidden rounded-lg bg-stone-900"
     >
       <Image

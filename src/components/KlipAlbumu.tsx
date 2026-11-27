@@ -1,18 +1,19 @@
 import KlipOynatici from "@/components/KlipOynatici"; // Klip: önce kapak + ▶, tıklanınca Instagram
 import InstagramGlifi from "@/components/InstagramGlifi"; // Instagram'ın resmî tek renk glifi (Meta marka sayfasından)
 import type { Clip } from "@/types"; // Klip kalıbı
+import { konuAdi, type Sozluk } from "@/lib/sozluk"; // Sözlük ve konunun o dildeki adı
 
 // Klibin linkinin adı (platforma göre). Ekranda yazmıyor: glif linkinin aria-label'ı (ekran okuyucu bunu okur)
-function izleYazisi(klip: Clip): string {
+function izleYazisi(klip: Clip, s: Sozluk): string {
   if (klip.platform === "youtube") {
-    return "Klibi YouTube'da izle";
+    return s.klip.youtubedaIzle;
   }
-  return "Klibi Instagram'da izle";
+  return s.klip.instagramdaIzle;
 }
 
 // Klip albümü: kişi sayfasından AYRI bileşene taşındı → aynı albümü deneme sayfası da kullanabilsin
 // (bir kez yaz, iki yerde kullan). Kişi sayfası: <KlipAlbumu klipler={kisi.clips} />
-export default function KlipAlbumu({ klipler }: { klipler: Clip[] }) {
+export default function KlipAlbumu({ klipler, s }: { klipler: Clip[]; s: Sozluk }) {
   // 📚 MDN CSS Grid · repeat(auto-fill, minmax(240px, 1fr)): sığdığı kadar sütun, her biri en az 240px
   // Geniş ekran (1152px) → 4 sütun (~270px, eskiden 320px → biraz küçüldü) · tablet → 2–3 · telefon → 1
   // min(240px,100%): çok dar ekranda taşmasın · gap-y-12: satırlar arası daha geniş (yazılar karışmasın)
@@ -25,10 +26,10 @@ export default function KlipAlbumu({ klipler }: { klipler: Clip[] }) {
           <p className="mb-3 flex items-baseline gap-3">
             {/* padStart(2, "0"): sayı 2 haneden kısaysa başına 0 ekle → 01…09, 10, 11, 12 (eskiden "0" + 10 = "010" oluyordu) */}
             <span className="font-serif text-3xl italic text-rose-800">{String(sira + 1).padStart(2, "0")}</span>
-            <span className="text-xs font-semibold uppercase tracking-widest text-rose-800">{klip.topic}</span>
+            <span className="text-xs font-semibold uppercase tracking-widest text-rose-800">{konuAdi(s, klip.topic)}</span>
           </p>
           {/* Klip: önce kapak + ▶, tıklanınca Instagram yüklenir (sayfa hızlı açılsın) */}
-          <KlipOynatici klip={klip} />
+          <KlipOynatici klip={klip} oynatYazisi={s.klip.oynat} />
 
           {/* ⭐ Klip altı: solda Lora başlık + gri kaynak satırı, sağda Instagram glifi (link).
               Eskisi: "Klibi Instagram'da izle ↗" yazısı → kaldırıldı (plan) */}
@@ -54,8 +55,8 @@ export default function KlipAlbumu({ klipler }: { klipler: Clip[] }) {
                 href={klip.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={izleYazisi(klip)}
-                title={izleYazisi(klip)} // Fare üstüne gelince küçük ipucu
+                aria-label={izleYazisi(klip, s)}
+                title={izleYazisi(klip, s)} // Fare üstüne gelince küçük ipucu
                 className="mt-1 shrink-0 text-stone-500 transition-colors hover:text-rose-800"
               >
                 <InstagramGlifi className="h-[29px] w-[29px]" />
@@ -68,7 +69,7 @@ export default function KlipAlbumu({ klipler }: { klipler: Clip[] }) {
                 rel="noopener noreferrer"
                 className="mt-1 shrink-0 text-xs text-stone-500 underline hover:text-rose-800"
               >
-                {izleYazisi(klip)} ↗
+                {izleYazisi(klip, s)} ↗
               </a>
             )}
           </div>

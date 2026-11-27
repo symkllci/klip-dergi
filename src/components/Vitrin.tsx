@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react"; // useLayo
 import Link from "next/link"; // Site içi sayfalara geçiş
 import Image from "next/image"; // Resmi küçültüp hızlı yükler
 import type { Person } from "@/types"; // Kişi kalıbı
+import { konuAdi, yol, type Dil, type Sozluk } from "@/lib/sozluk"; // Dile göre konu adı ve adres
 
 // Kendiliğinden kayma aralığı: 5 saniye
 const KAYMA_SURESI = 5000;
@@ -22,7 +23,7 @@ function seridiKaydir(serit: HTMLDivElement | null, sira: number, davranis: Scro
 }
 
 // Vitrin: ortada büyük hikâye, yanlarda sıradakiler soluk (sonsuz döngü)
-export default function Vitrin({ kisiler }: { kisiler: Person[] }) {
+export default function Vitrin({ kisiler, dil, s }: { kisiler: Person[]; dil: Dil; s: Sozluk }) {
   const adet = kisiler.length; // Gerçek kişi sayısı (5)
 
   // ♾️ SONSUZ DÖNGÜ: kartları 3 kez yan yana diz → [kopya] [GERÇEK] [kopya] = 15 kart
@@ -99,7 +100,7 @@ export default function Vitrin({ kisiler }: { kisiler: Person[] }) {
           return (
             <Link
               key={`${sira}-${kisi.slug}`} // Aynı kişi 3 kez var → key'e şerit sırası da eklendi (benzersiz olsun)
-              href={`/kisiler/${kisi.slug}`}
+              href={yol(dil, `/kisiler/${kisi.slug}`)}
               // Kopyalar ekran okuyucuya ve Tab tuşuna gizli: her kişi bir kez okunsun
               aria-hidden={gercek ? undefined : true}
               tabIndex={gercek ? undefined : -1}
@@ -131,7 +132,7 @@ export default function Vitrin({ kisiler }: { kisiler: Person[] }) {
               <div className="pt-5">
                 {/* Konu: sadece ortadakinde (yanda opacity-0 = görünmez ama yer tutar, kart zıplamaz) */}
                 <p className={`text-xs font-semibold uppercase tracking-widest text-rose-800 transition-opacity duration-500 ${ortada ? "opacity-100" : "opacity-0"}`}>
-                  {klip.topic}
+                  {konuAdi(s, klip.topic)}
                 </p>
                 {/* ⚠️ Titreşim düzeltmesi: eskiden yazı BOYUTU değişiyordu (text-lg ↔ text-3xl).
                     Boyut değişince kartın yüksekliği değişiyor → şerit uzayıp kısalıyor → alttaki sayfa her 5 sn'de zıplıyordu.
@@ -163,7 +164,7 @@ export default function Vitrin({ kisiler }: { kisiler: Person[] }) {
       <button
         type="button"
         onClick={() => git(konum - 1)} // Hep bir sola: sayıyı başa sarmak yok, kopya karta geçer
-        aria-label="Önceki hikâye"
+        aria-label={s.vitrin.onceki}
         className="absolute left-[calc(50%-130px)] top-[247px] z-10 -translate-x-1/2 -translate-y-1/2 shadow-md sm:left-[calc(50%-150px)] sm:top-[283px] flex h-11 w-11 items-center justify-center rounded-full border border-amber-200 bg-amber-50 text-stone-600 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
       >
         ←
@@ -171,7 +172,7 @@ export default function Vitrin({ kisiler }: { kisiler: Person[] }) {
       <button
         type="button"
         onClick={() => git(konum + 1)} // Hep bir sağa: sondan sonra kopyanın 1. kartı gelir
-        aria-label="Sonraki hikâye"
+        aria-label={s.vitrin.sonraki}
         className="absolute right-[calc(50%-130px)] top-[247px] z-10 translate-x-1/2 -translate-y-1/2 shadow-md sm:right-[calc(50%-150px)] sm:top-[283px] flex h-11 w-11 items-center justify-center rounded-full border border-amber-200 bg-amber-50 text-stone-600 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
       >
         →
@@ -184,7 +185,7 @@ export default function Vitrin({ kisiler }: { kisiler: Person[] }) {
             key={kisi.slug}
             type="button"
             onClick={() => git(konum - aktif + sira)} // Aynı grup içinde o kişiye git
-            aria-label={`${sira + 1}. hikâye: ${kisi.name}`}
+            aria-label={`${sira + 1}. ${s.vitrin.hikaye}: ${kisi.name}`}
             className={`h-2 rounded-full transition-all ${
               sira === aktif ? "w-7 bg-rose-800" : "w-2 bg-stone-300 hover:bg-stone-400"
             }`}
