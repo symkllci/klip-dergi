@@ -8,7 +8,9 @@
     "klip": "klip",
     "klipler": "klip",
     "kisi": "kişi",
-    "yerel": "tr-TR"
+    "yerel": "tr-TR",
+    "bulten": "Bülten",
+    "gizlilik": "Gizlilik"
   },
   "header": {
     "menuyuAc": "Menüyü aç",
@@ -104,6 +106,27 @@
     "kaldirmaEtiket": "Hak sahipleri için · Kaldırma politikası",
     "kaldirmaMetin": "Sitemizde yer alan bir klip, biyografi ya da fotoğraf hakkında itirazınız varsa iletişim adresimizden bize yazın. İtiraz edilen içerik",
     "kaldirmaVurgu": "24 saat içinde kaldırılır."
+  },
+  "bulten": {
+    "baslik": "Bülten",
+    "kutuBaslik": "Haftanın girişimci hikâyeleri e-postanda",
+    "aciklama": "Her hafta yeni klipler ve kısa hikâyeler. İstediğin zaman ayrılabilirsin.",
+    "eposta": "E-posta adresin",
+    "yerTutucu": "ornek@eposta.com",
+    "onayMetni": "Klip Dergi bülteninin e-posta adresime gönderilmesine onay veriyorum.",
+    "ayrintilar": "Kişisel verilerin nasıl işlendiği:",
+    "dugme": "Abone ol",
+    "gonderiliyor": "Gönderiliyor…",
+    "basarili": "Teşekkürler! Kaydın alındı.",
+    "gecersizEposta": "Geçerli bir e-posta adresi yaz.",
+    "ayniEposta": "Bu e-posta adresi zaten kayıtlı.",
+    "onayYok": "Kayıt için onay kutusunu işaretlemelisin.",
+    "genelHata": "Bir sorun oldu, lütfen tekrar dene."
+  },
+  "gizlilik": {
+    "baslik": "Gizlilik",
+    "aciklama": "Bülten için kişisel verilerin işlenmesine ilişkin aydınlatma metni (taslak).",
+    "sadeceTurkce": ""
   },
   "konular": {
     "girişimcilik": "girişimcilik",

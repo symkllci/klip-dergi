@@ -8,7 +8,9 @@
     "klip": "clip",
     "klipler": "clips",
     "kisi": "people",
-    "yerel": "en-GB"
+    "yerel": "en-GB",
+    "bulten": "Newsletter",
+    "gizlilik": "Privacy"
   },
   "header": {
     "menuyuAc": "Open menu",
@@ -104,6 +106,27 @@
     "kaldirmaEtiket": "For rights holders · Takedown policy",
     "kaldirmaMetin": "If you object to a clip, biography or photo on our site, write to us at our contact address. Content that is objected to",
     "kaldirmaVurgu": "is removed within 24 hours."
+  },
+  "bulten": {
+    "baslik": "Newsletter",
+    "kutuBaslik": "This week's founder stories in your inbox",
+    "aciklama": "New clips and short stories every week. Unsubscribe anytime.",
+    "eposta": "Your email address",
+    "yerTutucu": "you@example.com",
+    "onayMetni": "I agree to receive the Klip Dergi newsletter at my email address.",
+    "ayrintilar": "How your personal data is processed:",
+    "dugme": "Subscribe",
+    "gonderiliyor": "Sending…",
+    "basarili": "Thank you! You're subscribed.",
+    "gecersizEposta": "Please enter a valid email address.",
+    "ayniEposta": "This email address is already subscribed.",
+    "onayYok": "Please tick the consent box to subscribe.",
+    "genelHata": "Something went wrong, please try again."
+  },
+  "gizlilik": {
+    "baslik": "Privacy",
+    "aciklama": "Privacy notice on processing personal data for the newsletter (draft).",
+    "sadeceTurkce": "This privacy notice is a draft and is currently available in Turkish only."
   },
   "konular": {
     "girişimcilik": "entrepreneurship",
