@@ -174,6 +174,8 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ lang: 
                 <figcaption className="mt-3 text-xs font-semibold uppercase tracking-widest text-stone-500">
                   {kisi.name} · {s.kisiSayfasi.klipNo} {String(kisi.clips.indexOf(klip) + 1).padStart(2, "0")}: {klip.title}
                 </figcaption>
+                {/* Çeviri notu: sadece alıntı çeviriyse (İngilizce sayfa). Kişi bu sözü Türkçe söyledi, dürüstçe belirtiyoruz */}
+                {klip.quoteTranslated && <p className="mt-1 text-xs italic text-stone-400">{s.klip.ceviri}</p>}
               </figure>
             ))}
 

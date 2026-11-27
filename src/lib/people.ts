@@ -43,11 +43,16 @@ const klipleriGetir = cache(async (): Promise<ApiKlip[]> => {
 });
 
 // 3) API'deki klibi sitenin Clip kalıbına çevir, bizim notumuzu (konu, alıntı) ekle
-function klibeCevir(klip: ApiKlip, not?: ClipNote): Clip {
+// dil "en" ise başlık ve alıntının İngilizcesi (notta varsa) kullanılır; yoksa Türkçesi kalır, site bozulmaz
+function klibeCevir(klip: ApiKlip, dil: Dil, not?: ClipNote): Clip {
+  const ingilizce = dil === "en";
+  // ?? = soldaki yoksa sağdakini al: İngilizce başlık yoksa API'nin Türkçe başlığı
+  const baslik = ingilizce ? (not?.titleEn ?? klip.baslik) : klip.baslik;
+  const ceviriAlinti = ingilizce ? not?.quoteEn : undefined;
   return {
     platform: "instagram",
     url: klip.url,
-    title: klip.baslik,
+    title: baslik,
     topic: not?.topic ?? "klip", // notu olmayan yeni klipte konu henüz yok
     publishedAt: klip.yayinTarihi.slice(0, 10), // "2026-10-01" ya da "2026-10-01T12:00:00Z" → "2026-10-01"
     cover: `/kapaklar/${klip.reel}.jpg`,
@@ -55,7 +60,8 @@ function klibeCevir(klip: ApiKlip, not?: ClipNote): Clip {
       episodeTitle: klip.kaynak.videoBasligi,
       episodeUrl: `https://www.youtube.com/watch?v=${klip.kaynak.youtubeId}`,
     },
-    quote: not?.quote,
+    quote: ceviriAlinti ?? not?.quote, // İngilizcesi varsa o, yoksa kişinin Türkçe sözü
+    quoteTranslated: ceviriAlinti !== undefined, // true → sayfada "Translated from Turkish" notu
   };
 }
 
@@ -71,13 +77,13 @@ export async function getAllPeople(dil: Dil = "tr"): Promise<Person[]> {
     const notlular = clipNotes
       .map((not) => {
         const klip = kendiKlipleri.find((k) => k.reel === not.reel);
-        return klip && klibeCevir(klip, not);
+        return klip && klibeCevir(klip, dil, not);
       })
       .filter((klip) => klip !== undefined);
     // Sonra API'de olup bizde notu olmayan yeni klipler
     const yeniler = kendiKlipleri
       .filter((klip) => !clipNotes.some((not) => not.reel === klip.reel))
-      .map((klip) => klibeCevir(klip));
+      .map((klip) => klibeCevir(klip, dil));
     // İngilizcede bio ve dek'in yerine bioEn ve dekEn geçer (kişi adı aynı kalır)
     const metin = dil === "en" ? { bio: kisi.bioEn, dek: kisi.dekEn } : {};
     return { ...kisi, ...metin, clips: [...notlular, ...yeniler] };
@@ -98,8 +104,9 @@ export async function getPersonBySlug(slug: string, dil: Dil = "tr"): Promise<Pe
 // Arama öneri listesi için kişiler: ad, slug, konular, klip başlıkları.
 // Biyografi gibi uzun bilgiler YOK → tarayıcıya az veri gider.
 // Üst menüdeki arama (layout.tsx) ve Kişiler sayfasındaki arama aynı listeyi kullanır.
-export async function getAramaKisileri(): Promise<AramaKisisi[]> {
-  const hepsi = await getAllPeople();
+// dil: İngilizcede klip başlıkları da İngilizce aransın ("obsession" → Nevzat Aydın)
+export async function getAramaKisileri(dil: Dil = "tr"): Promise<AramaKisisi[]> {
+  const hepsi = await getAllPeople(dil);
   return hepsi.map((kisi) => ({
     ad: kisi.name,
     slug: kisi.slug,

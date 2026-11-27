@@ -7,6 +7,7 @@ export type Clip = {
     cover: string;
     source?: Source; // klibin kaynağı. ? = bulamadıklarımızda olmayabilir (4 klipte yok)
     quote?: string; // klipten alıntı, kişinin kendi sözü. ? = bulamadıklarımızda olmayabilir (Aykut, Efe, Mark)
+    quoteTranslated?: boolean; // alıntı çeviri mi? (İngilizce sayfada true → altına "Translated from Turkish")
 };
 
 export type Person = {
@@ -27,8 +28,10 @@ export type Person = {
 // İkisi reel koduyla eşleşir.
 export type ClipNote = {
     reel: string; // Instagram kodu, ör. "Ddqm-BsAxNj" (API'deki "reel" ile aynı)
+    titleEn?: string; // klip başlığının İngilizcesi (Türkçe başlık API'den gelir). ? = yeni klipte henüz olmayabilir
     topic: string; // konu: editör kararı
     quote?: string; // klipten alıntı, kişinin kendi sözü. ? = her klipte yok
+    quoteEn?: string; // alıntının İngilizcesi. Sayfada altına "Translated from Turkish" yazılır
 };
 
 // people.json'daki bir kişinin hâli: clips yerine clipNotes (klip notları)

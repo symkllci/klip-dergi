@@ -55,7 +55,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   const s = getSozluk(dil); // O dilin sözlüğü
   // Arama önerileri: sadece ad, slug, konular, klip başlıkları (biyografi vb. tarayıcıya gönderilmesin, sayfa hafif kalsın)
   // Konular o dile çevrilir: İngilizcede "yatırım" yerine "investment" önerilsin
-  const aramaKisileri = (await getAramaKisileri()).map((kisi) => ({
+  const aramaKisileri = (await getAramaKisileri(dil)).map((kisi) => ({
     ...kisi,
     konular: kisi.konular.map((konu) => konuAdi(s, konu)),
   }));

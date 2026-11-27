@@ -30,6 +30,8 @@ export default function AlintiBandi({ kisi, s }: { kisi: Person; s: Sozluk }) {
         <figcaption className="shrink-0 md:text-right">
           <p className="text-lg font-semibold">{kisi.name}</p>
           <p className="mt-1 text-stone-300">{klip.title}</p>
+          {/* Çeviri notu: sadece alıntı çeviriyse (İngilizce sayfa) */}
+          {klip.quoteTranslated && <p className="mt-1 text-xs italic text-stone-400">{s.klip.ceviri}</p>}
           <a
             href={klip.url}
             target="_blank"
