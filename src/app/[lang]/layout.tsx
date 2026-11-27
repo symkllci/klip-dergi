@@ -2,6 +2,7 @@ import Header from "@/components/Header"; // İnce başlık, her sayfada
 import Footer from "@/components/Footer"; // Alt bilgi, her sayfada
 import { getAramaKisileri } from "@/lib/people"; // Arama önerileri için kişiler
 import { DILLER, dilAl, getSozluk, konuAdi } from "@/lib/sozluk"; // Diller ve sözlük
+import { siteAdresi } from "@/lib/site-adresi"; // Sitenin tam adresi (Vercel / localhost)
 import type { Metadata } from "next"; // Sayfa başlığı ve açıklaması için Next.js'in kalıbı
 import { Inter, Lora } from "next/font/google"; // Metin fontu Inter, uzun okuma fontu Lora
 import "../globals.css"; // Tailwind'in bağlandığı stil dosyası (bir üst klasörde, app/ içinde)
@@ -10,25 +11,6 @@ import "../globals.css"; // Tailwind'in bağlandığı stil dosyası (bir üst k
 const inter = Inter({ variable: "--font-inter", subsets: ["latin", "latin-ext"] });
 // Lora: biyografi gibi uzun okuma metinleri
 const lora = Lora({ variable: "--font-lora", subsets: ["latin", "latin-ext"], style: ["normal", "italic"] });
-
-// ⭐ Sitenin tam adresi: paylaşım görseli (WhatsApp kapağı) için gerekli.
-// Vercel her ortamda bize kendi adresini "ortam değişkeni" (process.env) olarak verir:
-// - Ana sitede (production): VERCEL_PROJECT_PRODUCTION_URL → klip-dergi.vercel.app
-// - Önizlemede (preview, ör. hafta5): VERCEL_BRANCH_URL → klip-dergi-git-hafta5-....vercel.app
-// - Kendi bilgisayarımda: hiçbiri yok → localhost
-// Eskiden ana site adresi elle yazılıydı; önizlemede görsel ana siteden isteniyordu, yeni kapaklar orada olmadığı için görünmüyordu.
-function siteAdresi(): URL {
-  if (process.env.VERCEL_ENV === "production" && process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    return new URL(`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`);
-  }
-  if (process.env.VERCEL_BRANCH_URL) {
-    return new URL(`https://${process.env.VERCEL_BRANCH_URL}`);
-  }
-  if (process.env.VERCEL_URL) {
-    return new URL(`https://${process.env.VERCEL_URL}`);
-  }
-  return new URL("http://localhost:3000");
-}
 
 // metadata: sekme başlığı, açıklama ve paylaşım bilgisi. Bütün sayfalar için geçerli.
 // Artık dile göre değiştiği için sabit değil, fonksiyon (generateMetadata): açıklama sözlükten
