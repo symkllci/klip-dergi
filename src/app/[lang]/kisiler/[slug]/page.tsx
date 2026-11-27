@@ -7,7 +7,7 @@ import HikayeKarti from "@/components/HikayeKarti"; // Diğer kişiler kartları
 import Kirinti from "@/components/Kirinti"; // Ekmek kırıntısı: nerede olduğunu gösterir
 import KlipAlbumu from "@/components/KlipAlbumu"; // Klipler albümü (oynatıcı + başlık + kaynak + Instagram glifi)
 import type { Metadata } from "next"; // Sekme başlığı ve paylaşım bilgisinin kalıbı
-import { dilAl, getSozluk, klipSayisi, yol } from "@/lib/sozluk"; // Dil, sözlük, klip sayısı, dile göre adres
+import { dilAdresleri, dilAl, getSozluk, klipSayisi, yol } from "@/lib/sozluk"; // Dil, sözlük, klip sayısı, dile göre adres
 
 // Başlık fontu: ana sayfayla aynı Lora. latin-ext: Türkçe harfler için
 const baslikFontu = Lora({ subsets: ["latin", "latin-ext"] });
@@ -36,6 +36,7 @@ export async function generateMetadata({
   return {
     title: kisi.name, // Kalıptaki %s yerine geçer → "Hamdi Ulukaya · Klip Dergi"
     description: kisi.bio, // Google'da ve paylaşımda görünen açıklama
+    alternates: dilAdresleri(dil, `/kisiler/${slug}`), // hreflang: bu kişinin TR ve EN sayfaları
     openGraph: {
       title: `${kisi.name} · ${s.genel.siteAdi}`, // WhatsApp önizlemesindeki başlık
       description: kisi.bio,

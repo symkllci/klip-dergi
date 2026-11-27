@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
 import { Lora } from "next/font/google";
 import Kirinti from "@/components/Kirinti"; // Ekmek kırıntısı: nerede olduğunu gösterir (kişi sayfasındakinin aynısı)
-import { dilAl, getSozluk, yol } from "@/lib/sozluk"; // Dil, sözlük ve dile göre adres
+import { dilAdresleri, dilAl, getSozluk, yol } from "@/lib/sozluk"; // Dil, sözlük ve dile göre adres
 
 const baslikFontu = Lora({ subsets: ["latin", "latin-ext"], style: ["normal", "italic"] });
 
 // Sekme başlığı: "Hakkımızda · Klip Dergi" / "About · Klip Dergi" (sözlükten)
 export async function generateMetadata({ params }: PageProps<"/[lang]/hakkinda">): Promise<Metadata> {
-  const s = getSozluk(dilAl((await params).lang));
-  return { title: s.genel.hakkimizda, description: s.hakkinda.aciklama };
+  const dil = dilAl((await params).lang);
+  const s = getSozluk(dil);
+  return {
+    title: s.genel.hakkimizda,
+    description: s.hakkinda.aciklama,
+    alternates: dilAdresleri(dil, "/hakkinda"), // hreflang: bu sayfanın TR ve EN adresleri
+  };
 }
 
 // Ortak görünüşler (kalıplar)

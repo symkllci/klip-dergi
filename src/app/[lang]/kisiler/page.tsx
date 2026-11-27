@@ -4,7 +4,8 @@ import { getAllPeople, getAramaKisileri } from "@/lib/people"; // Bütün kişil
 import HikayeKarti from "@/components/HikayeKarti"; // Kişi kartı: ana sayfadaki "Bütün hikâyeler" albümüyle aynı (kişi fotoğrafı, siyah-beyaz, kutusuz)
 import Kirinti from "@/components/Kirinti"; // ⭐ Ekmek kırıntısı: nerede olduğunu gösterir
 import AramaKutusu from "@/components/AramaKutusu"; // Önerili arama kutusu (üst menüdekiyle aynı, burada büyük hâli)
-import { dilAl, getSozluk, konuAdi, yol } from "@/lib/sozluk"; // Dil, sözlük, konunun o dildeki adı, adres
+import { dilAdresleri, dilAl, getSozluk, konuAdi, yol } from "@/lib/sozluk"; // Dil, sözlük, konunun o dildeki adı, adres
+import type { Metadata } from "next"; // Sekme başlığı ve hreflang bilgisinin kalıbı
 
 // Başlık fontu: ana sayfadakiyle aynı Lora. latin-ext: Türkçe harfler (ş, ğ, ı, İ) için.
 const baslikFontu = Lora({ subsets: ["latin", "latin-ext"] });
@@ -17,6 +18,13 @@ const konuTemel = "text-xs font-semibold uppercase tracking-[0.2em] transition-c
 const konuSecili = "text-rose-800 underline decoration-2 underline-offset-4";
 // Seçili olmayan: gri, üstüne gelince bordo
 const konuNormal = "text-stone-500 hover:text-rose-800";
+
+// Sekme başlığı ("Kişiler · Klip Dergi" / "People · Klip Dergi") ve hreflang (TR ve EN adresleri)
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const dil = dilAl((await params).lang);
+  const s = getSozluk(dil);
+  return { title: s.genel.kisiler, description: s.kisilerSayfasi.aciklama, alternates: dilAdresleri(dil, "/kisiler") };
+}
 
 // Kişiler sayfası. searchParams: adresteki ? sonrası bilgiler.
 // Örnek: /kisiler?konu=yatırım&ara=ata → { konu: "yatırım", ara: "ata" }

@@ -4,7 +4,8 @@ import { getAllPeople } from "@/lib/people"; // Bütün kişileri getiren tarif.
 import Vitrin from "@/components/Vitrin"; // Kayan vitrin: tarayıcıda çalışan ("use client") bileşen
 import HikayeKarti from "@/components/HikayeKarti"; // Kutusuz hikâye kartı: görsel + konu + isim + kanca (3 düzen)
 import AlintiBandi from "@/components/AlintiBandi"; // Tam genişlik koyu alıntı bandı
-import { dilAl, getSozluk, yol } from "@/lib/sozluk"; // Dil, sözlük ve dile göre adres
+import { dilAdresleri, dilAl, getSozluk, yol } from "@/lib/sozluk"; // Dil, sözlük, dile göre adres, hreflang
+import type { Metadata } from "next"; // Sekme başlığı ve hreflang bilgisinin kalıbı
 
 // Başlık fontu: dergi hissi versin diye serif (kaynak: Next.js Fonts belgesi).
 // latin-ext: Türkçe harfler (ş, ğ, ı, İ) için.
@@ -13,6 +14,11 @@ const baslikFontu = Lora({ subsets: ["latin", "latin-ext"], style: ["normal", "i
 
 // Renkler (Tailwind'in hazır renkleri):
 // krem zemin amber-50 · koyu mürekkep stone-900 · bordo vurgu rose-800
+
+// hreflang: ana sayfanın TR ("/") ve EN ("/en") adresleri. Başlık ve açıklama layout'tan gelir
+export async function generateMetadata({ params }: PageProps<"/[lang]">): Promise<Metadata> {
+  return { alternates: dilAdresleri(dilAl((await params).lang), "/") };
+}
 
 // Ana sayfa: sitenin adresi "/" (localhost:3000). Sunucuda hazırlanır, sadece vitrin tarayıcıda çalışır.
 export default async function Home({ params }: PageProps<"/[lang]">) {

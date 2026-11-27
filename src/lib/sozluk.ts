@@ -45,3 +45,21 @@ export function konuAdi(s: Sozluk, konu: string): string {
 export function klipSayisi(s: Sozluk, adet: number): string {
   return `${adet} ${adet === 1 ? s.genel.klip : s.genel.klipler}`;
 }
+
+// hreflang: Google'a "bu sayfanın öbür dildeki hâli şurada" demek. 📚 Next.js Metadata: alternates
+// Her sayfanın generateMetadata'sına eklenir → <head>'e şunlar yazılır:
+//   <link rel="canonical" href=".../en/kisiler">                   (bu sayfanın asıl adresi)
+//   <link rel="alternate" hreflang="tr" href=".../kisiler">
+//   <link rel="alternate" hreflang="en" href=".../en/kisiler">
+//   <link rel="alternate" hreflang="x-default" href=".../kisiler"> (dil seçilmemişse: Türkçe)
+// adres: dilsiz adres, ör. "/kisiler/hamdi-ulukaya". Tam adrese (https://...) layout'taki metadataBase çevirir
+export function dilAdresleri(dil: Dil, adres: string) {
+  return {
+    canonical: yol(dil, adres),
+    languages: {
+      tr: yol("tr", adres),
+      en: yol("en", adres),
+      "x-default": yol("tr", adres),
+    },
+  };
+}
