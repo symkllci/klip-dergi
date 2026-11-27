@@ -5,6 +5,7 @@ import { Lora } from "next/font/google"; // Ana sayfadaki serif başlık fontu
 import { getAllPeople, getPersonBySlug } from "@/lib/people"; // Herkesi getiren ve slug ile bulan tarifler
 import HikayeKarti from "@/components/HikayeKarti"; // Diğer kişiler kartları: ana sayfadaki kutusuz dergi kartı
 import Kirinti from "@/components/Kirinti"; // Ekmek kırıntısı: nerede olduğunu gösterir
+import PaylasDugmesi from "@/components/PaylasDugmesi"; // Paylaş: telefonda sistem menüsü, bilgisayarda linki kopyala
 import KlipAlbumu from "@/components/KlipAlbumu"; // Klipler albümü (oynatıcı + başlık + kaynak + Instagram glifi)
 import type { Metadata } from "next"; // Sekme başlığı ve paylaşım bilgisinin kalıbı
 import { dilAdresleri, dilAl, getSozluk, klipSayisi, yol } from "@/lib/sozluk"; // Dil, sözlük, klip sayısı, dile göre adres
@@ -150,6 +151,10 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ lang: 
           <h1 className={`${baslikFontu.className} text-5xl font-bold leading-tight sm:text-7xl`}>{kisi.name}</h1>
           {/* Kanca: isimden sonra tek cümle */}
           <p className="mx-auto mt-3 max-w-2xl font-serif text-lg italic leading-relaxed text-stone-600 sm:text-xl">{kisi.dek}</p>
+          {/* Paylaş düğmesi: kancanın altında, ortada. Paylaşılan başlık: "Hamdi Ulukaya · Klip Dergi", metin: kanca */}
+          <div className="mt-6">
+            <PaylasDugmesi baslik={`${kisi.name} · ${s.genel.siteAdi}`} metin={kisi.dek} s={s.kisiSayfasi} />
+          </div>
         </header>
 
         {/* 4. YAZI: tek sütun, ortada dar (max-w-3xl ≈ 70 karakterlik satır → rahat okunur).
