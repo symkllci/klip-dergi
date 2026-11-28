@@ -129,6 +129,7 @@ export default function Header({ kisiler, dil, s }: { kisiler: AramaKisisi[]; di
             <li><Link href={yol(dil, "/")} onClick={() => setAcik(false)} className="block px-6 py-4 hover:text-rose-300">{s.genel.anaSayfa}</Link></li>
             <li><Link href={yol(dil, "/kisiler")} onClick={() => setAcik(false)} className="block px-6 py-4 hover:text-rose-300">{s.genel.kisiler}</Link></li>
             <li><Link href={yol(dil, "/hakkinda")} onClick={() => setAcik(false)} className="block px-6 py-4 hover:text-rose-300">{s.genel.hakkimizda}</Link></li>
+            <li><Link href={yol(dil, "/bulten")} onClick={() => setAcik(false)} className="block px-6 py-4 hover:text-rose-300">{s.genel.bulten}</Link></li>
           </ul>
         </nav>
       )}
