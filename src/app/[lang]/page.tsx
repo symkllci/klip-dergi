@@ -4,6 +4,7 @@ import { getAllPeople } from "@/lib/people"; // Bütün kişileri getiren tarif.
 import Vitrin from "@/components/Vitrin"; // Kayan vitrin: tarayıcıda çalışan ("use client") bileşen
 import HikayeKarti from "@/components/HikayeKarti"; // Kutusuz hikâye kartı: görsel + konu + isim + kanca (3 düzen)
 import AlintiBandi from "@/components/AlintiBandi"; // Tam genişlik koyu alıntı bandı
+import BultenFormu from "@/components/BultenFormu"; // Bülten kayıt formu (/bulten sayfasındakiyle aynı)
 import { dilAdresleri, dilAl, getSozluk, yol } from "@/lib/sozluk"; // Dil, sözlük, dile göre adres, hreflang
 import type { Metadata } from "next"; // Sekme başlığı ve hreflang bilgisinin kalıbı
 
@@ -135,6 +136,16 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             {kisiler.map((kisi) => (
               <HikayeKarti key={kisi.slug} kisi={kisi} duzen="album" dil={dil} s={s} />
             ))}
+          </div>
+        </section>
+
+        {/* 4. BÜLTEN KUTUSU: sayfanın sonunda, ortada. Başlık + kısa açıklama + form (BultenFormu) */}
+        <section className="mx-[clamp(16px,3.2vw,56px)] mt-20 border-y-2 border-stone-900 px-6 py-12 text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-rose-800">{s.bulten.baslik}</p>
+          <h2 className={`${baslikFontu.className} mt-3 text-balance text-2xl sm:text-4xl`}>{s.bulten.kutuBaslik}</h2>
+          <p className="mx-auto mt-3 max-w-xl font-serif italic text-stone-600">{s.bulten.aciklama}</p>
+          <div className="mt-8">
+            <BultenFormu dil={dil} s={s} />
           </div>
         </section>
       </main>

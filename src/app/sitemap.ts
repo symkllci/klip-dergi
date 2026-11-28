@@ -30,6 +30,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...ikiDilde("/"), // ana sayfa
     ...ikiDilde("/kisiler"),
     ...ikiDilde("/hakkinda"),
+    ...ikiDilde("/bulten"), // /gizlilik taslak olduğu için haritada yok (noindex)
     // flatMap: her kişi için 2 satır (TR + EN) → tek uzun liste. 12 kişi × 2 = 24 satır
     ...kisiler.flatMap((kisi) => ikiDilde(`/kisiler/${kisi.slug}`, kisi.updatedAt)),
   ];

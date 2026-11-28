@@ -30,6 +30,8 @@ export default function Footer({ dil, s }: { dil: Dil; s: Sozluk }) {
             <ul className="mt-4 space-y-2 text-sm text-white/80">
               <li><Link href={yol(dil, "/hakkinda")} className="hover:text-white hover:underline">{s.genel.hakkimizda}</Link></li>
               <li><Link href={yol(dil, "/kisiler")} className="hover:text-white hover:underline">{s.genel.kisiler}</Link></li>
+              <li><Link href={yol(dil, "/bulten")} className="hover:text-white hover:underline">{s.genel.bulten}</Link></li>
+              <li><Link href={yol(dil, "/gizlilik")} className="hover:text-white hover:underline">{s.genel.gizlilik}</Link></li>
             </ul>
           </div>
 
