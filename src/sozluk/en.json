@@ -22,7 +22,7 @@
     "buyukYer": "Name, topic, clip",
     "etiket": "Search the site",
     "oneriler": "People suggestions",
-    "dugme": "Search"
+    "dugme": "Search", "oneriVar": "suggestions available", "oneriVarTek": "suggestion available", "sonucYok": "No results"
   },
   "footer": {
     "dergi": "Magazine",

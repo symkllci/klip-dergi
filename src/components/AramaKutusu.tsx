@@ -65,6 +65,16 @@ export default function AramaKutusu({ kisiler, dil, s, kapat, buyuk = false, ilk
     : [];
   const listeGorunur = acik && oneriler.length > 0;
 
+  // 🔊 Ekran okuyucuya kaç öneri olduğunu söyle: "3 öneri var" / "1 suggestion available" / "Sonuç yok"
+  // Sadece kullanıcı yazarken (acik) ve kutu boş değilken. Sayfa açılırken (ilkYazi) boşuna konuşmasın
+  // İngilizcede tekil/çoğul farkı var (suggestion / suggestions) → iki ayrı sözlük anahtarı
+  const duyuru =
+    acik && aranan
+      ? oneriler.length > 0
+        ? `${oneriler.length} ${oneriler.length === 1 ? s.arama.oneriVarTek : s.arama.oneriVar}`
+        : s.arama.sonucYok
+      : "";
+
   // Bir kişiye git: listeyi kapat, aramayı kapat, kişi sayfasını aç
   function git(kisi: AramaKisisi) {
     setAcik(false);
@@ -149,6 +159,12 @@ export default function AramaKutusu({ kisiler, dil, s, kapat, buyuk = false, ilk
           {s.arama.dugme}
         </button>
       )}
+
+      {/* Duyuru: ekranda görünmez (sr-only), sadece ekran okuyucu okur. role="status" + aria-live="polite":
+          değişince, o an söylediği şeyi bitirip sonra söyler (araya girmez) */}
+      <p role="status" aria-live="polite" className="sr-only">
+        {duyuru}
+      </p>
 
       {/* Öneri listesi: role="listbox". Kapalıyken de sayfada durur (hidden): aria-controls'un gösterdiği id hep var olsun */}
       <ul

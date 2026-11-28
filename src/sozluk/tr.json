@@ -22,7 +22,7 @@
     "buyukYer": "İsim, konu, klip",
     "etiket": "Sitede ara",
     "oneriler": "Kişi önerileri",
-    "dugme": "Ara"
+    "dugme": "Ara", "oneriVar": "öneri var", "oneriVarTek": "öneri var", "sonucYok": "Sonuç yok"
   },
   "footer": {
     "dergi": "Dergi",
