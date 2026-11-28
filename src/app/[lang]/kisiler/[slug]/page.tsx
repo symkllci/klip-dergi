@@ -7,6 +7,7 @@ import HikayeKarti from "@/components/HikayeKarti"; // Diğer kişiler kartları
 import Kirinti from "@/components/Kirinti"; // Ekmek kırıntısı: nerede olduğunu gösterir
 import PaylasDugmesi from "@/components/PaylasDugmesi"; // Paylaş: telefonda sistem menüsü, bilgisayarda linki kopyala
 import KlipAlbumu from "@/components/KlipAlbumu"; // Klipler albümü (oynatıcı + başlık + kaynak + Instagram glifi)
+import HaberlerBolumu from "@/components/HaberlerBolumu"; // Haberlerde: kişinin iş haberleri (en fazla 3, editör onaylı)
 import InstagramGlifi from "@/components/InstagramGlifi"; // Instagram'ın resmî tek renk glifi (Meta marka sayfasından)
 import type { Metadata } from "next"; // Sekme başlığı ve paylaşım bilgisinin kalıbı
 import { dilAdresleri, dilAl, getSozluk, klipSayisi, yol } from "@/lib/sozluk"; // Dil, sözlük, klip sayısı, dile göre adres
@@ -227,6 +228,9 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ lang: 
           {/* Albüm ayrı bileşende: src/components/KlipAlbumu.tsx (deneme sayfası da kullanıyor) */}
           <KlipAlbumu klipler={kisi.clips} s={s} />
         </section>
+
+        {/* 5½. HABERLERDE: Kliplerden sonra, Diğer kişilerden önce (hocanın tasarımı). Haberi yoksa hiç çıkmaz */}
+        <HaberlerBolumu slug={kisi.slug} s={s} />
 
         {/* 6. DİĞER KİŞİLER: ana sayfadaki kutusuz dergi kartı (HikayeKarti, yatay görsel, ortalı yazı) */}
         <section className="mt-20">
