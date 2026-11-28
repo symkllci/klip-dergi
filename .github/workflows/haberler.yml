@@ -1,0 +1,64 @@
+# HABER ÖNERİLERİ: her Pazartesi sabah haberleri çeker, src/data/haberler.json'a ekleyen bir PR açar.
+# Editör (Şeyma) PR'da uygun olmayan satırları siler, sonra birleştirir → haber sitede çıkar.
+# ⚠️ Bu iş ÜCRETSİZ ve anahtarsız (Google News RSS herkese açık). ElevenLabs seslendirmesi BURAYA KONMAZ (hocanın kuralı).
+# 📚 GitHub Actions schedule: cron saatleri UTC'dir → 06:00 UTC = 09:00 Türkiye
+
+name: Haber önerileri
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Pazartesi 06:00 UTC (09:00 TR)
+  workflow_dispatch: # Actions sekmesinden elle çalıştırma (Run workflow)
+    inputs:
+      gun:
+        description: "Kaç günlük haber? Boş bırak = betik karar verir (haftalık: 7)"
+        required: false
+        default: ""
+  push: # Bu dosya hafta6'ya ilk gönderildiğinde bir kez çalışır → İLK PR (son 90 gün)
+    branches: [hafta6]
+    paths: [".github/workflows/haberler.yml"]
+
+permissions:
+  contents: write # PR dalına commit atabilsin
+  pull-requests: write # PR açabilsin
+
+jobs:
+  haberler:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Haberleri çek
+        env:
+          # İlk gönderim (push) → 90 gün · elle çalıştırma → yazılan sayı · Pazartesi → boş (betik 7 gün der)
+          GUN: ${{ github.event_name == 'push' && '90' || inputs.gun || '' }}
+        run: npx tsx scripts/haber-cek.ts ${GUN:+--gun $GUN}
+
+      - name: Tarih
+        id: tarih
+        run: echo "bugun=$(TZ=Europe/Istanbul date +%d.%m.%Y)" >> "$GITHUB_OUTPUT"
+
+      - name: PR aç
+        uses: peter-evans/create-pull-request@v8
+        with:
+          branch: haber-onerileri # Hep aynı dal: açık PR varsa onu günceller, yenisini açmaz
+          base: ${{ github.ref_name }} # Hangi dalda çalıştıysa ona PR (ilk sefer hafta6, sonra main)
+          add-paths: src/data/haberler.json # Sadece bu dosya
+          commit-message: "Haber önerileri (${{ steps.tarih.outputs.bugun }})"
+          title: "Haber önerileri · ${{ steps.tarih.outputs.bugun }}"
+          body: |
+            Bu PR'ı GitHub Actions açtı (`scripts/haber-cek.ts`).
+
+            **Editör için:** "Files changed" sekmesinde `src/data/haberler.json` dosyasına bak.
+            Girişimcilik / iş haberi olmayan satırları sil (… → Edit file), commit'le, sonra **Merge**.
+            Birleşen haberler kişi sayfasındaki "Haberlerde" bölümünde çıkar (kişi başına en fazla 3).
+
+            Sadece başlık, kaynak, tarih ve link. Haberin metni ve fotoğrafı alınmaz.
+          delete-branch: true
