@@ -1,0 +1,11 @@
+{
+  "_aciklama": "Haberlerde: sadece bu sitelerden gelen haberler alinir. Yeni site eklemek icin satir ekle.",
+  "kaynaklar": [
+    { "ad": "Patronlar Dünyası", "site": "patronlardunyasi.com" },
+    { "ad": "MediaCat", "site": "mediacat.com" },
+    { "ad": "Marketing Türkiye", "site": "marketingturkiye.com.tr" },
+    { "ad": "Webtekno", "site": "webtekno.com" },
+    { "ad": "Ekonomim", "site": "ekonomim.com" },
+    { "ad": "Notbir", "site": "notbir.com.tr" }
+  ]
+}
