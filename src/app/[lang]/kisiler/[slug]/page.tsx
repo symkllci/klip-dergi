@@ -7,6 +7,7 @@ import HikayeKarti from "@/components/HikayeKarti"; // Diğer kişiler kartları
 import Kirinti from "@/components/Kirinti"; // Ekmek kırıntısı: nerede olduğunu gösterir
 import PaylasDugmesi from "@/components/PaylasDugmesi"; // Paylaş: telefonda sistem menüsü, bilgisayarda linki kopyala
 import KlipAlbumu from "@/components/KlipAlbumu"; // Klipler albümü (oynatıcı + başlık + kaynak + Instagram glifi)
+import InstagramGlifi from "@/components/InstagramGlifi"; // Instagram'ın resmî tek renk glifi (Meta marka sayfasından)
 import type { Metadata } from "next"; // Sekme başlığı ve paylaşım bilgisinin kalıbı
 import { dilAdresleri, dilAl, getSozluk, klipSayisi, yol } from "@/lib/sozluk"; // Dil, sözlük, klip sayısı, dile göre adres
 
@@ -194,9 +195,10 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ lang: 
             </time>
           </p>
 
-          {/* Sosyal medya: yuvarlak Instagram ikonu, zemini şeffaf (beyaz değil). Linki yoksa hiç çıkmaz */}
+          {/* Sosyal medya: Instagram'ın RESMÎ glifi (KlipAlbumu'ndakiyle aynı). Linki yoksa hiç çıkmaz
+              Çerçeve yok: Meta kuralı glifin çevresinde glifin yarısı kadar boşluk ister (29 px glif → ~15 px) */}
           {kisi.links.length > 0 && (
-            <ul className="mt-4 flex flex-wrap gap-3">
+            <ul className="mt-4 flex flex-wrap gap-4">
               {kisi.links.map((link) => (
                 <li key={link}>
                   {/* Dış link: yeni sekmede, rel güvenlik için. Yazı yok → aria-label ekran okuyucuya söyler */}
@@ -206,14 +208,9 @@ export default async function KisiSayfasi({ params }: { params: Promise<{ lang: 
                     rel="noopener noreferrer"
                     aria-label={`${kisi.name} ${s.kisiSayfasi.instagramda}`}
                     title="Instagram"
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-amber-200 bg-transparent text-stone-700 transition-colors hover:border-rose-800 hover:bg-rose-800 hover:text-white"
+                    className="block text-stone-700 transition-colors hover:text-rose-800"
                   >
-                    {/* Instagram ikonu: yuvarlak köşeli kare + daire + küçük nokta. currentColor = yazı rengini al */}
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5" aria-hidden="true">
-                      <rect x="3" y="3" width="18" height="18" rx="5" />
-                      <circle cx="12" cy="12" r="4" />
-                      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-                    </svg>
+                    <InstagramGlifi className="h-[29px] w-[29px]" />
                   </a>
                 </li>
               ))}
